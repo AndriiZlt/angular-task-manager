@@ -11,28 +11,46 @@
         class="message"
         matInput
         #message
-        maxlength="256"
+        maxlength="106"
         [(ngModel)]="inputValue"
         [ngModelOptions]="{ standalone: true }"
       />
 
-      <mat-hint align="end">{{ message.value.length }} / 256</mat-hint>
+      <mat-hint align="end">{{ message.value.length }} / 106</mat-hint>
     </mat-form-field>
-    <button (click)="addTask()" class="add-btn">Add task</button>
+    <button
+      (click)="addTask()"
+      class="add-btn"
+      [disabled]="!inputValue"
+      [ngClass]="{ disabledBtn: !inputValue }"
+    >
+      Add task
+    </button>
 
     <button (click)="clearInput()" class="add-btn">Clear</button>
-    <button (click)="onFilterClick()" class="add-btn">
-      {{ filter ? "Show All" : "Show ongoing" }}
-    </button>
+    <!-- <button (click)="onFilterClick()" class="add-btn">
+      {{ filter ? "Show All" : "Filter done" }}
+    </button> -->
   </form>
-  <p>{{ filter ? "Filtered tasks" : "All tasks" }}</p>
+  <hr />
+  <mat-button-toggle-group
+    name="fontStyle"
+    aria-label="Font Style"
+    (change)="onFilterChange($event)"
+  >
+    <mat-button-toggle value="all">All tasks</mat-button-toggle>
+    <mat-button-toggle value="unfinished">Unfinished tasks</mat-button-toggle>
+    <mat-button-toggle value="completed">Completed tasks</mat-button-toggle>
+  </mat-button-toggle-group>
+  <!-- <h2>{{ filter ? "Filtered tasks" : "All tasks" }}</h2> -->
 </div>
 <div class="tasks">
   <app-task
     *ngFor="let task of tasks | filter : filter; let index = id"
     [task]="task"
     [taskIndex]="tasks.indexOf(task)"
-    (onTaskDelete)="onTaskDelete($event)"
-    (onTaskCheckClick)="onTaskCheckClick($event)"
+    (onTaskDelete)="this.onTaskDelete.emit($event)"
+    (onTaskCheckClick)="this.onTaskCheckClick.emit($event)"
+    (onDetailsClick)="this.onDetailsClick.emit($event)"
   ></app-task>
 </div>

@@ -1,16 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeViewComponent } from './pages/home-view/home-view.component';
-import { TaskViewComponent } from './pages/task-view/task-view.component';
+import { MyAppComponent } from './pages/my-app/my-app.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeViewComponent,
-  },
-  {
-    path: 'task',
-    component: TaskViewComponent,
+    component: MyAppComponent,
   },
 ];
 

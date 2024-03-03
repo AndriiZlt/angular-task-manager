@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeViewComponent } from './pages/home-view/home-view.component';
@@ -13,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { MyAppComponent } from './pages/my-app/my-app.component';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RouterModule } from '@angular/router';
     TaskViewComponent,
     TaskComponent,
     FilterTasksformPipe,
+    MyAppComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,13 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     RouterModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'fill' },
+    },
+  ],
   bootstrap: [AppComponent],
+  entryComponents: [AppComponent],
 })
 export class AppModule {}

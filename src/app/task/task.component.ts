@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Task } from '../app.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -15,16 +8,18 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent implements OnInit {
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
   @Input() task: Task;
   @Input() taskIndex: number;
   @Output() onTaskDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() onTaskCheckClick: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChild('checkbox') checkbox;
+  @Output() onDetailsClick: EventEmitter<any> = new EventEmitter<any>();
   changed: boolean = false;
-  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {}
+
   onCardClick(index) {
-    this.router.navigate(['/task'], { queryParams: { index: index } });
+    this.onDetailsClick.emit(index);
   }
 }

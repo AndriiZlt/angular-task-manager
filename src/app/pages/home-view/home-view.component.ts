@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Injectable,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Task } from 'src/app/app.component';
 
@@ -13,13 +7,18 @@ import { Task } from 'src/app/app.component';
   templateUrl: './home-view.component.html',
   styleUrls: ['./home-view.component.scss'],
 })
-@Injectable()
 export class HomeViewComponent implements OnInit {
-  @Output() onSetLocalStorage: EventEmitter<any> = new EventEmitter<any>();
   constructor(private router: Router, private route: ActivatedRoute) {}
+
+  @Output() onSetLocalStorage: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onTaskDelete: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onTaskCheckClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onDetailsClick: EventEmitter<any> = new EventEmitter<any>();
+  @Input() tasks: Task[];
   inputValue: string = '';
-  tasks: Task[] = [];
-  filter: boolean = false;
+  @Input() filter: string = 'all';
+
+  ngOnInit(): void {}
 
   addTask() {
     this.tasks.push({
@@ -33,62 +32,19 @@ export class HomeViewComponent implements OnInit {
   clearInput() {
     this.inputValue = '';
   }
-  onTaskDelete(selectedIndex: number): void {
-    this.tasks.splice(selectedIndex, 1);
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
-  }
-  onTaskCheckClick(selectedIndex: number): void {
-    console.log(
-      'onTaskCheck. selected Index = ',
-      selectedIndex,
-      'Tasks after update',
-      this.tasks
-    );
-    this.tasks[selectedIndex].completed = !this.tasks[selectedIndex].completed;
-    console.log();
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
-    this.resetPage();
-  }
 
-  filterTasks() {
-    this.filter = !this.filter;
-  }
-
-  onFilterClick() {
-    this.filter = !this.filter;
-    localStorage.setItem('filter', JSON.stringify(this.filter));
-  }
-
-  getDataFromLocalStorage() {
-    let filterFromLocalStorage = localStorage.getItem('filter');
-    if (
-      filterFromLocalStorage != '' &&
-      filterFromLocalStorage != null &&
-      filterFromLocalStorage != 'undefined'
-    ) {
-      this.filter = JSON.parse(filterFromLocalStorage);
+  onFilterChange(event) {
+    switch (event.value) {
+      case 'all':
+        this.filter = 'all';
+        break;
+      case 'unfinished':
+        this.filter = 'unfinished';
+        break;
+      case 'completed':
+        this.filter = 'completed';
+        break;
+      default:
     }
-
-    let dataFromStrage = localStorage.getItem('tasks');
-    if (
-      dataFromStrage != '' &&
-      dataFromStrage != null &&
-      typeof dataFromStrage != 'undefined'
-    ) {
-      this.tasks = JSON.parse(dataFromStrage);
-    }
-  }
-
-  resetPage() {
-    console.log('Reload page');
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['./'], {
-      relativeTo: this.route,
-    });
-  }
-
-  ngOnInit(): void {
-    this.getDataFromLocalStorage();
   }
 }

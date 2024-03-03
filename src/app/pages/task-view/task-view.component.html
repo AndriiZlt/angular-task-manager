@@ -1,1 +1,45 @@
-<p>task-view works!</p>
+<div class="container">
+  <div class="panel">
+    <h2 class="title">
+      Detailed view of task #{{ tasks.indexOf(tasks[index]) + 1 }}
+    </h2>
+
+    <!-- <input [(ngModel)]="task.description" /> -->
+    <h2 *ngIf="index < 0">No task</h2>
+    <div *ngIf="index > -1">
+      <textarea class="description">{{
+        this.tasks[index].description
+      }}</textarea>
+      <div class="checkbox">
+        <h3>Check if done:</h3>
+        <mat-checkbox
+          class="example-margin"
+          color="primary"
+          #checkbox
+          [checked]="tasks[index].completed"
+          (change)="this.onTaskCheckClick.emit(this.index)"
+        ></mat-checkbox>
+      </div>
+
+      <div class="checkbox">
+        <h3>Press to delete</h3>
+        <button
+          mat-fab
+          color="warn"
+          style="
+            font-size: 20px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: violet;
+          "
+          (click)="this.onTaskDelete.emit(this.index)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

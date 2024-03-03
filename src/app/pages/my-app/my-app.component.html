@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-md-7">
+    <app-home-view
+      [tasks]="tasks"
+      [filter]="filter"
+      (onTaskDelete)="onTaskDelete($event)"
+      (onTaskCheckClick)="onTaskCheckClick($event)"
+      (onDetailsClick)="onDetailsClick($event)"
+    ></app-home-view>
+  </div>
+  <div class="col-md-5">
+    <app-task-view
+      [tasks]="tasks"
+      [index]="taskViewIndex"
+      (onTaskDelete)="onTaskDelete($event)"
+      (onTaskCheckClick)="onTaskCheckClick($event)"
+    ></app-task-view>
+  </div>
+</div>

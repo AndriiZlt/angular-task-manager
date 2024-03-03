@@ -1,11 +1,21 @@
 <div class="card">
-  <mat-card style="width: 600px; height: 25px; margin-left: 30px">
+  <mat-card
+    style="
+      width: 600px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+    "
+  >
     <div class="task">
-      <p style="width: 30px; margin: 0; font-size: 18px">{{ taskIndex + 1 }}</p>
-      <h3
-        style="width: 500px; margin: 0; font-size: 18px"
-        [style.text-decoration]="task.completed ? 'line-through' : 'none'"
+      <p
+        style="width: 30px; margin: 0; font-size: 18px; align-self: flex-start"
       >
+        {{ taskIndex + 1 }}
+      </p>
+      <h3 [style.text-decoration]="task.completed ? 'line-through' : 'none'">
         {{ task.description }}
       </h3>
       <mat-checkbox
@@ -27,10 +37,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      border: violet;
     "
     (click)="this.onTaskDelete.emit(this.taskIndex)"
   >
     <mat-icon>delete</mat-icon>
   </button>
-  <button (click)="onCardClick(taskIndex)" class="details">details</button>
+  <button (click)="onCardClick(this.taskIndex)" class="details">details</button>
 </div>

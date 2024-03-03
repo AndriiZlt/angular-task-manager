@@ -2,17 +2,24 @@
 
 .card {
   display: flex;
+  flex-direction: row;
   align-items: center;
   margin-bottom: 10px;
 
   .task {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     text-transform: capitalize;
     margin: 0 0 0 10px;
     :not(:last-child) {
       margin-right: 10px;
+    }
+    h3 {
+      width: 500px;
+      margin: 0;
+      font-size: 18px;
     }
   }
   button {

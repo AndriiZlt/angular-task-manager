@@ -5,15 +5,18 @@ import { Task } from '../app.component';
   name: 'filter',
 })
 export class FilterTasksformPipe implements PipeTransform {
-  transform(allTasks: Task[], filtered: boolean) {
-    console.log('pipe Before', allTasks, 'filtered:', filtered);
-    allTasks = filtered
-      ? allTasks.filter((task) => {
-          console.log(task.id, '=>', task.completed);
-          return task.completed === false;
-        })
-      : allTasks;
-    console.log('pipe After', allTasks);
-    return allTasks;
+  transform(allTasks: Task[], filter: string) {
+    console.log('pipe', filter);
+    switch (filter) {
+      case 'all':
+        return allTasks;
+      case 'unfinished':
+        return allTasks.filter((task) => task.completed === false);
+      case 'completed':
+        return allTasks.filter((task) => task.completed === true);
+
+      default:
+        return allTasks;
+    }
   }
 }
