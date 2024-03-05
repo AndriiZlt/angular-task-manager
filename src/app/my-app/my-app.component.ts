@@ -33,7 +33,7 @@ export class MyAppComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.router.navigate(['login']);
   }
 }
