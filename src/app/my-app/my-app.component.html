@@ -1,0 +1,33 @@
+<div class="header">
+  <div class="headerContainer">
+    <nav>
+      <ul class="navUl">
+        <li
+          [style]="
+            this.view === 'task-manager'
+              ? 'text-decoration:underline'
+              : 'text-decoration:none'
+          "
+          (click)="onViewChange($event)"
+        >
+          <a routerLink="/task-manager" id="task-manager">Task Manager</a>
+        </li>
+        <li
+          (click)="onViewChange($event)"
+          [style]="
+            this.view === 'friends-list'
+              ? 'text-decoration:underline'
+              : 'text-decoration:none'
+          "
+        >
+          <a routerLink="/friends-list" id="friends-list">Friends List</a>
+        </li>
+      </ul>
+    </nav>
+    <button mat-flat-button color="primary" (click)="logout()">Logout</button>
+  </div>
+</div>
+<div class="containerr">
+  <router-outlet> </router-outlet>
+</div>
+<div class="footer"></div>

@@ -1,0 +1,27 @@
+<section class="right" style="width: 95%; padding: 10px">
+  <nav>
+    <!-- <li>
+        <a routerLink="/friends-list/my-friends" id="my-friends"
+          >My Friends</a
+        >
+      </li> -->
+
+    <a
+      routerLink="/friends-list"
+      id="users-online"
+      style="text-decoration: none; font-size: 22px; font-weight: 600"
+      >Back to friends list</a
+    >
+  </nav>
+  <hr />
+  <h2>Online Users:</h2>
+  <div class="usersList">
+    <app-user-card
+      *ngFor="let user of users; let index = id"
+      [user]="user"
+      (addFriend)="onAddFriend($event)"
+      [userIndex]="index"
+    >
+    </app-user-card>
+  </div>
+</section>

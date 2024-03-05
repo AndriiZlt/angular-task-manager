@@ -1,0 +1,86 @@
+@import "../../../../assets/scss/mixins";
+@import "../../../../assets/scss/variables";
+@import "../../../../styles.scss";
+
+.userCard {
+  position: relative;
+  background-color: $gray-100;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: 150px;
+  width: 390px;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+  box-shadow: 2px 1px 5px 0px rgba(0, 0, 0, 0.76);
+  -webkit-box-shadow: 2px 1px 5px 0px rgba(0, 0, 0, 0.76);
+  -moz-box-shadow: 2px 1px 5px 0px rgba(0, 0, 0, 0.76);
+  margin-bottom: 15px;
+  > * {
+    margin-right: 12px;
+  }
+
+  p {
+    line-height: 48px;
+    margin-bottom: 0;
+  }
+
+  img {
+    width: 130px;
+    border-radius: 5px;
+  }
+
+  .genderImg {
+    position: absolute;
+    right: 10px;
+    bottom: 16px;
+    height: 30px;
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .addFriendIcon {
+    position: absolute;
+    right: 3px;
+    top: 9px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    img {
+      height: 100%;
+      width: 100%;
+    }
+    :active {
+      transform: translateY(1px);
+    }
+  }
+  .userDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 170px;
+    height: 60px;
+    font-weight: 500;
+  }
+  .nameAge {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 22px;
+    height: 35px;
+    line-height: 30px;
+    > *:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+  .userCountry {
+    font-size: 18px;
+    height: 35px;
+    line-height: 30px;
+  }
+}

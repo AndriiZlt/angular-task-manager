@@ -9,12 +9,12 @@ import {
 import { Task } from 'src/app/app.component';
 
 @Component({
-  selector: 'app-task-view',
-  templateUrl: './task-view.component.html',
-  styleUrls: ['./task-view.component.scss'],
+  selector: 'app-details',
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskViewComponent implements OnInit {
+export class DetailsComponent implements OnInit {
   constructor() {}
   @Input() tasks: Task[];
   @Input() index: number;

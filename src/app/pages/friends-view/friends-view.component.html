@@ -1,0 +1,80 @@
+<div class="friendsViewContainer">
+  <div
+    class="col-md-10"
+    style="
+      width: 95%;
+      height: fit-content;
+      min-height: 1000px;
+      overflow: hidden;
+      background-color: rgb(230, 240, 240);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 14px;
+    "
+  >
+    <nav>
+      <a
+        routerLink="people"
+        id="users-online"
+        style="text-decoration: none; font-size: 22px; font-weight: 600"
+        >Click to see online users</a
+      >
+    </nav>
+    <hr />
+    <form class="example-form">
+      <mat-form-field class="example-full-width" style="width: 220px">
+        <mat-label>Type to filter..</mat-label>
+        <input
+          class="message"
+          matInput
+          #message
+          maxlength="20"
+          [(ngModel)]="inputValue"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="onFilterChange()"
+        />
+
+        <mat-hint align="end">{{ message.value.length }} / 20</mat-hint>
+      </mat-form-field>
+      <!-- <button
+        (click)="addTask()"
+        class="add-btn"
+        [disabled]="!inputValue"
+        [ngClass]="{ disabledBtn: !inputValue }"
+      >
+        Add task
+      </button> -->
+
+      <button (click)="clearFilter()" class="add-btn">Clear</button>
+    </form>
+
+    <h2>Friends List:</h2>
+    <div class="friendsList">
+      <div
+        class="noUserText"
+        *ngIf="this.friends.length === 0"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 300px;
+        "
+      >
+        <h2 style="width: 400px">
+          You don't have any friends yet! Click on the link above to see online
+          users.
+        </h2>
+      </div>
+
+      <app-friend-card
+        *ngFor="let friend of friends | pipe2 : inputValue; let index = id"
+        [friend]="friend"
+        (removeFriend)="onRemoveFriend($event)"
+        [friendIndex]="index"
+      >
+      </app-friend-card>
+    </div>
+  </div>
+</div>

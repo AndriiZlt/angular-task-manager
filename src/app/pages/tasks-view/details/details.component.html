@@ -1,15 +1,31 @@
 <div class="container">
   <div class="panel">
-    <h2 class="title">
-      Detailed view of task #{{ tasks.indexOf(tasks[index]) + 1 }}
+    <h2 class="title" style="margin-bottom: 30px">
+      Detailed view of task
+      {{ index === -1 ? "" : index + 1 }}
     </h2>
 
     <!-- <input [(ngModel)]="task.description" /> -->
     <h2 *ngIf="index < 0">No task</h2>
     <div *ngIf="index > -1">
-      <textarea class="description">{{
-        this.tasks[index].description
-      }}</textarea>
+      <div
+        style="
+          background-color: white;
+          border-radius: 10px;
+          padding: 6px;
+          margin-bottom: 50px;
+          margin-top: 40px;
+        "
+      >
+        <p
+          class="description"
+          maxlength="80"
+          style="width: 360px; height: 90px"
+        >
+          {{ this.tasks[index].description }}
+        </p>
+      </div>
+
       <div class="checkbox">
         <h3>Check if done:</h3>
         <mat-checkbox
@@ -28,8 +44,8 @@
           color="warn"
           style="
             font-size: 20px;
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;

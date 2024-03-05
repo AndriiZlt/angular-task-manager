@@ -6,7 +6,6 @@ import { Task } from '../app.component';
 })
 export class FilterTasksformPipe implements PipeTransform {
   transform(allTasks: Task[], filter: string) {
-    console.log('pipe', filter);
     switch (filter) {
       case 'all':
         return allTasks;

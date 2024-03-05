@@ -3,6 +3,7 @@
 body {
   font-family: Roboto, Arial, sans-serif;
   margin: 0;
+  box-sizing: border-box;
 }
 .basic-container {
   padding: 30px;
@@ -14,7 +15,7 @@ body {
 }
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";

@@ -1,7 +1,7 @@
 <div class="card">
   <mat-card
     style="
-      width: 600px;
+      width: 585px;
       height: 25px;
       display: flex;
       align-items: center;
@@ -10,9 +10,7 @@
     "
   >
     <div class="task">
-      <p
-        style="width: 30px; margin: 0; font-size: 18px; align-self: flex-start"
-      >
+      <p>
         {{ taskIndex + 1 }}
       </p>
       <h3 [style.text-decoration]="task.completed ? 'line-through' : 'none'">
@@ -24,6 +22,7 @@
         #checkbox
         [checked]="task.completed"
         (change)="this.onTaskCheckClick.emit(this.taskIndex)"
+        style="width: 24px; padding: 0; margin: 0"
       ></mat-checkbox>
     </div>
   </mat-card>
@@ -32,12 +31,13 @@
     color="warn"
     style="
       font-size: 20px;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       border: violet;
+      margin-left: 10px;
     "
     (click)="this.onTaskDelete.emit(this.taskIndex)"
   >

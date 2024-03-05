@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="col-md-7" style="min-width: 745px">
+    <div class="mat-app-background basic-container">
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>New task..</mat-label>
+          <input
+            class="message"
+            matInput
+            #message
+            maxlength="80"
+            [(ngModel)]="inputValue"
+            [ngModelOptions]="{ standalone: true }"
+          />
+
+          <mat-hint align="end">{{ message.value.length }} / 80</mat-hint>
+        </mat-form-field>
+        <button
+          (click)="addTask()"
+          class="add-btn"
+          [disabled]="!inputValue"
+          [ngClass]="{ disabledBtn: !inputValue }"
+        >
+          Add task
+        </button>
+
+        <button (click)="clearInput()" class="add-btn">Clear</button>
+      </form>
+      <hr />
+      <mat-button-toggle-group
+        name="fontStyle"
+        aria-label="Font Style"
+        (change)="onFilterChange($event)"
+      >
+        <mat-button-toggle value="all">All tasks</mat-button-toggle>
+        <mat-button-toggle value="unfinished"
+          >Unfinished tasks</mat-button-toggle
+        >
+        <mat-button-toggle value="completed">Completed tasks</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div class="tasks">
+      <app-task
+        *ngFor="let task of tasks | filter : filter; let index = id"
+        [task]="task"
+        [taskIndex]="tasks.indexOf(task)"
+        (onTaskDelete)="onTaskDelete($event)"
+        (onTaskCheckClick)="onTaskCheckClick($event)"
+        (onDetailsClick)="onDetailsClick($event)"
+      ></app-task>
+    </div>
+  </div>
+  <hr />
+  <div class="col-md-5" style="background-color: azure; margin-left: 20px">
+    <app-details
+      [tasks]="tasks"
+      [index]="detailedViewIndex"
+      (onTaskDelete)="onTaskDelete($event)"
+      (onTaskCheckClick)="onTaskCheckClick($event)"
+    ></app-details>
+  </div>
+</div>
