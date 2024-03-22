@@ -1,9 +1,18 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
 body {
-  font-family: Roboto, Arial, sans-serif;
+  font-weight: 500;
+  font-style: normal;
   margin: 0;
   box-sizing: border-box;
+  background: linear-gradient(90deg, #c5d6f4, #abcfd1);
 }
 .basic-container {
   padding: 30px;
@@ -13,9 +22,6 @@ body {
   float: right;
   margin: 8px;
 }
-
-/* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";
 
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";

@@ -1,10 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-
-export interface Task {
-  id: number;
-  description: string;
-  completed: boolean;
-}
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',

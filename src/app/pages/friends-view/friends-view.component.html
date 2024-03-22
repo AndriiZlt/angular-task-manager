@@ -2,20 +2,22 @@
   <div
     class="col-md-10"
     style="
-      width: 95%;
+      width: 100%;
       height: fit-content;
       min-height: 1000px;
       overflow: hidden;
-      background-color: rgb(230, 240, 240);
+      background-color: rgb(235, 242, 250);
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      padding: 14px;
+      padding: 30px;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
     "
   >
     <nav>
       <a
-        routerLink="people"
+        routerLink="users"
         id="users-online"
         style="text-decoration: none; font-size: 22px; font-weight: 600"
         >Click to see online users</a
@@ -37,14 +39,6 @@
 
         <mat-hint align="end">{{ message.value.length }} / 20</mat-hint>
       </mat-form-field>
-      <!-- <button
-        (click)="addTask()"
-        class="add-btn"
-        [disabled]="!inputValue"
-        [ngClass]="{ disabledBtn: !inputValue }"
-      >
-        Add task
-      </button> -->
 
       <button (click)="clearFilter()" class="add-btn">Clear</button>
     </form>
@@ -63,8 +57,9 @@
         "
       >
         <h2 style="width: 400px">
-          You don't have any friends yet! Click on the link above to see online
-          users.
+          You don't have any friends yet! <br />
+          Click here <br />
+          <span><a routerLink="users">to see online users.</a></span>
         </h2>
       </div>
 

@@ -1,0 +1,97 @@
+<div class="container">
+  <div
+    class="col-md-7"
+    style="
+      width: 100%;
+      height: fit-content;
+      min-height: 1000px;
+      overflow: hidden;
+      background-color: rgb(235, 240, 248);
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 30px;
+    "
+  >
+    <div class="mat-app-background basic-container">
+      <form class="example-form">
+        <mat-form-field class="example-full-width" style="margin-bottom: 20px">
+          <mat-label>Title...</mat-label>
+          <input
+            class="message"
+            matInput
+            #message1
+            maxlength="43"
+            [(ngModel)]="title"
+            [ngModelOptions]="{ standalone: true }"
+            style="font-size: 20px; height: 40px; font-weight: 600"
+            (ngModelChange)="onChange('title', $event)"
+          />
+
+          <mat-hint align="end">{{ message1.value.length }} / 43</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Description...</mat-label>
+          <textarea
+            style="
+              font-size: 20px;
+              height: 95px;
+              margin-bottom: 0;
+              font-weight: 600;
+            "
+            class="message"
+            matInput
+            #message2
+            maxlength="165"
+            [(ngModel)]="description"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="onChange('description', $event)"
+          ></textarea>
+
+          <mat-hint align="end">{{ message2.value.length }} / 165</mat-hint>
+        </mat-form-field>
+
+        <div class="buttons">
+          <button
+            class="add-btn"
+            [disabled]="isDisabled"
+            [style]="
+              isDisabled
+                ? 'background:#545b77;color:grey;'
+                : 'background:#58AD91'
+            "
+            (click)="addTask()"
+          >
+            Add
+          </button>
+          <button (click)="clearInput()" class="add-btn">Clear</button>
+        </div>
+      </form>
+      <hr />
+      <mat-button-toggle-group
+        name="fontStyle"
+        aria-label="Font Style"
+        (change)="onFilterChange($event)"
+      >
+        <mat-button-toggle value="all">All tasks</mat-button-toggle>
+        <mat-button-toggle value="unfinished"
+          >Unfinished tasks</mat-button-toggle
+        >
+        <mat-button-toggle value="completed">Completed tasks</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <div class="tasks">
+      <div *ngIf="tasks.length === 0"><h2>No tasks</h2></div>
+      <app-task
+        *ngFor="let task of tasks | filter : filter; let index = id"
+        [task]="task"
+        [taskIndex]="tasks.indexOf(task)"
+        (onTaskDelete)="onTaskDelete($event)"
+        (onDetailsClick)="onDetailsClick($event)"
+      ></app-task>
+    </div>
+  </div>
+</div>

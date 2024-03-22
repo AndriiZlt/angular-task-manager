@@ -1,30 +1,41 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
-import { TasksViewComponent } from './pages/tasks-view/tasks-view.component';
-import { FriendsViewComponent } from './pages/friends-view/friends-view.component';
-import { PeopleComponent } from './pages/friends-view/people/people.component';
+import { MyAppComponent } from './pages/my-app.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: 'login', component: LoginComponent },
   {
-    path: 'task-manager',
-    component: TasksViewComponent,
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/login/login.module').then((module) => module.LoginModule),
     canActivate: [AuthGuard],
   },
   {
-    path: 'friends-list',
-    component: FriendsViewComponent,
+    path: 'home',
+    component: MyAppComponent,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'task-manager',
+        loadChildren: () =>
+          import('./pages/tasks-view/task-manager.module').then(
+            (module) => module.TaskManagerModule
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'friends-list',
+        loadChildren: () =>
+          import('./pages/friends-view/friends-view.module').then(
+            (module) => module.FriendsViewModule
+          ),
+        canActivate: [AuthGuard],
+      },
+    ],
   },
-  {
-    path: 'friends-list/people',
-    component: PeopleComponent,
-    canActivate: [AuthGuard],
-  },
-  { path: '**', redirectTo: 'home' },
+
+  { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({

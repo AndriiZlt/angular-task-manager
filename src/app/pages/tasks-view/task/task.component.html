@@ -1,7 +1,7 @@
 <div class="card">
   <mat-card
     style="
-      width: 585px;
+      width: 730px;
       height: 25px;
       display: flex;
       align-items: center;
@@ -10,23 +10,27 @@
     "
   >
     <div class="task">
-      <p>
+      <p style="margin-right: 5px">
         {{ taskIndex + 1 }}
       </p>
-      <h3 [style.text-decoration]="task.completed ? 'line-through' : 'none'">
-        {{ task.description }}
-      </h3>
+      <div class="text">
+        <h3 id="titleH3"><span>TITLE:</span>{{ task.title }}</h3>
+        <h3 [style.color]="task.completed ? 'grey' : 'black'">
+          <span>DESCRIPTION:</span>{{ task.description }}
+        </h3>
+      </div>
+
       <mat-checkbox
         class="example-margin"
         color="primary"
         #checkbox
         [checked]="task.completed"
-        (change)="this.onTaskCheckClick.emit(this.taskIndex)"
+        (change)="onCheckClick(this.taskIndex)"
         style="width: 24px; padding: 0; margin: 0"
       ></mat-checkbox>
     </div>
   </mat-card>
-  <button
+  <!-- <button
     mat-fab
     color="warn"
     style="
@@ -42,6 +46,61 @@
     (click)="this.onTaskDelete.emit(this.taskIndex)"
   >
     <mat-icon>delete</mat-icon>
+  </button> -->
+
+  <button class="cta" (click)="onCardClick(this.taskIndex)">
+    <span class="hover-underline-animation"> Details </span>
+    <!-- <svg
+      id="arrow-horizontal"
+      xmlns="http://www.w3.org/2000/svg"
+      width="30"
+      height="10"
+      viewBox="0 0 46 16"
+    >
+      <path
+        id="Path_10"
+        data-name="Path 10"
+        d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
+        transform="translate(30)"
+      ></path>
+    </svg> -->
   </button>
-  <button (click)="onCardClick(this.taskIndex)" class="details">details</button>
+
+  <button class="bin-button" (click)="this.onTaskDelete.emit(this.taskIndex)">
+    <svg
+      class="bin-top"
+      viewBox="0 0 39 7"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
+      <line
+        x1="12"
+        y1="1.5"
+        x2="26.0357"
+        y2="1.5"
+        stroke="white"
+        stroke-width="3"
+      ></line>
+    </svg>
+    <svg
+      class="bin-bottom"
+      viewBox="0 0 33 39"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask id="path-1-inside-1_8_19" fill="white">
+        <path
+          d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+        ></path>
+      </mask>
+      <path
+        d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+        fill="white"
+        mask="url(#path-1-inside-1_8_19)"
+      ></path>
+      <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+      <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+    </svg>
+  </button>
 </div>

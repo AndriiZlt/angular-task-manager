@@ -29,7 +29,7 @@ export interface User {
   selector: 'app-friends-view',
   templateUrl: './friends-view.component.html',
   styleUrls: ['./friends-view.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FriendsViewComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
@@ -44,7 +44,6 @@ export class FriendsViewComponent implements OnInit {
       friendsFromLocalStorage != 'undefined'
     ) {
       this.friends = JSON.parse(friendsFromLocalStorage);
-      // console.log('Friends', this.friends);
     }
 
     let friendsFilterFromLocalStorage =
@@ -55,7 +54,6 @@ export class FriendsViewComponent implements OnInit {
       friendsFilterFromLocalStorage != 'undefined'
     ) {
       this.inputValue = friendsFilterFromLocalStorage;
-      // console.log('Friends', this.friends);
     }
   }
 
@@ -74,17 +72,17 @@ export class FriendsViewComponent implements OnInit {
     this.resetPage();
   }
 
-  onFilterChange() {
+  onFilterChange(): void {
     localStorage.setItem('friendsListFilter', this.inputValue);
     // console.log('filter changed', this.inputValue);
   }
 
-  clearFilter() {
+  clearFilter(): void {
     this.inputValue = '';
     localStorage.setItem('friendsListFilter', '');
   }
 
-  resetPage() {
+  resetPage(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['./'], {

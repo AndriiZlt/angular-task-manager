@@ -1,0 +1,73 @@
+@import "../../../assets/scss/mixins";
+@import "../../../assets/scss/variables";
+@import "../../../styles.scss";
+
+.ng-tns-c134-0.ng-star-inserted {
+  font-size: 20px;
+}
+
+.container {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  .basic-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .ng-tns-c134-1 {
+    height: 0px;
+    margin-bottom: 20px;
+  }
+
+  .mat-form-field-type-mat-input {
+    height: 90px;
+  }
+
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .example-full-width {
+    width: 100%;
+  }
+
+  .add-btn {
+    @include btn;
+    background-color: $cyan-600;
+    color: $gray-200;
+    font-weight: 600;
+    width: 130px;
+  }
+
+  .disabledBtn {
+    background-color: $gray-500;
+  }
+
+  .tasks {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 1300px) {
+    flex-direction: column;
+  }
+
+  .message ::first-letter {
+    text-transform: uppercase;
+  }
+}

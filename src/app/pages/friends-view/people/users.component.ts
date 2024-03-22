@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { User } from '../friends-view.component';
 
 @Component({
-  selector: 'app-people',
-  templateUrl: './people.component.html',
-  styleUrls: ['./people.component.scss'],
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PeopleComponent implements OnInit {
+export class UsersComponent implements OnInit {
   constructor() {}
   friends: User[] = [];
   users: User[] = [];
@@ -26,8 +26,7 @@ export class PeopleComponent implements OnInit {
     this.fetchUsers();
   }
 
-  onAddFriend(userId: string) {
-    console.log(userId);
+  onAddFriend(userId: string): void {
     let newUser: User;
 
     if (!this.friends.filter((friend) => friend.id === userId)[0]) {
@@ -45,7 +44,7 @@ export class PeopleComponent implements OnInit {
     // console.log(this.friends);
   }
 
-  fetchUsers() {
+  fetchUsers(): void {
     let c: User[] = [];
     fetch(`https://randomuser.me/api/?results=45`)
       .then((results) => {
@@ -77,9 +76,9 @@ export class PeopleComponent implements OnInit {
               country,
             })
         );
-        console.log('C', c);
+        // console.log('C', c);
         this.users = [...c];
-        console.log('fetched users ', this.users);
+        console.log('fetched users:', this.users);
       });
   }
 }

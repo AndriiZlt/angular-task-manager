@@ -6,9 +6,15 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Task } from '../../../app.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TaskManagerService } from 'src/app/services/task-manager.service';
 
+export interface Task {
+  id: number;
+  title: string;
+  description: string;
+  completed: boolean;
+}
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -16,18 +22,24 @@ import { ActivatedRoute, Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private taskManagerService: TaskManagerService
+  ) {}
 
   @Input() task: Task;
   @Input() taskIndex: number;
   @Output() onTaskDelete: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onTaskCheckClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDetailsClick: EventEmitter<any> = new EventEmitter<any>();
-  changed: boolean = false;
 
   ngOnInit(): void {}
 
-  onCardClick(index) {
+  onCheckClick(index: number): void {
+    this.taskManagerService.triggerEvent({ action: 'check', index });
+  }
+
+  onCardClick(index: number): void {
     this.onDetailsClick.emit(index);
   }
 }

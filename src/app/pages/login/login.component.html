@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="screen">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-field">
+        <input
+          type="text"
+          placeholder="Name"
+          required
+          formControlName="name"
+          id="nameInput"
+          [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+          class="form-control"
+          (ngModelChange)="onFormChange()"
+        />
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+          <div *ngIf="f.name.errors.required">Name is required</div>
+          <div *ngIf="f.name.errors.minlength">
+            Name must be at least 3 characters
+          </div>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <input
+          type="email"
+          placeholder="Email"
+          required
+          formControlName="email"
+          [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+          class="form-control"
+          (ngModelChange)="onFormChange()"
+        />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors.required">Email is required</div>
+          <div *ngIf="f.email.errors.email">Must be a valid email address</div>
+        </div>
+      </div>
+
+      <div class="form-field" id="passwordDiv">
+        <input
+          [type]="inputType"
+          placeholder="Password"
+          id="password"
+          required
+          formControlName="password"
+          [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+          class="form-control"
+          (ngModelChange)="onFormChange()"
+        />
+        <div
+          class="eye"
+          (click)="passwordShowHide()"
+          [style]="submitted && f.email.errors ? 'margin-right:20px' : ''"
+        >
+          <img
+            [src]="
+              inputType === 'password'
+                ? '../../../assets/eye.svg'
+                : '../../../assets/eye-green.svg'
+            "
+            alt="eye"
+          />
+        </div>
+        <div class="invalid" *ngIf="submitted && f.password.errors">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+          <div
+            *ngIf="
+              (f.password.errors.pattern || !f.password.errors.minLength) &&
+              !f.password.errors.required
+            "
+          >
+            At list 8 characters, 1 number and upper case letter, and 1 special
+            character
+          </div>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <button
+          class="loginBtn"
+          [disabled]="isDisabled"
+          [style]="isDisabled ? 'background-color:grey' : ''"
+        >
+          <span>Login</span>
+          <svg
+            width="34"
+            height="34"
+            viewBox="0 0 74 74"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="37"
+              cy="37"
+              r="35.5"
+              stroke="black"
+              stroke-width="3"
+            ></circle>
+            <path
+              d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z"
+              fill="black"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
