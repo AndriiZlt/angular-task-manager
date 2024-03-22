@@ -15,7 +15,7 @@
       </p>
       <div class="text">
         <h3 id="titleH3"><span>TITLE:</span>{{ task.title }}</h3>
-        <h3 [style.color]="task.completed ? 'grey' : 'black'">
+        <h3 [style.color]="task.status === 'completed' ? 'grey' : 'black'">
           <span>DESCRIPTION:</span>{{ task.description }}
         </h3>
       </div>
@@ -24,7 +24,7 @@
         class="example-margin"
         color="primary"
         #checkbox
-        [checked]="task.completed"
+        [checked]="task.status === 'completed' ? true : false"
         (change)="onCheckClick(this.taskIndex)"
         style="width: 24px; padding: 0; margin: 0"
       ></mat-checkbox>

@@ -16,9 +16,9 @@ export class TasksPipe implements PipeTransform {
       case TaskFilterValue.all:
         return allTasks;
       case TaskFilterValue.unfinished:
-        return allTasks.filter((task) => task.completed === false);
+        return allTasks.filter((task) => task.status === 'undone');
       case TaskFilterValue.completed:
-        return allTasks.filter((task) => task.completed === true);
+        return allTasks.filter((task) => task.status === 'completed');
 
       default:
         return allTasks;

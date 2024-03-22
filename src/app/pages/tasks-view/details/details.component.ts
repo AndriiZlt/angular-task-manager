@@ -39,8 +39,15 @@ export class DetailsComponent implements OnInit {
 
   checkHandler(index: number): void {
     this.taskManagerService.triggerEvent({ action: 'check', index });
-    this.task.completed = !this.task.completed;
-    this.isChecked = this.task.completed;
+
+    if (this.task.status === 'completed') {
+      this.task.status = 'undone';
+      this.isChecked = false;
+    } else {
+      this.task.status = 'completed';
+      this.isChecked = true;
+    }
+
     this.isDisabled = false;
   }
 
@@ -69,8 +76,12 @@ export class DetailsComponent implements OnInit {
       this.task = JSON.parse(tasksFromLC).filter(
         (task) => task.id === this.id
       )[0];
-      // console.log('task=>', this.task);
-      this.isChecked = this.task.completed;
+
+      if (this.task.status === 'completed') {
+        this.isChecked = true;
+      } else {
+        this.isChecked = false;
+      }
     }
   }
 

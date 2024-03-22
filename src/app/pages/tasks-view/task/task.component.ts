@@ -13,7 +13,7 @@ export interface Task {
   id: number;
   title: string;
   description: string;
-  completed: boolean;
+  status: 'completed' | 'undone';
 }
 @Component({
   selector: 'app-task',

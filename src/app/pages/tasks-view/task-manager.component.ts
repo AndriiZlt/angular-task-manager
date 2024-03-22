@@ -77,7 +77,7 @@ export class TaskManagerComponent implements OnInit {
         id: Date.now(),
         title: this.capitalize(this.title),
         description: this.capitalize(this.description),
-        completed: false,
+        status: 'undone',
       });
       this.description = '';
       this.title = `New task #${this.tasks.length + 1}`;
@@ -105,10 +105,16 @@ export class TaskManagerComponent implements OnInit {
   }
 
   onCheckClick(index): void {
-    if (index != undefined && this.tasks.length > 0) {
-      this.tasks[index].completed = !this.tasks[index].completed;
+    if (this.tasks[0]) {
+      if (index != undefined && this.tasks.length > 0) {
+        if (this.tasks[index].status === 'completed') {
+          this.tasks[index].status = 'undone';
+        } else {
+          this.tasks[index].status = 'completed';
+        }
 
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+      }
     }
   }
 
