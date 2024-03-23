@@ -33,9 +33,7 @@ export class UsersComponent implements OnInit {
       newUser = this.users.filter((user) => user.id === userId)[0];
 
       this.friends.push(newUser);
-      alert(
-        `User ${newUser.name.first} ${newUser.name.last} was added to your friend list!`
-      );
+      alert(`User ${newUser.name} was added to your friend list!`);
       localStorage.setItem('friends', JSON.stringify(this.friends));
     } else {
       alert(`User is already in your friend list!`);
@@ -46,38 +44,36 @@ export class UsersComponent implements OnInit {
 
   fetchUsers(): void {
     let c: User[] = [];
-    fetch(`https://randomuser.me/api/?results=45`)
+    fetch(`https://dummyjson.com/users`)
       .then((results) => {
         return results.json();
       })
       .then((data) => {
-        // console.log(data.results);
-        data.results.map(
+        // console.log(typeof data.users[0].age);
+        data.users.map(
           ({
-            cell,
-            dob,
             email,
             gender,
-            id: { value },
-            name,
-            picture,
-            location: { city, country },
-            login: { uuid },
+            id,
+            firstName,
+            lastName,
+            image,
+            address: { city },
+            age,
           }) =>
             c.push({
-              id: uuid,
-              cell,
-              dob,
+              id,
+              age,
               email,
               gender,
-              name,
-              picture,
+              name: { first: firstName, last: lastName },
+              picture: { large: image, medium: image },
               city,
-              country,
             })
         );
         this.users = [...c];
         // console.log('fetched users:', this.users);
-      });
+      })
+      .catch((e) => console.log('Error:', e));
   }
 }
