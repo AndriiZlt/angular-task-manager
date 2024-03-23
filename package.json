@@ -26,6 +26,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
     "angular-in-memory-web-api": "~0.11.0",
     "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
     "moment": "^2.26.0",
     "roboto-fontface": "^0.10.0",
     "rxjs": "~6.5.4",
