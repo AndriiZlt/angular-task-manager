@@ -25,11 +25,14 @@ export interface User {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FriendsViewComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {}
   friends: User[] = [];
   inputValue: string = '';
   isLoading: boolean = true;
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
   ngOnInit(): void {
+    localStorage.setItem('lastUrl', 'friends-list');
     let friendsFromLocalStorage = localStorage.getItem('friends');
     if (
       friendsFromLocalStorage != '' &&

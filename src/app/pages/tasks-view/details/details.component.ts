@@ -35,6 +35,7 @@ export class DetailsComponent implements OnInit {
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.params.id);
     this.getFromLocalStorage();
+    localStorage.setItem('lastUrl', `task-manager/task/${this.id}`);
   }
 
   checkHandler(index: number): void {

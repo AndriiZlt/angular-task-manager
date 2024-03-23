@@ -21,6 +21,7 @@ export class TaskManagerComponent implements OnInit {
   title: string = '';
   filter: TaskFilterValue = TaskFilterValue.all;
   isDisabled: boolean = true;
+  // lastUrl: string;
 
   constructor(
     private router: Router,
@@ -47,6 +48,7 @@ export class TaskManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // localStorage.setItem('lastUrl', 'task-manager');
     this.getDataFromLocalStorage();
   }
 
@@ -89,7 +91,7 @@ export class TaskManagerComponent implements OnInit {
     }
   }
 
-  editTask(params: any) {
+  editTask(params: any): void {
     if (this.tasks[0]) {
       this.tasks[params.index].title = params.title;
       this.tasks[params.index].description = params.description;
@@ -154,7 +156,6 @@ export class TaskManagerComponent implements OnInit {
     }
 
     let dataFromStrage = localStorage.getItem('tasks');
-
     if (
       dataFromStrage !== '' &&
       dataFromStrage !== null &&
@@ -162,6 +163,11 @@ export class TaskManagerComponent implements OnInit {
     ) {
       this.tasks = [...JSON.parse(dataFromStrage)];
     }
+
+    // let lastUrl = localStorage.getItem('lastUrl');
+    // if (lastUrl) {
+    //   this.lastUrl = lastUrl;
+    // }
 
     this.title = `New task #${this.tasks.length + 1}`;
   }

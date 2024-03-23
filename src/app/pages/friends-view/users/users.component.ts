@@ -15,6 +15,7 @@ export class UsersComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    localStorage.setItem('lastUrl', 'friends-list/users');
     let friendsFromLocalStorage = localStorage.getItem('friends');
     if (
       friendsFromLocalStorage != '' &&

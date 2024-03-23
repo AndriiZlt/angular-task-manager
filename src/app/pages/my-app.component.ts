@@ -12,6 +12,7 @@ export class MyAppComponent implements OnInit {
   view: string = 'task-manager';
   token: string;
   loginName: string;
+  lastUrl: string;
 
   constructor(
     private router: Router,
@@ -28,7 +29,8 @@ export class MyAppComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDataFromLocalStorage();
-    this.router.navigate([`home/${this.view}`]);
+    console.log(`home/${this.lastUrl}`);
+    this.router.navigate([`home/${this.lastUrl}`]);
   }
 
   getDataFromLocalStorage(): void {
@@ -52,6 +54,11 @@ export class MyAppComponent implements OnInit {
     if (loginName) {
       this.loginName = loginName;
     }
+
+    let lastUrl = localStorage.getItem('lastUrl');
+    if (lastUrl) {
+      this.lastUrl = lastUrl;
+    }
   }
 
   onViewChange(event): void {
@@ -60,9 +67,11 @@ export class MyAppComponent implements OnInit {
     switch (this.view) {
       case 'task-manager':
         this.router.navigate(['home/task-manager']);
+        localStorage.setItem('lastUrl', 'home/task-manager');
         break;
       case 'friends-list':
         this.router.navigate(['home/friends-list']);
+        localStorage.setItem('lastUrl', 'home/friends-list');
     }
   }
 
