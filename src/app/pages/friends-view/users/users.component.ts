@@ -46,7 +46,7 @@ export class UsersComponent implements OnInit {
 
   fetchUsers(): void {
     let c: User[] = [];
-    fetch(`https://randomuser.me/api/?results=45`)
+    fetch(``)
       .then((results) => {
         return results.json();
       })
