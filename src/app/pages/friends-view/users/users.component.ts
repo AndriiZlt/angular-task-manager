@@ -76,9 +76,8 @@ export class UsersComponent implements OnInit {
               country,
             })
         );
-        // console.log('C', c);
         this.users = [...c];
-        console.log('fetched users:', this.users);
+        // console.log('fetched users:', this.users);
       });
   }
 }

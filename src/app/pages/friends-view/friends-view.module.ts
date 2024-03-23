@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FriendsListRoutingModule } from './friends-view-routing.module';
 import { FriendCardComponent } from './friend-card/friend-card.component';
-import { UsersComponent } from './people/users.component';
+import { UsersComponent } from './users/users.component';
 import { FriendsViewComponent } from './friends-view.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import { MaterialModule } from 'src/app/material-module';

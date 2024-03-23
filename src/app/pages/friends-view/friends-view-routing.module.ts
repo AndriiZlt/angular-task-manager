@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FriendsViewComponent } from './friends-view.component';
-import { UsersComponent } from './people/users.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {

@@ -61,5 +61,6 @@
     "tslint": "~6.1.0",
     "typescript": "~3.8.3",
     "utf-8-validate": "^5.0.10"
-  }
+  },
+  "proxy": "https://randomuser.me"
 }
