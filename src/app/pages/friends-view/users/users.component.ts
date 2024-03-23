@@ -8,9 +8,12 @@ import { User } from '../friends-view.component';
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent implements OnInit {
-  constructor() {}
   friends: User[] = [];
   users: User[] = [];
+  isLoading: boolean = true;
+
+  constructor() {}
+
   ngOnInit(): void {
     let friendsFromLocalStorage = localStorage.getItem('friends');
     if (
@@ -21,7 +24,6 @@ export class UsersComponent implements OnInit {
       let c: User[] = [...this.friends];
       c = JSON.parse(friendsFromLocalStorage);
       this.friends = c;
-      console.log('Friends', this.friends);
     }
     this.fetchUsers();
   }
@@ -72,7 +74,7 @@ export class UsersComponent implements OnInit {
             })
         );
         this.users = [...c];
-        // console.log('fetched users:', this.users);
+        this.isLoading = false;
       })
       .catch((e) => console.log('Error:', e));
   }
