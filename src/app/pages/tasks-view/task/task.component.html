@@ -30,49 +30,12 @@
       ></mat-checkbox>
     </div>
   </mat-card>
-  <!-- <button
-    mat-fab
-    color="warn"
-    style="
-      font-size: 20px;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: violet;
-      margin-left: 10px;
-    "
-    (click)="this.onTaskDelete.emit(this.taskIndex)"
-  >
-    <mat-icon>delete</mat-icon>
-  </button> -->
-
   <button class="cta" (click)="onCardClick(this.taskIndex)">
     <span class="hover-underline-animation"> Details </span>
-    <!-- <svg
-      id="arrow-horizontal"
-      xmlns="http://www.w3.org/2000/svg"
-      width="30"
-      height="10"
-      viewBox="0 0 46 16"
-    >
-      <path
-        id="Path_10"
-        data-name="Path 10"
-        d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-        transform="translate(30)"
-      ></path>
-    </svg> -->
   </button>
 
   <button class="bin-button" (click)="this.onTaskDelete.emit(this.taskIndex)">
-    <svg
-      class="bin-top"
-      viewBox="0 0 39 7"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg class="bin-top" viewBox="0 0 39 7" fill="none">
       <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
       <line
         x1="12"
@@ -83,12 +46,7 @@
         stroke-width="3"
       ></line>
     </svg>
-    <svg
-      class="bin-bottom"
-      viewBox="0 0 33 39"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg class="bin-bottom" viewBox="0 0 33 39" fill="none">
       <mask id="path-1-inside-1_8_19" fill="white">
         <path
           d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
