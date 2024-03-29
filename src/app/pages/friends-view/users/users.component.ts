@@ -26,7 +26,6 @@ export class UsersComponent implements OnInit {
       c = JSON.parse(friendsFromLocalStorage);
       this.friends = c;
     }
-    this.fetchUsers();
   }
 
   onAddFriend(userId: string): void {

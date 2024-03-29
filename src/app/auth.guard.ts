@@ -62,6 +62,7 @@ export class AuthGuard implements CanActivate {
       `Session duration = ${Math.floor(mins)} min (max 60 min)`
     );
     if (Math.floor(mins) > 60) {
+      localStorage.clear();
       return false;
     } else {
       return true;
