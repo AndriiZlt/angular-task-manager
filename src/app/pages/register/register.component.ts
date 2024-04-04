@@ -8,13 +8,13 @@ import { JwtAuth } from 'src/app/models/jwtAuth';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+export class RegisterComponent implements OnInit {
+  registerForm: FormGroup;
   submitted: boolean = false;
   valid: boolean = false;
   inputType: string = 'password';
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loginForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       name: [
         null,
         [
@@ -80,28 +80,28 @@ export class LoginComponent implements OnInit {
   }
 
   get f() {
-    return this.loginForm.controls;
+    return this.registerForm.controls;
   }
 
   onSubmit(): void {
     this.submitted = true;
 
-    if (this.loginForm.invalid) {
-      console.log('Invalid input', this.loginForm.errors);
+    if (this.registerForm.invalid) {
+      console.log('Invalid input', this.registerForm.errors);
       return;
     }
     this.valid = true;
-    console.log('SUCCESS =>' + JSON.stringify(this.loginForm.value));
+    console.log('SUCCESS =>' + JSON.stringify(this.registerForm.value));
 
     let capitalized = // Making first letter uppercase
-      this.loginForm.value.name.charAt(0).toUpperCase() +
-      this.loginForm.value.name.slice(1);
+      this.registerForm.value.name.charAt(0).toUpperCase() +
+      this.registerForm.value.name.slice(1);
 
-    this.registerDto.Name = this.capitalize(this.loginForm.value.name);
-    this.registerDto.Surname = this.capitalize(this.loginForm.value.surname);
-    this.registerDto.Username = this.loginForm.value.username;
-    this.registerDto.Email = this.loginForm.value.email;
-    this.registerDto.Password = this.loginForm.value.password;
+    this.registerDto.Name = this.capitalize(this.registerForm.value.name);
+    this.registerDto.Surname = this.capitalize(this.registerForm.value.surname);
+    this.registerDto.Username = this.registerForm.value.username;
+    this.registerDto.Email = this.registerForm.value.email;
+    this.registerDto.Password = this.registerForm.value.password;
 
     this.register(this.registerDto);
 
@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit {
   }
 
   onFormChange(): void {
-    if (this.loginForm.invalid) {
+    if (this.registerForm.invalid) {
       this.isDisabled = true;
     } else {
       this.isDisabled = false;

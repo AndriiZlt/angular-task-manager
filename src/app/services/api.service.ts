@@ -5,12 +5,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiService {
-  readonly rootURL = 'https://localhost:7027/api/v1/User/getusers';
+  readonly rootURL = 'https://localhost:7027/api';
 
   constructor(private http: HttpClient) {}
 
   getUsers() {
-    return this.http.get(this.rootURL);
+    return this.http.get(this.rootURL + '/v1/User/getusers');
   }
 
   authentication() {}

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { ApiService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-my-app',
@@ -27,12 +28,8 @@ export class MyAppComponent implements OnInit {
     this.router.navigate([`home/${this.lastUrl}`]);
 
     this.apiService.getUsers().subscribe((data) => {
-      console.log('data', data);
+      console.log('Users from backend:', data);
     });
-
-    // this.apiService.authentication().subscibe((data) => {
-    //   console.log(data);
-    // });
 
     this.loginService.getLoginData().subscribe((param: any) => {
       if (param !== undefined && param !== '' && param !== null) {

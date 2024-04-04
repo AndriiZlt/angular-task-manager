@@ -12,6 +12,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'register',
+    loadChildren: () =>
+      import('./pages/register/register.module').then(
+        (module) => module.RegisterModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'home',
     component: MyAppComponent,
     canActivate: [AuthGuard],

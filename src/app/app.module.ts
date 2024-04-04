@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { MyAppComponent } from './pages/my-app.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { FriendsViewModule } from './pages/friends-view/friends-view.module';
+// import { RegisterComponent } from './pages/login/register.component';
 
 @NgModule({
   declarations: [AppComponent, MyAppComponent],
