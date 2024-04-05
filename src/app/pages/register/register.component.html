@@ -14,7 +14,7 @@
           class="form-control"
           (ngModelChange)="onFormChange()"
         />
-        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+        <div *ngIf="f.name.touched && f.name.errors" class="invalid-feedback">
           <div *ngIf="f.name.errors.required">Name is required</div>
           <div *ngIf="f.name.errors.minlength">
             Name must be at least 3 characters
@@ -33,7 +33,10 @@
           class="form-control"
           (ngModelChange)="onFormChange()"
         />
-        <div *ngIf="submitted && f.surname.errors" class="invalid-feedback">
+        <div
+          *ngIf="f.surname.touched && f.surname.errors"
+          class="invalid-feedback"
+        >
           <div *ngIf="f.surname.errors.required">Surname is required</div>
           <div *ngIf="f.surname.errors.minlength">
             Name must be at least 3 characters
@@ -52,10 +55,13 @@
           class="form-control"
           (ngModelChange)="onFormChange()"
         />
-        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+        <div
+          *ngIf="f.username.touched && f.username.errors"
+          class="invalid-feedback"
+        >
           <div *ngIf="f.username.errors.required">Username is required</div>
           <div *ngIf="f.username.errors.minlength">
-            Name must be at least 3 characters
+            Name must be at least 5 characters
           </div>
         </div>
       </div>
@@ -70,9 +76,11 @@
           class="form-control"
           (ngModelChange)="onFormChange()"
         />
-        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+        <div *ngIf="f.email.touched && f.email.errors" class="invalid-feedback">
           <div *ngIf="f.email.errors.required">Email is required</div>
-          <div *ngIf="f.email.errors.email">Must be a valid email address</div>
+          <div *ngIf="f.email.errors.pattern">
+            Must be a valid email address
+          </div>
         </div>
       </div>
 
@@ -101,7 +109,7 @@
             alt="eye"
           />
         </div>
-        <div class="invalid" *ngIf="submitted && f.password.errors">
+        <div class="invalid" *ngIf="f.password.touched && f.password.errors">
           <div *ngIf="f.password.errors.required">Password is required</div>
           <div
             *ngIf="
@@ -138,5 +146,8 @@
         </button>
       </div>
     </form>
+    <div class="toLogin" (click)="toLoginPage()">
+      <h3>TO LOGIN FORM</h3>
+    </div>
   </div>
 </div>

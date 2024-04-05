@@ -28,6 +28,8 @@ export class TaskManagerComponent implements OnInit {
     private route: ActivatedRoute,
     private taskManagerService: TaskManagerService
   ) {
+    localStorage.setItem('lastUrl', 'home/task-manager');
+
     this.taskManagerService.getEvent().subscribe((param: any) => {
       if (param !== undefined) {
         switch (param.action) {

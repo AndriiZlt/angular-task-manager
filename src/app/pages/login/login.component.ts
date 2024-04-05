@@ -30,40 +30,18 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private authService: AuthService
-  ) {}
+  ) {
+    localStorage.setItem('lastUrl', 'login');
+  }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      name: [
-        null,
-        [
-          Validators.required,
-          Validators.pattern(/^[A-z0-9]*$/),
-          Validators.minLength(3),
-        ],
-      ],
-      surname: [
-        null,
-        [
-          Validators.required,
-          Validators.pattern(/^[A-z0-9]*$/),
-          Validators.minLength(3),
-        ],
-      ],
       username: [
         null,
         [
           Validators.required,
           Validators.pattern(/^[A-z0-9]*$/),
-          Validators.minLength(3),
-        ],
-      ],
-      email: [
-        null,
-        [
-          Validators.required,
-          Validators.email,
-          Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+          Validators.minLength(5),
         ],
       ],
       password: [
@@ -106,10 +84,10 @@ export class LoginComponent implements OnInit {
     this.register(this.registerDto);
 
     this.loginService.triggerEvent(capitalized);
-    // this.login();
   }
 
   onFormChange(): void {
+    this.submitted = true;
     if (this.loginForm.invalid) {
       this.isDisabled = true;
     } else {
@@ -153,5 +131,9 @@ export class LoginComponent implements OnInit {
 
   capitalize(value: string): string {
     return value.charAt(0).toUpperCase() + value.slice(1);
+  }
+
+  toRegisterPage(): void {
+    this.router.navigate(['/register']);
   }
 }

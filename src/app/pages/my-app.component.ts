@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { ApiService } from '../services/api.service';
-import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-my-app',
@@ -11,7 +10,6 @@ import { AuthService } from '../services/auth.service';
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyAppComponent implements OnInit {
-  view: string = 'task-manager';
   token: string;
   loginName: string;
   lastUrl: string;
@@ -24,8 +22,14 @@ export class MyAppComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDataFromLocalStorage();
-    // console.log(`home/${this.lastUrl}`);
-    this.router.navigate([`home/${this.lastUrl}`]);
+
+    if (this.lastUrl) {
+      console.log(`last url : ${this.lastUrl}`);
+      this.router.navigate([`${this.lastUrl}`]);
+    } else {
+      console.log(`last url is null, redirecting to /task-nmanager`);
+      this.router.navigate([`home/task-manager`]);
+    }
 
     this.apiService.getUsers().subscribe((data) => {
       console.log('Users from backend:', data);
@@ -40,15 +44,6 @@ export class MyAppComponent implements OnInit {
   }
 
   getDataFromLocalStorage(): void {
-    let viewFromLocalStorage = localStorage.getItem('view');
-    if (
-      viewFromLocalStorage !== '' &&
-      viewFromLocalStorage !== null &&
-      viewFromLocalStorage !== 'undefined'
-    ) {
-      this.view = viewFromLocalStorage;
-    }
-
     let token = localStorage.getItem('token');
     if (token) {
       this.token = token;
@@ -68,20 +63,22 @@ export class MyAppComponent implements OnInit {
   }
 
   onViewChange(event): void {
-    this.view = event.target.id;
-    localStorage.setItem('view', this.view);
-    switch (this.view) {
-      case 'task-manager':
+    this.lastUrl = 'home/' + event.target.id;
+    localStorage.setItem('lastUrl', this.lastUrl);
+    switch (this.lastUrl) {
+      case 'home/task-manager':
         this.router.navigate(['home/task-manager']);
-        localStorage.setItem('lastUrl', 'home/task-manager');
         break;
-      case 'friends-list':
+      case 'home/friends-list':
         this.router.navigate(['home/friends-list']);
-        localStorage.setItem('lastUrl', 'home/friends-list');
+        break;
+      default:
+        this.router.navigate(['home/task-manager']);
     }
   }
 
   logout(): void {
+    console.log('Loging out...');
     localStorage.clear();
     this.router.navigate(['login']);
   }

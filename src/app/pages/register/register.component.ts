@@ -30,7 +30,9 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private authService: AuthService
-  ) {}
+  ) {
+    localStorage.setItem('lastUrl', 'register');
+  }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
@@ -55,14 +57,13 @@ export class RegisterComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern(/^[A-z0-9]*$/),
-          Validators.minLength(3),
+          Validators.minLength(5),
         ],
       ],
       email: [
         null,
         [
           Validators.required,
-          Validators.email,
           Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
         ],
       ],
@@ -110,6 +111,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onFormChange(): void {
+    this.submitted = true;
     if (this.registerForm.invalid) {
       this.isDisabled = true;
     } else {
@@ -120,9 +122,10 @@ export class RegisterComponent implements OnInit {
   async register(registerDto: Register) {
     try {
       this.authService.register(registerDto).subscribe((data) => {
-        console.log('Registration data:', data);
+        // console.log('Registration data:', data);
         localStorage.setItem('token', data.token);
-        this.router.navigate(['home']);
+        localStorage.setItem('lastUrl', 'home/task-manager');
+        this.router.navigate(['home/task-manager']);
       });
     } catch (error) {
       console.log('Error:', error.message);
@@ -153,5 +156,9 @@ export class RegisterComponent implements OnInit {
 
   capitalize(value: string): string {
     return value.charAt(0).toUpperCase() + value.slice(1);
+  }
+
+  toLoginPage(): void {
+    this.router.navigate(['login']);
   }
 }

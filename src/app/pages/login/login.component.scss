@@ -25,6 +25,24 @@
     color: #00224d;
   }
 
+  .toRegister {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+      font-size: 16px;
+      color: #d6dac8;
+      cursor: pointer;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    h3:hover {
+      color: #41c9e2;
+    }
+  }
+
   .screen {
     display: flex;
     flex-direction: column;
@@ -32,7 +50,7 @@
     justify-content: center;
     background: #35374b;
     position: relative;
-    height: 600px;
+    height: 400px;
     width: 450px;
     box-shadow: 0px 0px 24px #433f5e;
     padding: 30px 20px;
@@ -62,26 +80,6 @@
   }
 
   form .form-field:nth-child(2)::before {
-    background-image: url("../../../assets/user-icon.png");
-    width: 21px;
-    height: 22px;
-    top: 15px;
-  }
-
-  form .form-field:nth-child(3)::before {
-    background-image: url("../../../assets/user-icon.png");
-    width: 21px;
-    height: 22px;
-    top: 15px;
-  }
-
-  form .form-field:nth-child(4)::before {
-    background-image: url("../../../assets/email.svg");
-    width: 21px;
-    height: 22px;
-    top: 15px;
-  }
-  form .form-field:nth-child(5)::before {
     background-image: url("../../../assets/password.svg");
     width: 21px;
     height: 22px;

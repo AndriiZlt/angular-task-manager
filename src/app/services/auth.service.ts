@@ -24,6 +24,8 @@ export class AuthService {
   }
 
   public login(user: Login): Observable<JwtAuth> {
+    let userStringified = JSON.stringify(user);
+    console.log('user', userStringified);
     return this.http.post<JwtAuth>(
       'http://localhost:7027/' + this.loginUrl,
       user

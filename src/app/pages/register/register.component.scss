@@ -25,6 +25,24 @@
     color: #00224d;
   }
 
+  .toLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+      font-size: 16px;
+      color: #d6dac8;
+      cursor: pointer;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    h3:hover {
+      color: #41c9e2;
+    }
+  }
+
   .screen {
     display: flex;
     flex-direction: column;
@@ -32,7 +50,7 @@
     justify-content: center;
     background: #35374b;
     position: relative;
-    height: 600px;
+    height: 650px;
     width: 450px;
     box-shadow: 0px 0px 24px #433f5e;
     padding: 30px 20px;
@@ -103,7 +121,7 @@
     position: relative;
   }
 
-  .form-field:not(:last-child) {
+  .form-field {
     margin-bottom: 10px;
     height: 80px;
   }
@@ -188,8 +206,5 @@
     img {
       width: 100%;
     }
-  }
-
-  .eye:active {
   }
 }

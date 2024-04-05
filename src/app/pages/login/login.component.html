@@ -2,44 +2,6 @@
   <h2>LOGIN FORM</h2>
   <div class="screen">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <!-- Name -->
-      <div class="form-field">
-        <input
-          type="text"
-          placeholder="Name"
-          required
-          formControlName="name"
-          id="nameInput"
-          [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
-          class="form-control"
-          (ngModelChange)="onFormChange()"
-        />
-        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-          <div *ngIf="f.name.errors.required">Name is required</div>
-          <div *ngIf="f.name.errors.minlength">
-            Name must be at least 3 characters
-          </div>
-        </div>
-      </div>
-      <!-- Surname -->
-      <div class="form-field">
-        <input
-          type="text"
-          placeholder="Surname"
-          required
-          formControlName="surname"
-          id="surNameInput"
-          [ngClass]="{ 'is-invalid': submitted && f.surname.errors }"
-          class="form-control"
-          (ngModelChange)="onFormChange()"
-        />
-        <div *ngIf="submitted && f.surname.errors" class="invalid-feedback">
-          <div *ngIf="f.surname.errors.required">Surname is required</div>
-          <div *ngIf="f.surname.errors.minlength">
-            Name must be at least 3 characters
-          </div>
-        </div>
-      </div>
       <!-- UserName -->
       <div class="form-field">
         <input
@@ -52,27 +14,14 @@
           class="form-control"
           (ngModelChange)="onFormChange()"
         />
-        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+        <div
+          *ngIf="f.username.touched && f.username.errors"
+          class="invalid-feedback"
+        >
           <div *ngIf="f.username.errors.required">Username is required</div>
           <div *ngIf="f.username.errors.minlength">
-            Name must be at least 3 characters
+            Name must be at least 5 characters
           </div>
-        </div>
-      </div>
-
-      <div class="form-field">
-        <input
-          type="email"
-          placeholder="Email"
-          required
-          formControlName="email"
-          [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-          class="form-control"
-          (ngModelChange)="onFormChange()"
-        />
-        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-          <div *ngIf="f.email.errors.required">Email is required</div>
-          <div *ngIf="f.email.errors.email">Must be a valid email address</div>
         </div>
       </div>
 
@@ -83,14 +32,14 @@
           id="password"
           required
           formControlName="password"
-          [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+          [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
           class="form-control"
           (ngModelChange)="onFormChange()"
         />
         <div
           class="eye"
           (click)="passwordShowHide()"
-          [style]="submitted && f.email.errors ? 'margin-right:20px' : ''"
+          [style]="submitted && f.password.errors ? 'margin-right:20px' : ''"
         >
           <img
             [src]="
@@ -101,7 +50,7 @@
             alt="eye"
           />
         </div>
-        <div class="invalid" *ngIf="submitted && f.password.errors">
+        <div class="invalid" *ngIf="f.password.touched && f.password.errors">
           <div *ngIf="f.password.errors.required">Password is required</div>
           <div
             *ngIf="
@@ -136,6 +85,9 @@
             ></path>
           </svg>
         </button>
+      </div>
+      <div class="toRegister" (click)="toRegisterPage()">
+        <h3>TO REGISTER FORM</h3>
       </div>
     </form>
   </div>

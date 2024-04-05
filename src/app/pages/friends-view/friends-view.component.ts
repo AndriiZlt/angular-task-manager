@@ -32,7 +32,7 @@ export class FriendsViewComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    localStorage.setItem('lastUrl', 'friends-list');
+    localStorage.setItem('lastUrl', 'home/friends-list');
     let friendsFromLocalStorage = localStorage.getItem('friends');
     if (
       friendsFromLocalStorage != '' &&

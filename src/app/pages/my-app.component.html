@@ -4,7 +4,7 @@
       <ul class="navUl">
         <li
           [style]="
-            this.view === 'task-manager'
+            this.lastUrl === 'home/task-manager'
               ? 'color:#cbf64b;text-decoration:underline'
               : ''
           "
@@ -15,7 +15,7 @@
         <li
           (click)="onViewChange($event)"
           [style]="
-            this.view === 'friends-list'
+            this.lastUrl === 'home/friends-list'
               ? 'color:#cbf64b;text-decoration:underline'
               : ''
           "

@@ -11,20 +11,32 @@ import {
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private location: Location) {}
+  constructor(private router: Router, private location: Location) {
+    console.log('AuthGuard');
+    let token = localStorage.getItem('token');
+    let lastUrl = localStorage.getItem('lastUrl');
+
+    console.log('LastUrl in authguard:', lastUrl);
+    console.log('Token in authguard:', token);
+    console.log('Location:', location);
+  }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    const token = localStorage.getItem('token');
-    const view = localStorage.getItem('view');
+    let token = localStorage.getItem('token');
+    let lastUrl = localStorage.getItem('lastUrl');
+
+    // console.log('VIEW in authguard', view);
+    // console.log('state.url:', state.url);
     // login page
     if (state.url === '/login') {
       if (token) {
         if (token) {
-          if (view) {
-            this.router.navigate([`home/${view}`]);
+          if (lastUrl) {
+            this.router.navigate([`${lastUrl}`]);
+            // this.router.navigate(['home']);
           } else {
             this.router.navigate(['home/task-manager']);
           }
@@ -39,8 +51,8 @@ export class AuthGuard implements CanActivate {
     if (state.url === '/register') {
       if (token) {
         if (token) {
-          if (view) {
-            this.router.navigate([`home/${view}`]);
+          if (lastUrl) {
+            this.router.navigate([`${lastUrl}`]);
           } else {
             this.router.navigate(['home/task-manager']);
           }
