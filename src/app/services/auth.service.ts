@@ -15,8 +15,6 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   public register(user: Register): Observable<JwtAuth> {
-    let userStringified = JSON.stringify(user);
-    console.log('user', userStringified);
     return this.http.post<JwtAuth>(
       'https://localhost:7027/' + this.registerUrl,
       user
@@ -24,10 +22,8 @@ export class AuthService {
   }
 
   public login(user: Login): Observable<JwtAuth> {
-    let userStringified = JSON.stringify(user);
-    console.log('user', userStringified);
     return this.http.post<JwtAuth>(
-      'http://localhost:7027/' + this.loginUrl,
+      'https://localhost:7027/' + this.loginUrl,
       user
     );
   }

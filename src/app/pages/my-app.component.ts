@@ -24,10 +24,10 @@ export class MyAppComponent implements OnInit {
     this.getDataFromLocalStorage();
 
     if (this.lastUrl) {
-      console.log(`last url : ${this.lastUrl}`);
+
       this.router.navigate([`${this.lastUrl}`]);
     } else {
-      console.log(`last url is null, redirecting to /task-nmanager`);
+
       this.router.navigate([`home/task-manager`]);
     }
 

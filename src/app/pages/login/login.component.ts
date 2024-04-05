@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
 import { Login } from 'src/app/models/login';
-import { Register } from 'src/app/models/register';
 import { JwtAuth } from 'src/app/models/jwtAuth';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -21,7 +20,6 @@ export class LoginComponent implements OnInit {
   isDisabled: boolean = true;
 
   loginDto = new Login();
-  registerDto = new Register();
   jwtDto = new JwtAuth();
 
   constructor(
@@ -71,19 +69,10 @@ export class LoginComponent implements OnInit {
     this.valid = true;
     console.log('SUCCESS =>' + JSON.stringify(this.loginForm.value));
 
-    let capitalized = // Making first letter uppercase
-      this.loginForm.value.name.charAt(0).toUpperCase() +
-      this.loginForm.value.name.slice(1);
+    this.loginDto.username = this.loginForm.value.username;
+    this.loginDto.password = this.loginForm.value.password;
 
-    this.registerDto.Name = this.capitalize(this.loginForm.value.name);
-    this.registerDto.Surname = this.capitalize(this.loginForm.value.surname);
-    this.registerDto.Username = this.loginForm.value.username;
-    this.registerDto.Email = this.loginForm.value.email;
-    this.registerDto.Password = this.loginForm.value.password;
-
-    this.register(this.registerDto);
-
-    this.loginService.triggerEvent(capitalized);
+    this.login(this.loginDto);
   }
 
   onFormChange(): void {
@@ -95,21 +84,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async register(registerDto: Register) {
-    try {
-      this.authService.register(registerDto).subscribe((data) => {
-        console.log('Registration data:', data);
-        localStorage.setItem('token', data.token);
-        this.router.navigate(['home']);
-      });
-    } catch (error) {
-      console.log('Error:', error.message);
-    }
-  }
-
   login(loginDto: Login) {
     this.authService.login(loginDto).subscribe((jwtDto) => {
+      console.log('Logged user from backend:', jwtDto);
       localStorage.setItem('token', jwtDto.token);
+      localStorage.setItem('lastUrl', 'home/task-manager');
+      this.router.navigate(['home/task-manager']);
+      this.loginService.triggerEvent(jwtDto.name);
     });
   }
 

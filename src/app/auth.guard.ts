@@ -11,15 +11,7 @@ import {
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private location: Location) {
-    console.log('AuthGuard');
-    let token = localStorage.getItem('token');
-    let lastUrl = localStorage.getItem('lastUrl');
-
-    console.log('LastUrl in authguard:', lastUrl);
-    console.log('Token in authguard:', token);
-    console.log('Location:', location);
-  }
+  constructor(private router: Router, private location: Location) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -35,8 +27,11 @@ export class AuthGuard implements CanActivate {
       if (token) {
         if (token) {
           if (lastUrl) {
-            this.router.navigate([`${lastUrl}`]);
-            // this.router.navigate(['home']);
+            if (lastUrl === 'login') {
+              this.router.navigate(['home/task-manager']);
+            } else {
+              this.router.navigate([`${lastUrl}`]);
+            }
           } else {
             this.router.navigate(['home/task-manager']);
           }
@@ -65,7 +60,7 @@ export class AuthGuard implements CanActivate {
 
     // other pages
     if (token) {
-      console.log('Token:', token);
+      console.log('Token=>' + token);
       return true;
     } else {
       console.log('No token');

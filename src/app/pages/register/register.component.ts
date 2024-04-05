@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
-import { Login } from 'src/app/models/login';
 import { Register } from 'src/app/models/register';
 import { JwtAuth } from 'src/app/models/jwtAuth';
 import { AuthService } from 'src/app/services/auth.service';
@@ -20,7 +19,6 @@ export class RegisterComponent implements OnInit {
   inputType: string = 'password';
   isDisabled: boolean = true;
 
-  loginDto = new Login();
   registerDto = new Register();
   jwtDto = new JwtAuth();
 
@@ -119,7 +117,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  async register(registerDto: Register) {
+  register(registerDto: Register) {
     try {
       this.authService.register(registerDto).subscribe((data) => {
         // console.log('Registration data:', data);
@@ -130,12 +128,6 @@ export class RegisterComponent implements OnInit {
     } catch (error) {
       console.log('Error:', error.message);
     }
-  }
-
-  login(loginDto: Login) {
-    this.authService.login(loginDto).subscribe((jwtDto) => {
-      localStorage.setItem('token', jwtDto.token);
-    });
   }
 
   passwordShowHide(): void {
