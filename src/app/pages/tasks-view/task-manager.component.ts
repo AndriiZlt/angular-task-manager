@@ -141,16 +141,12 @@ export class TaskManagerComponent implements OnInit {
     }
   }
 
-  onCheckClick(index: number): void {
+  onCheckClick(taskId: number): void {
     if (this.tasks[0]) {
-      if (index != undefined && this.tasks.length > 0) {
-        if (this.tasks[index].status === 'completed') {
-          this.tasks[index].status = 'undone';
-        } else {
-          this.tasks[index].status = 'completed';
-        }
-
-        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+      if (taskId != undefined && this.tasks.length > 0) {
+        this.apiService.updateStatus(taskId).subscribe((data) => {
+          this.updatePage();
+        });
       }
     }
   }

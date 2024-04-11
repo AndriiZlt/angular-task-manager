@@ -15,14 +15,19 @@ export class TaskManagerApiService {
   }
 
   addTask(task: TaskToAdd) {
-    console.log('Task to add:', task);
     return this.http.post(this.rootURL + '/v1/Task/addtask', task);
   }
 
   deleteTask(taskId: number) {
-    console.log('index in ApiService:', taskId);
     return this.http.post(
       this.rootURL + `/v1/Task/deletetask?taskId=${taskId}`,
+      taskId
+    );
+  }
+
+  updateStatus(taskId: number) {
+    return this.http.put(
+      this.rootURL + `/v1/Task/updatestatus?taskId=${taskId}`,
       taskId
     );
   }
