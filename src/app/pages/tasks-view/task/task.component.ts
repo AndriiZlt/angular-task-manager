@@ -7,14 +7,11 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Task } from 'src/app/models/Task';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 
-export interface Task {
-  id: number;
-  title: string;
-  description: string;
-  status: 'completed' | 'undone';
-}
+
+
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',

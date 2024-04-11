@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService {
+export class LoginNameService {
   constructor() {}
 
   private loginData = new BehaviorSubject<string>('');

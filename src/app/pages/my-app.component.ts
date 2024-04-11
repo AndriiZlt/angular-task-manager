@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../services/login.service';
-import { ApiService } from '../services/api.service';
+import { LoginNameService } from '../services/loginName.service';
+import { TaskManagerApiService } from '../services/task-managerApi.service';
 
 @Component({
   selector: 'app-my-app',
@@ -16,26 +16,24 @@ export class MyAppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private apiService: ApiService,
-    private loginService: LoginService
+    private apiService: TaskManagerApiService,
+    private loginNameService: LoginNameService
   ) {}
 
   ngOnInit(): void {
     this.getDataFromLocalStorage();
 
     if (this.lastUrl) {
-
       this.router.navigate([`${this.lastUrl}`]);
     } else {
-
       this.router.navigate([`home/task-manager`]);
     }
 
-    this.apiService.getUsers().subscribe((data) => {
-      console.log('Users from backend:', data);
-    });
+    // this.apiService.getTasks().subscribe((data) => {
+    //   console.log('Tasks from backend:', data);
+    // });
 
-    this.loginService.getLoginData().subscribe((param: any) => {
+    this.loginNameService.getLoginData().subscribe((param: any) => {
       if (param !== undefined && param !== '' && param !== null) {
         this.loginName = param;
         localStorage.setItem('loginName', param);

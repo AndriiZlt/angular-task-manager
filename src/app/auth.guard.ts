@@ -20,14 +20,12 @@ export class AuthGuard implements CanActivate {
     let token = localStorage.getItem('token');
     let lastUrl = localStorage.getItem('lastUrl');
 
-    // console.log('VIEW in authguard', view);
-    // console.log('state.url:', state.url);
-    // login page
-    if (state.url === '/login') {
+    // login & register pages
+    if (state.url === '/login' || state.url === '/register') {
       if (token) {
         if (token) {
           if (lastUrl) {
-            if (lastUrl === 'login') {
+            if (lastUrl === 'login' || lastUrl === 'register') {
               this.router.navigate(['home/task-manager']);
             } else {
               this.router.navigate([`${lastUrl}`]);
@@ -42,25 +40,9 @@ export class AuthGuard implements CanActivate {
       }
     }
 
-    // register page
-    if (state.url === '/register') {
-      if (token) {
-        if (token) {
-          if (lastUrl) {
-            this.router.navigate([`${lastUrl}`]);
-          } else {
-            this.router.navigate(['home/task-manager']);
-          }
-        }
-        return false;
-      } else {
-        return true;
-      }
-    }
-
     // other pages
     if (token) {
-      console.log('Token=>' + token);
+      console.log('Token => ' + token);
       return true;
     } else {
       console.log('No token');

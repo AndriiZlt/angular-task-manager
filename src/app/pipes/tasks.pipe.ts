@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Task } from '../pages/tasks-view/task/task.component';
+import { Task } from 'src/app/models/Task';
 
 enum TaskFilterValue {
   'all' = 1,

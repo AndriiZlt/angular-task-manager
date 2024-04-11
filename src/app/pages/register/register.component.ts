@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from 'src/app/services/login.service';
+import { LoginNameService } from 'src/app/services/loginName.service';
 import { Register } from 'src/app/models/register';
 import { JwtAuth } from 'src/app/models/jwtAuth';
 import { AuthService } from 'src/app/services/auth.service';
@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private loginService: LoginService,
+    private loginNameService: LoginNameService,
     private authService: AuthService
   ) {
     localStorage.setItem('lastUrl', 'register');
@@ -104,7 +104,7 @@ export class RegisterComponent implements OnInit {
 
     this.register(this.registerDto);
 
-    this.loginService.triggerEvent(capitalized);
+    this.loginNameService.triggerEvent(capitalized);
     // this.login();
   }
 

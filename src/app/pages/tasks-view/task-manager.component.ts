@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Task } from './task/task.component';
+import { Task } from 'src/app/models/Task';
+import { TaskToAdd } from 'src/app/models/TaskToAdd';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
+import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 
 enum TaskFilterValue {
   'all' = 1,
@@ -13,7 +15,7 @@ enum TaskFilterValue {
   selector: 'app-task-manager',
   templateUrl: './task-manager.component.html',
   styleUrls: ['./task-manager.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskManagerComponent implements OnInit {
   tasks: Task[] = [];
@@ -21,12 +23,12 @@ export class TaskManagerComponent implements OnInit {
   title: string = '';
   filter: TaskFilterValue = TaskFilterValue.all;
   isDisabled: boolean = true;
-  // lastUrl: string;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private taskManagerService: TaskManagerService
+    private taskManagerService: TaskManagerService,
+    private apiService: TaskManagerApiService
   ) {
     localStorage.setItem('lastUrl', 'home/task-manager');
 
@@ -50,8 +52,41 @@ export class TaskManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // localStorage.setItem('lastUrl', 'task-manager');
-    this.getDataFromLocalStorage();
+    this.updatePage();
+  }
+
+  updatePage(): void {
+    this.apiService.getTasks().subscribe((data) => {
+      console.log('Tasks:', data);
+      this.tasks = [...(<Task[]>data)];
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+      this.updateInput(`New task #${this.tasks.length + 1}`);
+      this.updateFilter();
+    });
+  }
+
+  updateFilter() {
+    let filterFromLocalStorage = localStorage.getItem('filter');
+    if (
+      filterFromLocalStorage !== '' &&
+      filterFromLocalStorage !== null &&
+      filterFromLocalStorage !== 'undefined'
+    ) {
+      switch (filterFromLocalStorage) {
+        case 'all':
+          this.filter = TaskFilterValue.all;
+          break;
+        case 'unfinished':
+          this.filter = TaskFilterValue.unfinished;
+          break;
+
+        case 'completed':
+          this.filter = TaskFilterValue.completed;
+          break;
+        default:
+          this.filter = TaskFilterValue.all;
+      }
+    }
   }
 
   onChange(field: string, value: string): void {
@@ -77,19 +112,16 @@ export class TaskManagerComponent implements OnInit {
 
   addTask(): void {
     if (this.title !== '') {
-      this.tasks.push({
-        id: Date.now(),
+      let taskToAdd: TaskToAdd = {
         title: this.capitalize(this.title),
         description: this.capitalize(this.description),
-        status: 'undone',
+      };
+      this.apiService.addTask(taskToAdd).subscribe((data) => {
+        this.updatePage();
       });
-      this.description = '';
-      this.title = `New task #${this.tasks.length + 1}`;
-      console.log(this.tasks);
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
     } else {
       this.isDisabled = true;
-      console.log('No empty title!');
+      alert('Why empty title?!');
     }
   }
 
@@ -101,14 +133,15 @@ export class TaskManagerComponent implements OnInit {
     }
   }
 
-  onTaskDelete(index: number): void {
-    if (index != undefined && this.tasks.length > 0) {
-      this.tasks.splice(index, 1);
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+  onTaskDelete(taskId: number): void {
+    if (taskId != undefined && this.tasks.length > 0) {
+      this.apiService.deleteTask(taskId).subscribe((data) => {
+        this.updatePage();
+      });
     }
   }
 
-  onCheckClick(index): void {
+  onCheckClick(index: number): void {
     if (this.tasks[0]) {
       if (index != undefined && this.tasks.length > 0) {
         if (this.tasks[index].status === 'completed') {
@@ -124,12 +157,12 @@ export class TaskManagerComponent implements OnInit {
 
   onDetailsClick(index: number): void {
     localStorage.setItem('detailsIndex', JSON.stringify(index));
-    this.router.navigate(['home/task-manager/task', this.tasks[index].id]);
+    this.router.navigate(['home/task-manager/task', this.tasks[index].taskId]);
   }
 
-  clearInput(): void {
+  updateInput(title: string = ''): void {
     this.description = '';
-    this.title = '';
+    this.title = title;
   }
 
   onFilterChange(event): void {
@@ -145,33 +178,6 @@ export class TaskManagerComponent implements OnInit {
         break;
       default:
     }
-  }
-
-  getDataFromLocalStorage(): void {
-    let filterFromLocalStorage = localStorage.getItem('filter');
-    if (
-      filterFromLocalStorage !== '' &&
-      filterFromLocalStorage !== null &&
-      filterFromLocalStorage !== 'undefined'
-    ) {
-      this.filter = JSON.parse(filterFromLocalStorage);
-    }
-
-    let dataFromStrage = localStorage.getItem('tasks');
-    if (
-      dataFromStrage !== '' &&
-      dataFromStrage !== null &&
-      typeof dataFromStrage !== 'undefined'
-    ) {
-      this.tasks = [...JSON.parse(dataFromStrage)];
-    }
-
-    // let lastUrl = localStorage.getItem('lastUrl');
-    // if (lastUrl) {
-    //   this.lastUrl = lastUrl;
-    // }
-
-    this.title = `New task #${this.tasks.length + 1}`;
   }
 
   resetPage(): void {

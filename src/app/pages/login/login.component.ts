@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from 'src/app/services/login.service';
+import { LoginNameService } from 'src/app/services/loginName.service';
 import { Login } from 'src/app/models/login';
 import { JwtAuth } from 'src/app/models/jwtAuth';
 import { AuthService } from 'src/app/services/auth.service';
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private loginService: LoginService,
+    private loginNameService: LoginNameService,
     private authService: AuthService
   ) {
     localStorage.setItem('lastUrl', 'login');
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token', jwtDto.token);
       localStorage.setItem('lastUrl', 'home/task-manager');
       this.router.navigate(['home/task-manager']);
-      this.loginService.triggerEvent(jwtDto.name);
+      this.loginNameService.triggerEvent(jwtDto.name);
     });
   }
 

@@ -5,7 +5,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Task } from '../task/task.component';
+import { Task } from 'src/app/models/Task';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 
