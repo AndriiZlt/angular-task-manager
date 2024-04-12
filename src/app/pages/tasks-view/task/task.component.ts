@@ -10,8 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Task } from 'src/app/models/Task';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 
-
-
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -20,8 +18,6 @@ import { TaskManagerService } from 'src/app/services/task-manager.service';
 })
 export class TaskComponent implements OnInit {
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private taskManagerService: TaskManagerService
   ) {}
 
@@ -33,7 +29,10 @@ export class TaskComponent implements OnInit {
   ngOnInit(): void {}
 
   onCheckClick(index: number): void {
-    this.taskManagerService.triggerEvent({ action: 'check', index });
+    this.taskManagerService.triggerEvent({
+      action: 'check',
+      taskId: this.task.taskId,
+    });
   }
 
   onCardClick(index: number): void {

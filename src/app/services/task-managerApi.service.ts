@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TaskToAdd } from '../models/TaskToAdd';
+import { Task } from '../models/Task';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +20,8 @@ export class TaskManagerApiService {
   }
 
   deleteTask(taskId: number) {
-    return this.http.post(
-      this.rootURL + `/v1/Task/deletetask?taskId=${taskId}`,
-      taskId
+    return this.http.delete(
+      this.rootURL + `/v1/Task/deletetask?taskId=${taskId}`
     );
   }
 
@@ -30,5 +30,9 @@ export class TaskManagerApiService {
       this.rootURL + `/v1/Task/updatestatus?taskId=${taskId}`,
       taskId
     );
+  }
+
+  updateTask(task: Task) {
+    return this.http.put(this.rootURL + '/v1/Task/updatetask', task);
   }
 }

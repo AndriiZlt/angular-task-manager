@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { MyAppComponent } from './pages/my-app.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
+  // { path: '', pathMatch: 'full', component: MyAppComponent },
   {
     path: 'login',
     loadChildren: () =>

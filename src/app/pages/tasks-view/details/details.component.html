@@ -23,11 +23,11 @@
 
   <div class="form-container">
     <h2 class="title" style="margin-bottom: 30px">
-      Detailed view of task #{{ index === -1 ? "" : index + 1 }}
+      Detailed view of task #{{ taskIndex === -1 ? "" : taskIndex + 1 }}
     </h2>
-    <h2 *ngIf="index < 0">No task</h2>
+    <h2 *ngIf="taskIndex < 0">No task</h2>
 
-    <div *ngIf="index > -1">
+    <div *ngIf="taskIndex > -1">
       <form class="form">
         <div class="form-group">
           <label for="title">Title</label>
@@ -63,14 +63,14 @@
               id="checkbox"
               name="checkbox"
               [checked]="isChecked"
-              (click)="checkHandler(this.index)"
+              (click)="onEdit('status', $event)"
             />
           </div>
         </div>
 
         <div class="checkbox">
           <h3>Press to delete:</h3>
-          <button class="bin-button" (click)="deleteHandler(this.index)">
+          <button class="bin-button" (click)="deleteHandler(task.taskId)">
             <svg class="bin-top" viewBox="0 0 39 7" fill="none">
               <line
                 y1="5"

@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
               this.router.navigate([`${lastUrl}`]);
             }
           } else {
-            this.router.navigate(['home/task-manager']);
+            this.router.navigate([`home/task-manager`]);
           }
         }
         return false;

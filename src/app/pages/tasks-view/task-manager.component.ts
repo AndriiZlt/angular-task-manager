@@ -36,11 +36,11 @@ export class TaskManagerComponent implements OnInit {
       if (param !== undefined) {
         switch (param.action) {
           case 'check':
-            this.onCheckClick(param.index);
+            this.onCheckClick(param.taskId);
             param = undefined;
             break;
           case 'delete':
-            this.onTaskDelete(param.index);
+            this.onTaskDelete(param.taskId);
             param = undefined;
             break;
           case 'edit':
@@ -79,7 +79,6 @@ export class TaskManagerComponent implements OnInit {
         case 'unfinished':
           this.filter = TaskFilterValue.unfinished;
           break;
-
         case 'completed':
           this.filter = TaskFilterValue.completed;
           break;
@@ -126,15 +125,13 @@ export class TaskManagerComponent implements OnInit {
   }
 
   editTask(params: any): void {
-    if (this.tasks[0]) {
-      this.tasks[params.index].title = params.title;
-      this.tasks[params.index].description = params.description;
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
-    }
+    this.apiService.updateTask(params.task).subscribe((data) => {
+      this.updatePage();
+    });
   }
 
   onTaskDelete(taskId: number): void {
-    if (taskId != undefined && this.tasks.length > 0) {
+    if (taskId != undefined) {
       this.apiService.deleteTask(taskId).subscribe((data) => {
         this.updatePage();
       });
@@ -142,12 +139,10 @@ export class TaskManagerComponent implements OnInit {
   }
 
   onCheckClick(taskId: number): void {
-    if (this.tasks[0]) {
-      if (taskId != undefined && this.tasks.length > 0) {
-        this.apiService.updateStatus(taskId).subscribe((data) => {
-          this.updatePage();
-        });
-      }
+    if (taskId !== undefined) {
+      this.apiService.updateStatus(taskId).subscribe((data) => {
+        this.updatePage();
+      });
     }
   }
 

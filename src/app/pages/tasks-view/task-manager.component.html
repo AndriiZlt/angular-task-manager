@@ -88,7 +88,7 @@
       <app-task
         *ngFor="let task of tasks | filter : filter; let index = taskId"
         [task]="task"
-        [taskIndex]="task.taskId"
+        [taskIndex]="tasks.indexOf(task)"
         (onTaskDelete)="onTaskDelete($event)"
         (onDetailsClick)="onDetailsClick($event)"
       ></app-task>

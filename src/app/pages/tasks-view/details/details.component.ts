@@ -18,8 +18,8 @@ import { TaskManagerService } from 'src/app/services/task-manager.service';
 export class DetailsComponent implements OnInit {
   task: Task;
   isChecked: boolean;
-  index: number = -1;
-  id: number = null;
+  taskIndex: number = -1;
+  taskId: number = null;
   isDisabled: boolean = true;
   height: string;
 
@@ -33,9 +33,9 @@ export class DetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.params.id);
+    this.taskId = Number(this.route.snapshot.params.id);
     this.getFromLocalStorage();
-    localStorage.setItem('lastUrl', `task-manager/task/${this.id}`);
+    localStorage.setItem('lastUrl', `task-manager/task/${this.taskId}`);
   }
 
   checkHandler(index: number): void {
@@ -61,22 +61,26 @@ export class DetailsComponent implements OnInit {
   }
 
   deleteHandler(index: number): void {
-    this.taskManagerService.triggerEvent({ action: 'delete', index });
-    this.router.navigate(['/task-manager']);
+    this.taskManagerService.triggerEvent({
+      action: 'delete',
+      taskId: this.task.taskId,
+    });
+    this.router.navigate(['home/task-manager']);
   }
 
   getFromLocalStorage(): void {
-    this.index = JSON.parse(localStorage.getItem('detailsIndex'));
+    this.taskIndex = JSON.parse(localStorage.getItem('detailsIndex'));
     let tasksFromLC = localStorage.getItem('tasks');
-    // console.log('Details init: tasks from LC', JSON.parse(tasksFromLC));
     if (
       tasksFromLC !== '' &&
       tasksFromLC !== null &&
       tasksFromLC !== 'undefined'
     ) {
       this.task = JSON.parse(tasksFromLC).filter(
-        (task) => task.id === this.id
+        (task: Task) => task.taskId === this.taskId
       )[0];
+
+      console.log('Task(detailed):', this.task);
 
       if (this.task.status === 'completed') {
         this.isChecked = true;
@@ -96,6 +100,7 @@ export class DetailsComponent implements OnInit {
     } else {
       this.isDisabled = false;
     }
+
     switch (field) {
       case 'title':
         this.task.title = this.capitalize(value);
@@ -103,8 +108,17 @@ export class DetailsComponent implements OnInit {
       case 'description':
         this.task.description = this.capitalize(value);
         break;
+      case 'status':
+        this.task.status =
+          this.task.status === 'undone' ? 'completed' : 'undone';
+        break;
+      default:
+        console.log(
+          'Something went wrong while editing Task in the detailed view!',
+          field,
+          value
+        );
     }
-    // let capitalized = input.charAt(0).toUpperCase() + input.slice(1);
   }
 
   capitalize(value: string): string {
@@ -114,16 +128,13 @@ export class DetailsComponent implements OnInit {
 
   saveHandler(): void {
     if (this.task.title !== '') {
-      let index = Number(this.index);
       this.taskManagerService.triggerEvent({
-        index,
         action: 'edit',
-        title: this.task.title,
-        description: this.task.description,
+        task: this.task,
       });
-      this.back();
+      this.router.navigate(['home/task-manager']);
     } else {
-      console.log('No empty title!');
+      console.log('Empty title!');
     }
   }
 }
