@@ -63,7 +63,7 @@ export class DetailsComponent implements OnInit {
   deleteHandler(index: number): void {
     this.taskManagerService.triggerEvent({
       action: 'delete',
-      taskId: this.task.taskId,
+      taskId: this.task.id,
     });
     this.router.navigate(['home/task-manager']);
   }
@@ -77,7 +77,7 @@ export class DetailsComponent implements OnInit {
       tasksFromLC !== 'undefined'
     ) {
       this.task = JSON.parse(tasksFromLC).filter(
-        (task: Task) => task.taskId === this.taskId
+        (task: Task) => task.id === this.taskId
       )[0];
 
       console.log('Task(detailed):', this.task);

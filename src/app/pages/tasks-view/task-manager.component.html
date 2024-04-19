@@ -16,8 +16,8 @@
     "
   >
     <div class="mat-app-background basic-container">
-      <form class="example-form">
-        <mat-form-field class="example-full-width" style="margin-bottom: 20px">
+      <form class="example-form" style="max-width: 100%">
+        <mat-form-field class="title">
           <mat-label>Title...</mat-label>
           <input
             class="message"
@@ -26,36 +26,48 @@
             maxlength="43"
             [(ngModel)]="title"
             [ngModelOptions]="{ standalone: true }"
-            style="font-size: 20px; height: 40px; font-weight: 600"
-            (ngModelChange)="onChange('title', $event)"
+            style="font-size: 18px; font-weight: 500; width: 200px"
+            (ngModelChange)="onFormChange('title', $event)"
           />
 
           <mat-hint align="end">{{ message1.value.length }} / 43</mat-hint>
         </mat-form-field>
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="description">
           <mat-label>Description...</mat-label>
-          <textarea
-            style="
-              font-size: 20px;
-              height: 95px;
-              margin-bottom: 0;
-              font-weight: 600;
-            "
+          <input
             class="message"
             matInput
             #message2
             maxlength="165"
             [(ngModel)]="description"
             [ngModelOptions]="{ standalone: true }"
-            (ngModelChange)="onChange('description', $event)"
-          ></textarea>
+            (ngModelChange)="onFormChange('description', $event)"
+            style="font-size: 18px; font-weight: 500; width: 500px"
+          />
 
           <mat-hint align="end">{{ message2.value.length }} / 165</mat-hint>
         </mat-form-field>
 
+        <mat-form-field style="margin-bottom: 80px; height: 0px; width: 200px">
+          <mat-label>Due date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            #message3
+            [(ngModel)]="datePickerDate"
+            (dateChange)="onDatePickerChange($event)"
+            [ngModelOptions]="{ standalone: true }"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
         <div class="buttons">
           <button
-            class="add-btn"
+            class="button"
             [disabled]="isDisabled"
             [style]="
               isDisabled
@@ -66,7 +78,7 @@
           >
             Add
           </button>
-          <button (click)="updateInput()" class="add-btn">Clear</button>
+          <button (click)="updateInput()" class="button">Clear</button>
         </div>
       </form>
       <hr />
@@ -86,12 +98,42 @@
     <div class="tasks">
       <div *ngIf="tasks.length === 0"><h2>No tasks</h2></div>
       <app-task
-        *ngFor="let task of tasks | filter : filter; let index = taskId"
+        *ngFor="let task of tasks | filter : filter; let index = id"
         [task]="task"
+        [subtasks]="subtasks"
         [taskIndex]="tasks.indexOf(task)"
         (onTaskDelete)="onTaskDelete($event)"
         (onDetailsClick)="onDetailsClick($event)"
+        (modalOpen)="modalOpen($event)"
       ></app-task>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart">
+      <app-task-chart
+        [tasks]="this.tasks"
+        [subtasks]="this.subtasks"
+      ></app-task-chart>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="subtaskModal" *ngIf="isModalOn">
+    <div class="backdrop">
+      <div class="inner">
+        <div class="closeButton" (click)="modalClose()">
+          <button class="button">
+            <span class="X"></span>
+            <span class="Y"></span>
+            <div class="close">Close</div>
+          </button>
+        </div>
+
+        <app-subtask-modal
+          [taskId]="modalTaskId"
+          (modalClose)="modalClose()"
+        ></app-subtask-modal>
+      </div>
     </div>
   </div>
 </div>

@@ -4,6 +4,8 @@ import { Task } from 'src/app/models/Task';
 import { TaskToAdd } from 'src/app/models/TaskToAdd';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
+import { DatePipe } from '@angular/common';
+import { Subtask } from 'src/app/models/Subtask';
 
 enum TaskFilterValue {
   'all' = 1,
@@ -15,20 +17,28 @@ enum TaskFilterValue {
   selector: 'app-task-manager',
   templateUrl: './task-manager.component.html',
   styleUrls: ['./task-manager.component.scss'],
+  providers: [DatePipe],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskManagerComponent implements OnInit {
   tasks: Task[] = [];
-  description: string = '';
+  subtasks: Subtask[] = [];
   title: string = '';
+  description: string = '';
+  dueDate: string = null;
+  datePickerDate: string = null;
+
   filter: TaskFilterValue = TaskFilterValue.all;
   isDisabled: boolean = true;
+  isModalOn: boolean = false;
+  modalTaskId: number = 1;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private taskManagerService: TaskManagerService,
-    private apiService: TaskManagerApiService
+    private apiService: TaskManagerApiService,
+    private datePipe: DatePipe
   ) {
     localStorage.setItem('lastUrl', 'home/task-manager');
 
@@ -36,11 +46,11 @@ export class TaskManagerComponent implements OnInit {
       if (param !== undefined) {
         switch (param.action) {
           case 'check':
-            this.onCheckClick(param.taskId);
+            this.onCheckClick(param.id);
             param = undefined;
             break;
           case 'delete':
-            this.onTaskDelete(param.taskId);
+            this.onTaskDelete(param.id);
             param = undefined;
             break;
           case 'edit':
@@ -56,12 +66,18 @@ export class TaskManagerComponent implements OnInit {
   }
 
   updatePage(): void {
+    this.apiService.getSubtasks().subscribe((data) => {
+      this.subtasks = [...(<Subtask[]>data)];
+
+      console.log('Subtasks:', this.subtasks);
+    });
+
     this.apiService.getTasks().subscribe((data) => {
-      console.log('Tasks:', data);
       this.tasks = [...(<Task[]>data)];
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
       this.updateInput(`New task #${this.tasks.length + 1}`);
       this.updateFilter();
+
+      console.log('Tasks:', this.tasks);
     });
   }
 
@@ -88,7 +104,7 @@ export class TaskManagerComponent implements OnInit {
     }
   }
 
-  onChange(field: string, value: string): void {
+  onFormChange(field: string, value: string): void {
     if (
       this.title === '' ||
       (this.title === `New task #${this.tasks.length + 1}` &&
@@ -109,18 +125,23 @@ export class TaskManagerComponent implements OnInit {
     }
   }
 
+  onDatePickerChange(event: any) {
+    this.datePickerDate = event.value;
+    this.dueDate = this.datePipe.transform(event.value, 'yyyy-MM-ddT23:59:59');
+  }
+
   addTask(): void {
     if (this.title !== '') {
       let taskToAdd: TaskToAdd = {
         title: this.capitalize(this.title),
         description: this.capitalize(this.description),
+        dateDue: this.dueDate,
       };
       this.apiService.addTask(taskToAdd).subscribe((data) => {
         this.updatePage();
       });
     } else {
       this.isDisabled = true;
-      alert('Why empty title?!');
     }
   }
 
@@ -148,7 +169,7 @@ export class TaskManagerComponent implements OnInit {
 
   onDetailsClick(index: number): void {
     localStorage.setItem('detailsIndex', JSON.stringify(index));
-    this.router.navigate(['home/task-manager/task', this.tasks[index].taskId]);
+    this.router.navigate(['home/task-manager/task', this.tasks[index].id]);
   }
 
   updateInput(title: string = ''): void {
@@ -182,5 +203,15 @@ export class TaskManagerComponent implements OnInit {
   capitalize(value: string): string {
     let capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
     return capitalizedValue;
+  }
+
+  modalOpen(id: number) {
+    this.modalTaskId = id;
+    this.isModalOn = true;
+  }
+
+  modalClose() {
+    this.isModalOn = false;
+    this.updatePage();
   }
 }

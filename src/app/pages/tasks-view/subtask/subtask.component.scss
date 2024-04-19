@@ -1,25 +1,13 @@
 @import "../../../../assets/scss/mixins";
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
-.task {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 1170px;
-}
-
-.subtasks {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .card {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 1000px;
+  align-self: flex-end;
+  width: 830px;
   height: 80px;
   margin-bottom: 10px;
   padding: 0 10px;
@@ -52,7 +40,7 @@
       text-transform: capitalize;
     }
     .text {
-      width: 600px;
+      width: 400px;
       h3 {
         // display: block;
         height: 26px;
@@ -192,66 +180,4 @@
   .bin-button:active {
     transform: scale(0.9);
   }
-}
-
-.button {
-  position: relative;
-  width: 150px;
-  height: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  border: 1px solid #15f5ba;
-  background-color: #15f5ba;
-  font-size: 17px;
-  border-radius: 5px;
-}
-
-.button,
-.button__icon,
-.button__text {
-  transition: all 0.3s;
-}
-
-.button .button__text {
-  transform: translateX(30px);
-  color: #094d4d;
-  font-weight: 600;
-}
-
-.button .button__icon {
-  position: absolute;
-  transform: translateX(109px);
-  height: 100%;
-  width: 39px;
-  background-color: #15f5ba;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.button .svg {
-  width: 30px;
-  stroke: #094d4d;
-}
-
-.button:hover {
-  background: #15f5ba;
-}
-
-.button:hover .button__text {
-  color: transparent;
-}
-
-.button:hover .button__icon {
-  width: 148px;
-  transform: translateX(0);
-}
-
-.button:active .button__icon {
-  background-color: #15f5ba;
-}
-
-.button:active {
-  border: 1px solid #15f5ba;
 }

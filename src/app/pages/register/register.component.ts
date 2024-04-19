@@ -90,7 +90,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.valid = true;
-    console.log('SUCCESS =>' + JSON.stringify(this.registerForm.value));
+    console.log('Logging in... =>' + JSON.stringify(this.registerForm.value));
 
     let capitalized = // Making first letter uppercase
       this.registerForm.value.name.charAt(0).toUpperCase() +

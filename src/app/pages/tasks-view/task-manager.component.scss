@@ -6,7 +6,17 @@
   font-size: 20px;
 }
 
+.ng-tns-c135-2 {
+  height: 19.5px;
+}
+
+:host ::ng-deep .mat-form-field-infix {
+  width: auto !important;
+  width: unset !important;
+}
+
 .container {
+  position: relative;
   padding: 0;
   display: flex;
   flex-direction: row;
@@ -21,12 +31,12 @@
   .buttons {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    align-items: flex-start;
+    align-self: flex-start;
   }
 
   .ng-tns-c134-1 {
     height: 0px;
-    margin-bottom: 20px;
   }
 
   .mat-form-field-type-mat-input {
@@ -34,21 +44,64 @@
   }
 
   .example-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     min-width: 150px;
     max-width: 500px;
     width: 100%;
   }
 
-  .example-full-width {
-    width: 100%;
+  .mat-form-field-flex {
+    // width: 100px;
+    // height: 70px;
+    margin-right: 20px;
+  }
+
+  .title {
+    margin-right: 20px;
+
+    height: 80px;
+  }
+
+  .description {
+    margin-right: 20px;
+    height: 80px;
   }
 
   .add-btn {
     @include btn;
+    margin: 0 0px 0 25px;
     background-color: $cyan-600;
     color: $gray-200;
     font-weight: 600;
-    width: 130px;
+    width: 100px;
+  }
+
+  .button {
+    padding: 12.5px 30px;
+    border: 0;
+    border-radius: 100px;
+    background-color: #2ba8fb;
+    color: #ffffff;
+    font-weight: Bold;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    margin: 7px 0px 0 15px;
+  }
+
+  .button:hover {
+    background-color: #6fc5ff;
+    box-shadow: 0 0 20px #6fc5ff50;
+    transform: scale(1.1);
+  }
+
+  .button:active {
+    background-color: #3d94cf;
+    transition: all 0.25s;
+    -webkit-transition: all 0.25s;
+    box-shadow: none;
+    transform: scale(0.98);
   }
 
   .disabledBtn {
@@ -63,11 +116,132 @@
     justify-content: center;
   }
 
+  .chart {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // height: 1000px;
+  }
+
   @media screen and (max-width: 1300px) {
     flex-direction: column;
   }
 
   .message ::first-letter {
     text-transform: uppercase;
+  }
+}
+
+.subtaskModal {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  // width: 1240px;
+  height: 100%;
+  z-index: 9999;
+  .backdrop {
+    position: fixed;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // width: 100%;
+    height: 100%;
+    background-color: rgba(60, 60, 60, 0.3);
+    backdrop-filter: blur(1rem);
+  }
+  .inner {
+    position: absolute;
+    top: 200px;
+    left: 230px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 1100px;
+    height: 200px;
+    background-color: #ffffff;
+    border-radius: 5px;
+
+    // close button
+    .closeButton {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      .button {
+        padding: 0;
+        position: relative;
+        width: 2em;
+        height: 2em;
+        border: none;
+        background: rgba(180, 83, 107, 0.3);
+        border-radius: 5px;
+        transition: background 0.5s;
+      }
+
+      .X {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1em;
+        height: 1.5px;
+        background-color: rgb(255, 255, 255);
+        transform: translateX(-50%) rotate(45deg);
+      }
+
+      .Y {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1em;
+        height: 1.5px;
+        background-color: #fff;
+        transform: translateX(-50%) rotate(-45deg);
+      }
+
+      .close {
+        position: absolute;
+        display: flex;
+        // padding: 0.8rem 0.8rem;
+        align-items: center;
+        justify-content: center;
+        transform: translateX(-50%);
+        top: -70%;
+        left: 50%;
+        width: 3em;
+        height: 1.5em;
+        font-size: 12px;
+        background-color: rgb(19, 22, 24);
+        color: rgb(187, 229, 236);
+        border: none;
+        border-radius: 3px;
+        pointer-events: none;
+        opacity: 0;
+      }
+
+      .button:hover {
+        background-color: rgb(211, 21, 21);
+      }
+
+      .button:active {
+        background-color: rgb(130, 0, 0);
+      }
+
+      .button:hover > .close {
+        animation: close 0.2s forwards 0.25s;
+      }
+
+      @keyframes close {
+        100% {
+          opacity: 1;
+        }
+      }
+    }
   }
 }

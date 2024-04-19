@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    localStorage.clear();
     this.loginForm = this.formBuilder.group({
       username: [
         null,
@@ -67,7 +68,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.valid = true;
-    console.log('SUCCESS =>' + JSON.stringify(this.loginForm.value));
+    console.log('Logging in... =>' + JSON.stringify(this.loginForm.value));
 
     this.loginDto.username = this.loginForm.value.username;
     this.loginDto.password = this.loginForm.value.password;
