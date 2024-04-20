@@ -6,6 +6,7 @@ import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 import { DatePipe } from '@angular/common';
 import { Subtask } from 'src/app/models/Subtask';
+import { ChartUpdateService } from 'src/app/services/updateChart.service';
 
 enum TaskFilterValue {
   'all' = 1,
@@ -18,7 +19,7 @@ enum TaskFilterValue {
   templateUrl: './task-manager.component.html',
   styleUrls: ['./task-manager.component.scss'],
   providers: [DatePipe],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.Default,
 })
 export class TaskManagerComponent implements OnInit {
   tasks: Task[] = [];
@@ -38,7 +39,8 @@ export class TaskManagerComponent implements OnInit {
     private route: ActivatedRoute,
     private taskManagerService: TaskManagerService,
     private apiService: TaskManagerApiService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private chartUpdateService: ChartUpdateService
   ) {
     localStorage.setItem('lastUrl', 'home/task-manager');
 
@@ -68,7 +70,6 @@ export class TaskManagerComponent implements OnInit {
   updatePage(): void {
     this.apiService.getSubtasks().subscribe((data) => {
       this.subtasks = [...(<Subtask[]>data)];
-
       console.log('Subtasks:', this.subtasks);
     });
 
@@ -79,6 +80,8 @@ export class TaskManagerComponent implements OnInit {
 
       console.log('Tasks:', this.tasks);
     });
+
+
   }
 
   updateFilter() {
@@ -127,7 +130,7 @@ export class TaskManagerComponent implements OnInit {
 
   onDatePickerChange(event: any) {
     this.datePickerDate = event.value;
-    this.dueDate = this.datePipe.transform(event.value, 'yyyy-MM-ddT23:59:59');
+    this.dueDate = this.datePipe.transform(event.value, 'yyyy-MM-ddThh:mm:ss');
   }
 
   addTask(): void {
@@ -143,6 +146,8 @@ export class TaskManagerComponent implements OnInit {
     } else {
       this.isDisabled = true;
     }
+
+    this.chartUpdateService.triggerEvent(1);
   }
 
   editTask(params: any): void {

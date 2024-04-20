@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subtask } from 'src/app/models/Subtask';
 import { SubtaskToAdd } from 'src/app/models/SubtaskToAdd';
@@ -17,11 +18,12 @@ export class SubtaskModalComponent implements OnInit {
   @Input() taskId: number;
   @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private apiService: TaskManagerApiService) {}
+  constructor(
+    private apiService: TaskManagerApiService,
+    private datePipe: DatePipe
+  ) {}
 
-  ngOnInit(): void {
-    console.log(this.taskId);
-  }
+  ngOnInit(): void {}
 
   onFormChange(field: string, value: string): void {
     if (this.title === '' || this.description === '') {
@@ -56,6 +58,10 @@ export class SubtaskModalComponent implements OnInit {
         title: this.capitalize(this.title),
         description: this.capitalize(this.description),
         taskId: this.taskId,
+        // dateCreated: this.datePipe.transform(
+        //   Date.now().toString,
+        //   'yyyy-MM-ddT23:59:59'
+        // ),
       };
       this.apiService.addSubtask(subtaskToAdd).subscribe((data) => {
         this.closeModal();
