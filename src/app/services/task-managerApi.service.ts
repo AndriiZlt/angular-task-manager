@@ -41,7 +41,7 @@ export class TaskManagerApiService {
 
   // SubTasks
   getSubtasks() {
-    return this.http.get(this.rootURL + '/v1/SubTask/getsubtasks');
+    return this.http.get(this.rootURL + '/v1/Subtask/getsubtasks');
   }
 
   addSubtask(subtask: SubtaskToAdd) {

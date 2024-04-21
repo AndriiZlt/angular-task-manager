@@ -6,7 +6,6 @@ import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 import { DatePipe } from '@angular/common';
 import { Subtask } from 'src/app/models/Subtask';
-import { ChartUpdateService } from 'src/app/services/updateChart.service';
 
 enum TaskFilterValue {
   'all' = 1,
@@ -39,8 +38,7 @@ export class TaskManagerComponent implements OnInit {
     private route: ActivatedRoute,
     private taskManagerService: TaskManagerService,
     private apiService: TaskManagerApiService,
-    private datePipe: DatePipe,
-    private chartUpdateService: ChartUpdateService
+    private datePipe: DatePipe
   ) {
     localStorage.setItem('lastUrl', 'home/task-manager');
 
@@ -69,6 +67,7 @@ export class TaskManagerComponent implements OnInit {
 
   updatePage(): void {
     this.apiService.getSubtasks().subscribe((data) => {
+      console.log('data after fetch', data);
       this.subtasks = [...(<Subtask[]>data)];
       console.log('Subtasks:', this.subtasks);
     });
@@ -80,8 +79,6 @@ export class TaskManagerComponent implements OnInit {
 
       console.log('Tasks:', this.tasks);
     });
-
-
   }
 
   updateFilter() {
@@ -146,8 +143,6 @@ export class TaskManagerComponent implements OnInit {
     } else {
       this.isDisabled = true;
     }
-
-    this.chartUpdateService.triggerEvent(1);
   }
 
   editTask(params: any): void {

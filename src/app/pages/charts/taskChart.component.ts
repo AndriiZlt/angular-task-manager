@@ -18,36 +18,71 @@ export class TaskChartComponent implements OnInit {
   dataset1: number[] = [];
   dataset2: number[] = [];
 
-  constructor(private apiService: TaskManagerApiService) {
-  }
+  constructor(private apiService: TaskManagerApiService) {}
 
   ngOnChanges(changes: SimpleChange) {
-    // if (changes['tasks']) {
-    //   console.log("changes['tasks']", changes['tasks'].currentValue);
-    //   this.tasks = changes['tasks'].currentValue;
-    //   console.log('tasks after change', this.tasks);
-    // }
-    // if (changes['subtasks']) {
-    //   console.log(2);
-    //   this.subtasks = changes['subtasks'].currentValue;
-    //   console.log('subtasks after change', this.subtasks);
-    // }
-    // this.updateChart();
+    console.log('change...', changes);
+    if (changes['tasks']) {
+      this.tasks = changes['tasks'].currentValue;
+    }
+    if (changes['subtasks']) {
+      this.subtasks = changes['subtasks'].currentValue;
+    }
+
+    console.log('Subtasks/Tasks after change:', this.tasks, this.subtasks);
+
+    // this.fetchData();
+    this.updateChart();
   }
 
   ngOnInit(): void {
-    this.updatePage();
+    // this.fetchData();
     // console.log('dates for chart', this.labels);
   }
 
-  updatePage(): void {
-    this.apiService.getSubtasks().subscribe((data) => {
-      this.subtasks = [...(<Subtask[]>data)];
-    });
+  // fetchData(): void {
+  //   console.log('fetching data..');
+  //   this.apiService.getSubtasks().subscribe((data) => {
+  //     this.subtasks = [...(<Subtask[]>data)];
+  //   });
 
-    this.apiService.getTasks().subscribe((data) => {
-      this.tasks = [...(<Task[]>data)];
-      this.updateChart();
+  //   this.apiService.getTasks().subscribe((data) => {
+  //     this.tasks = [...(<Task[]>data)];
+  //     this.updateChart();
+  //   });
+  //   console.log('After fetching', this.tasks, this.subtasks);
+  // }
+
+  updateChart() {
+    // console.log('update chart', this.tasks, this.subtasks);
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    this.updateLabels();
+    this.updateDatasets();
+
+    var canvas = document.getElementById('canvas');
+    this.chart = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: this.labels,
+        datasets: [
+          {
+            label: 'Tasks',
+            data: this.dataset1,
+            backgroundColor: 'red',
+            borderColor: 'red',
+            fill: false,
+          },
+          {
+            label: 'Subtasks',
+            data: this.dataset2,
+            backgroundColor: 'blue',
+            borderColor: 'blue',
+            fill: false,
+          },
+        ],
+      },
     });
   }
 
@@ -67,6 +102,7 @@ export class TaskChartComponent implements OnInit {
   }
 
   shortenAllDates() {
+    // console.log('data before shorting:', this.tasks, this.subtasks);
     for (let i = 0; i < this.tasks.length; i++) {
       this.tasks[i].dateCreated = this.shortenOneDate(
         this.tasks[i].dateCreated
@@ -88,9 +124,12 @@ export class TaskChartComponent implements OnInit {
         this.subtasks[i].dateCompleted
       );
     }
+
+    // console.log('data after shorting:', this.tasks, this.subtasks);
   }
 
-  updateLabels(): string[] {
+  updateLabels(): void {
+    // console.log('update labels', this.tasks, this.subtasks);
     this.shortenAllDates(); // Make all dates in Tasks and Subtasks short
 
     // Take only dates to one string[]
@@ -101,54 +140,32 @@ export class TaskChartComponent implements OnInit {
       .concat(this.subtasks.map((t) => t.dateCompleted))
       .filter((s) => s != null);
 
+    // console.log('shortDates', shortDates);
+
     // Only unique dates
     let unique_values = shortDates.filter(
       (value, index, current_value) => current_value.indexOf(value) === index
     );
-    console.log(
-      'unique_values',
-      unique_values.filter((v) => v != null)
-    );
+    // console.log(
+    //   'unique_values',
+    //   unique_values.filter((v) => v != null)
+    // );
 
-    // Sorting before return
-    return unique_values.filter((v) => v != null).sort();
+    // Sorting before updateting labels
+    this.labels = unique_values.filter((v) => v != null).sort();
   }
 
-  updateChart() {
-    let labels = this.updateLabels();
-    // console.log('labels:', labels);
-    // console.log('tasksss', this.tasks);
-    // console.log('subtasksss', this.subtasks);
-    labels.map((label) => {
+  updateDatasets() {
+    // console.log('update dataset', this.tasks, this.subtasks);
+    let dataset1 = [];
+    let dataset2 = [];
+    this.labels.map((label) => {
       let count1 = this.tasks.filter((t) => t.dateCreated === label).length;
-      this.dataset1.push(count1);
+      dataset1.push(count1);
       let count2 = this.subtasks.filter((s) => s.dateCreated === label).length;
-      this.dataset2.push(count2);
+      dataset2.push(count2);
     });
-
-    // console.log('Dataset1:', this.dataset1, 'Dataset2:', this.dataset2);
-
-    this.chart = new Chart('canvas', {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: 'Tasks',
-            data: this.dataset1,
-            backgroundColor: 'red',
-            borderColor: 'red',
-            fill: false,
-          },
-          {
-            label: 'Subtasks',
-            data: this.dataset2,
-            backgroundColor: 'blue',
-            borderColor: 'blue',
-            fill: false,
-          },
-        ],
-      },
-    });
+    this.dataset1 = [...dataset1];
+    this.dataset2 = [...dataset2];
   }
 }
