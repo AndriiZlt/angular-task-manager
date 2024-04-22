@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     localStorage.clear();
+    localStorage.setItem('lastUrl', 'login');
     this.loginForm = this.formBuilder.group({
       username: [
         null,

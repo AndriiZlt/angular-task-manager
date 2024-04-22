@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Friend } from 'src/app/models/Friend';
+import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 
 export interface User {
   id: string;
@@ -22,26 +24,34 @@ export interface User {
   selector: 'app-friends-view',
   templateUrl: './friends-view.component.html',
   styleUrls: ['./friends-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FriendsViewComponent implements OnInit {
-  friends: User[] = [];
+  friends: Friend[] = [];
   inputValue: string = '';
   isLoading: boolean = true;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private apiService: TaskManagerApiService
+  ) {}
 
   ngOnInit(): void {
     localStorage.setItem('lastUrl', 'home/friends-list');
-    let friendsFromLocalStorage = localStorage.getItem('friends');
-    if (
-      friendsFromLocalStorage != '' &&
-      friendsFromLocalStorage != null &&
-      friendsFromLocalStorage != 'undefined'
-    ) {
-      this.friends = JSON.parse(friendsFromLocalStorage);
-    }
+    this.updateFriends();
+    this.updateFilterFromLC();
+  }
 
+  updateFriends(): void {
+    this.apiService.getFriends().subscribe((res) => {
+      this.friends = [...(<Friend[]>res)];
+      console.log('Friends:', this.friends);
+      localStorage.setItem('friends', JSON.stringify(this.friends));
+    });
+  }
+
+  updateFilterFromLC(): void {
     let friendsFilterFromLocalStorage =
       localStorage.getItem('friendsListFilter');
     if (
@@ -53,19 +63,10 @@ export class FriendsViewComponent implements OnInit {
     }
   }
 
-  onRemoveFriend(userId: string) {
-    let friendToRemove = this.friends.filter(
-      (friend) => friend.id === userId
-    )[0];
-    this.friends.splice(
-      this.friends.indexOf(
-        this.friends.filter((friend) => friend.id === userId)[0]
-      ),
-      1
-    );
-
-    localStorage.setItem('friends', JSON.stringify(this.friends));
-    this.resetPage();
+  onRemoveFriend(friendId: string): void {
+    this.apiService.deleteFriend(Number(friendId)).subscribe((res) => {
+      this.updateFriends();
+    });
   }
 
   onFilterChange(): void {

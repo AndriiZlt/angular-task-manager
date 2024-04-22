@@ -8,6 +8,7 @@ import { UserCardComponent } from './user-card/user-card.component';
 import { MaterialModule } from 'src/app/material-module';
 import { FormsModule } from '@angular/forms';
 import { FriendsPipe } from 'src/app/pipes/friends.pipe';
+import { FriendChartComponent } from '../charts/friend-chart/friend-chart.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { FriendsPipe } from 'src/app/pipes/friends.pipe';
     UsersComponent,
     UserCardComponent,
     FriendsPipe,
+    FriendChartComponent,
   ],
   imports: [
     CommonModule,

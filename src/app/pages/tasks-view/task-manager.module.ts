@@ -8,7 +8,7 @@ import { DetailsComponent } from './details/details.component';
 import { TaskComponent } from './task/task.component';
 import { FormsModule } from '@angular/forms';
 import { SubtaskComponent } from './subtask/subtask.component';
-import { TaskChartComponent } from '../charts/taskChart.component';
+import { TaskChartComponent } from '../charts/task-chart/taskChart.component';
 import { SubtaskModalComponent } from './subtask-modal/subtask-modal.component';
 
 @NgModule({

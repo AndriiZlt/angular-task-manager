@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { User } from '../friends-view.component';
 import { Router } from '@angular/router';
+import { Friend } from 'src/app/models/Friend';
+import { FriendToAdd } from 'src/app/models/FriendToAdd';
+import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
+import { Gender } from 'src/app/models/Gender';
 
 @Component({
   selector: 'app-users',
@@ -9,33 +13,86 @@ import { Router } from '@angular/router';
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent implements OnInit {
-  friends: User[] = [];
+  friends: Friend[] = [];
   users: User[] = [];
   isLoading: boolean = true;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private apiService: TaskManagerApiService
+  ) {}
 
   ngOnInit(): void {
     localStorage.setItem('lastUrl', 'home/friends-list/users');
     this.fetchUsers();
+    this.updateFriendsFromLC();
+  }
+
+  gender(userGender: string): 'unknown' | 'male' | 'female' | 'other' {
+    switch (userGender) {
+      case 'male':
+        return 'male';
+      case 'female':
+        return 'female';
+      case 'other':
+        return 'other';
+      default:
+        return 'unknown';
+    }
+  }
+
+  updateFriendsFromLC() {
+    let friendsFromLC = JSON.parse(localStorage.getItem('friends'));
+    if (friendsFromLC) {
+      this.friends = [...(<Friend[]>friendsFromLC)];
+    }
   }
 
   onAddFriend(userId: string): void {
-    let newUser: User;
+    let newFriend: User;
+    let usersEmail = this.users.filter((u) => u.id === userId)[0].email;
+    console.log('email', usersEmail);
+    console.log(
+      'Common users',
+      this.friends.filter((friend) => friend.email === usersEmail)
+    );
+    if (!this.friends.filter((friend) => friend.email === usersEmail)[0]) {
+      newFriend = this.users.filter((user) => user.id === userId)[0];
+      let friendToAdd: FriendToAdd = {
+        age: Number(newFriend.age),
+        email: newFriend.email,
+        gender: this.gender(newFriend.gender),
+        fName: newFriend.name.first,
+        lName: newFriend.name.last,
+        picture: newFriend.picture.large,
+      };
 
-    if (!this.friends.filter((friend) => friend.id === userId)[0]) {
-      newUser = this.users.filter((user) => user.id === userId)[0];
-      this.friends.push(newUser);
-      alert(`User ${newUser.name} was added to your friend list!`);
-      localStorage.setItem('friends', JSON.stringify(this.friends));
+      // console.log('FriendToAdd', friendToAdd);
+
+      this.apiService.addFriend(friendToAdd).subscribe((data) => {
+        console.log('Response:', data);
+        if (data) {
+          alert(
+            `User ${friendToAdd.fName} ${friendToAdd.lName} was added to your friend list!`
+          );
+          this.updateFriends(<Friend>data);
+        }
+      });
     } else {
       alert(`User is already in your friend list!`);
     }
-
-    // console.log(this.friends);
   }
 
-  back() {
+  updateFriends(friendToAdd: Friend): void {
+    this.friends.push(friendToAdd);
+    let friendsFromLC: Friend[] = JSON.parse(localStorage.getItem('friends'));
+    if (friendsFromLC) {
+      friendsFromLC.push(friendToAdd);
+      localStorage.setItem('friends', JSON.stringify(friendsFromLC));
+    }
+  }
+
+  back(): void {
     this.router.navigate([`home/friends-list`]);
   }
 
@@ -69,6 +126,7 @@ export class UsersComponent implements OnInit {
             })
         );
         this.users = [...c];
+        console.log('Users online:', this.users);
         this.isLoading = false;
       })
       .catch((e) => console.log('Error:', e));

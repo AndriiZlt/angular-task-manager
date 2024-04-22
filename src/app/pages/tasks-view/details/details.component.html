@@ -29,83 +29,87 @@
 
     <div *ngIf="taskIndex > -1">
       <form class="form">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            [(ngModel)]="task.title"
-            maxlength="43"
-            (ngModelChange)="onEdit('title', $event)"
-          />
-        </div>
-        <div class="form-group">
-          <label for="textarea">Description</label>
-          <textarea
-            name="textarea"
-            id="textarea"
-            rows="10"
-            cols="50"
-            required=""
-            [(ngModel)]="task.description"
-            (ngModelChange)="onEdit('description', $event)"
-            maxlength="150"
-          >
-          </textarea>
-        </div>
-
-        <div class="checkbox">
-          <h3>Check if done:</h3>
-          <div class="checkboxx">
+        <div class="left">
+          <div class="form-group">
+            <label for="title">Title</label>
             <input
-              type="checkbox"
-              id="checkbox"
-              name="checkbox"
-              [checked]="isChecked"
-              (click)="onEdit('status', $event)"
+              type="text"
+              id="title"
+              name="title"
+              [(ngModel)]="task.title"
+              maxlength="43"
+              (ngModelChange)="onEdit('title', $event)"
             />
+          </div>
+          <div class="form-group">
+            <label for="textarea">Description</label>
+            <textarea
+              name="textarea"
+              id="textarea"
+              rows="10"
+              cols="50"
+              required=""
+              [(ngModel)]="task.description"
+              (ngModelChange)="onEdit('description', $event)"
+              maxlength="150"
+            >
+            </textarea>
           </div>
         </div>
 
-        <div class="checkbox">
-          <h3>Press to delete:</h3>
-          <button class="bin-button" (click)="deleteHandler(task.id)">
-            <svg class="bin-top" viewBox="0 0 39 7" fill="none">
-              <line
-                y1="5"
-                x2="39"
-                y2="5"
-                stroke="white"
-                stroke-width="4"
-              ></line>
-              <line
-                x1="12"
-                y1="1.5"
-                x2="26.0357"
-                y2="1.5"
-                stroke="white"
-                stroke-width="3"
-              ></line>
-            </svg>
-            <svg class="bin-bottom" viewBox="0 0 33 39" fill="none">
-              <mask id="path-1-inside-1_8_19" fill="white">
+        <div class="right">
+          <div class="checkbox">
+            <h3>Check if done:</h3>
+            <div class="checkboxx">
+              <input
+                type="checkbox"
+                id="checkbox"
+                name="checkbox"
+                [checked]="isChecked"
+                (click)="onEdit('status', $event)"
+              />
+            </div>
+          </div>
+
+          <div class="deleteDiv">
+            <h3>Press to delete:</h3>
+            <button class="bin-button" (click)="deleteHandler(task.id)">
+              <svg class="bin-top" viewBox="0 0 39 7" fill="none">
+                <line
+                  y1="5"
+                  x2="39"
+                  y2="5"
+                  stroke="white"
+                  stroke-width="4"
+                ></line>
+                <line
+                  x1="12"
+                  y1="1.5"
+                  x2="26.0357"
+                  y2="1.5"
+                  stroke="white"
+                  stroke-width="3"
+                ></line>
+              </svg>
+              <svg class="bin-bottom" viewBox="0 0 33 39" fill="none">
+                <mask id="path-1-inside-1_8_19" fill="white">
+                  <path
+                    d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                  ></path>
+                </mask>
                 <path
-                  d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                  d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+                  fill="white"
+                  mask="url(#path-1-inside-1_8_19)"
                 ></path>
-              </mask>
-              <path
-                d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
-                fill="white"
-                mask="url(#path-1-inside-1_8_19)"
-              ></path>
-              <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
-              <path d="M21 6V29" stroke="white" stroke-width="4"></path>
-            </svg>
-          </button>
+                <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+                <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+              </svg>
+            </button>
+          </div>
         </div>
       </form>
-      <div class="checkbox">
+      <div class="saveDiv">
         <button
           class="form-submit-btn"
           [disabled]="isDisabled"
@@ -117,5 +121,14 @@
         </button>
       </div>
     </div>
+  </div>
+  <div class="subtasks">
+    <app-subtask
+      *ngFor="let subtask of filteredSubtasks; let index = taskId"
+      [subtask]="subtask"
+      [subtaskIndex]="taskIndex"
+      (onSubtaskDelete)="this.onSubtaskDelete($event)"
+      (checkSubtask)="this.checkSubtask($event)"
+    ></app-subtask>
   </div>
 </div>

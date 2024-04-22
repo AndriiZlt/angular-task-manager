@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { TaskToAdd } from '../models/TaskToAdd';
 import { Task } from '../models/Task';
 import { SubtaskToAdd } from '../models/SubtaskToAdd';
+import { FriendToAdd } from '../models/FriendToAdd';
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +48,34 @@ export class TaskManagerApiService {
   addSubtask(subtask: SubtaskToAdd) {
     console.log('Http Posted subtask:', subtask);
     return this.http.post(this.rootURL + '/v1/Subtask/addsubtask', subtask);
+  }
+
+  deleteSubtask(subtaskId: number) {
+    return this.http.delete(
+      this.rootURL + `/v1/Subtask/deletesubtask?taskId=${subtaskId}`
+    );
+  }
+
+  updateStatusSubtask(subtaskId: number) {
+    return this.http.put(
+      this.rootURL + `/v1/Subtask/updatestatus?taskId=${subtaskId}`,
+      subtaskId
+    );
+  }
+
+  // FRIENDS
+
+  addFriend(friendToAdd: FriendToAdd) {
+    return this.http.post(this.rootURL + `/v1/Friend/addfriend`, friendToAdd);
+  }
+
+  getFriends() {
+    return this.http.get(this.rootURL + '/v1/Friend/getfriends');
+  }
+
+  deleteFriend(friendId: number) {
+    return this.http.delete(
+      this.rootURL + `/v1/Friend/deletefriend?friendId=${friendId}`
+    );
   }
 }

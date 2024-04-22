@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { User } from '../friends-view.component';
+import { Friend } from 'src/app/models/Friend';
 
 @Component({
   selector: 'app-friend-card',
@@ -17,9 +17,13 @@ import { User } from '../friends-view.component';
 export class FriendCardComponent implements OnInit {
   constructor() {}
 
-  @Input() friend: User;
+  @Input() friend: Friend;
   @Input() friendIndex: number;
   @Output() removeFriend: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit(): void {}
+
+  onRemove() {
+    this.removeFriend.emit(this.friend.id);
+  }
 }

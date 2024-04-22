@@ -94,7 +94,7 @@
     *ngFor="let subtask of filteredSubtasks; let index = taskId"
     [subtask]="subtask"
     [subtaskIndex]="filteredSubtasks.indexOf(subtask)"
-    (onTaskDelete)="(onTaskDelete)"
-    (onDetailsClick)="(onDetailsClick)"
+    (onSubtaskDelete)="onSubtaskDelete($event)"
+    (checkSubtask)="emitCheckSubtask($event)"
   ></app-subtask>
 </div>

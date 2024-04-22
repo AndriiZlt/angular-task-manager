@@ -13,13 +13,13 @@ import { TaskManagerService } from 'src/app/services/task-manager.service';
   selector: 'app-subtask',
   templateUrl: './subtask.component.html',
   styleUrls: ['./subtask.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubtaskComponent implements OnInit {
   @Input() subtask: Subtask;
   @Input() subtaskIndex: number;
-  @Output() onTaskDelete: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onDetailsClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onSubtaskDelete: EventEmitter<any> = new EventEmitter<any>();
+  @Output() checkSubtask: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private taskManagerService: TaskManagerService) {}
 
@@ -30,9 +30,15 @@ export class SubtaskComponent implements OnInit {
       action: 'check',
       taskId: this.subtask.id,
     });
+
+    this.checkSubtask.emit(this.subtask.id);
   }
 
-  onCardClick(index: number): void {
-    this.onDetailsClick.emit(index);
+  deleteSubtask() {
+    this.onSubtaskDelete.emit(this.subtask.id);
+  }
+
+  statusUpdate() {
+    this.checkSubtask.emit(this.subtask.id);
   }
 }

@@ -6,6 +6,7 @@ import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 import { DatePipe } from '@angular/common';
 import { Subtask } from 'src/app/models/Subtask';
+import { HttpClient } from '@angular/common/http';
 
 enum TaskFilterValue {
   'all' = 1,
@@ -43,6 +44,7 @@ export class TaskManagerComponent implements OnInit {
     localStorage.setItem('lastUrl', 'home/task-manager');
 
     this.taskManagerService.getEvent().subscribe((param: any) => {
+      // console.log('param:', param);
       if (param !== undefined) {
         switch (param.action) {
           case 'check':
@@ -56,6 +58,17 @@ export class TaskManagerComponent implements OnInit {
           case 'edit':
             this.editTask(param);
             break;
+          case 'subtaskDelete':
+            this.deleteSubtask(param.id);
+            break;
+          case 'subtaskStatusUpdate':
+            this.statusUpdateSubtask(param.id);
+            break;
+          case 'addSubtask':
+            this.updatePage();
+            break;
+          default:
+            console.log('Unknown action!');
         }
       }
     });
@@ -67,13 +80,14 @@ export class TaskManagerComponent implements OnInit {
 
   updatePage(): void {
     this.apiService.getSubtasks().subscribe((data) => {
-      console.log('data after fetch', data);
-      this.subtasks = [...(<Subtask[]>data)];
+      this.subtasks = <Subtask[]>data;
+      localStorage.setItem('subtasks', JSON.stringify(this.subtasks));
       console.log('Subtasks:', this.subtasks);
     });
 
     this.apiService.getTasks().subscribe((data) => {
       this.tasks = [...(<Task[]>data)];
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
       this.updateInput(`New task #${this.tasks.length + 1}`);
       this.updateFilter();
 
@@ -105,6 +119,7 @@ export class TaskManagerComponent implements OnInit {
   }
 
   onFormChange(field: string, value: string): void {
+    console.log('form change:', field, value);
     if (
       this.title === '' ||
       (this.title === `New task #${this.tasks.length + 1}` &&
@@ -121,6 +136,7 @@ export class TaskManagerComponent implements OnInit {
         break;
       case 'description':
         this.description = this.capitalize(value);
+        console.log('description:', this.description);
         break;
     }
   }
@@ -128,48 +144,6 @@ export class TaskManagerComponent implements OnInit {
   onDatePickerChange(event: any) {
     this.datePickerDate = event.value;
     this.dueDate = this.datePipe.transform(event.value, 'yyyy-MM-ddThh:mm:ss');
-  }
-
-  addTask(): void {
-    if (this.title !== '') {
-      let taskToAdd: TaskToAdd = {
-        title: this.capitalize(this.title),
-        description: this.capitalize(this.description),
-        dateDue: this.dueDate,
-      };
-      this.apiService.addTask(taskToAdd).subscribe((data) => {
-        this.updatePage();
-      });
-    } else {
-      this.isDisabled = true;
-    }
-  }
-
-  editTask(params: any): void {
-    this.apiService.updateTask(params.task).subscribe((data) => {
-      this.updatePage();
-    });
-  }
-
-  onTaskDelete(taskId: number): void {
-    if (taskId != undefined) {
-      this.apiService.deleteTask(taskId).subscribe((data) => {
-        this.updatePage();
-      });
-    }
-  }
-
-  onCheckClick(taskId: number): void {
-    if (taskId !== undefined) {
-      this.apiService.updateStatus(taskId).subscribe((data) => {
-        this.updatePage();
-      });
-    }
-  }
-
-  onDetailsClick(index: number): void {
-    localStorage.setItem('detailsIndex', JSON.stringify(index));
-    this.router.navigate(['home/task-manager/task', this.tasks[index].id]);
   }
 
   updateInput(title: string = ''): void {
@@ -213,5 +187,70 @@ export class TaskManagerComponent implements OnInit {
   modalClose() {
     this.isModalOn = false;
     this.updatePage();
+  }
+
+  // Task service
+
+  addTask(): void {
+    if (this.title !== '') {
+      let taskToAdd: TaskToAdd = {
+        title: this.capitalize(this.title),
+        description: this.capitalize(this.description),
+        dateDue: this.dueDate,
+      };
+      this.apiService.addTask(taskToAdd).subscribe((_) => {
+        this.updatePage();
+      });
+    } else {
+      this.isDisabled = true;
+    }
+  }
+
+  editTask(params: any): void {
+    this.apiService.updateTask(params.task).subscribe((_) => {
+      this.updatePage();
+    });
+  }
+
+  onTaskDelete(taskId: number): void {
+    if (taskId != undefined) {
+      this.apiService.deleteTask(taskId).subscribe((_) => {
+        this.updatePage();
+      });
+    }
+  }
+
+  onCheckClick(taskId: number): void {
+    if (taskId !== undefined) {
+      this.apiService.updateStatus(taskId).subscribe((_) => {
+        this.updatePage();
+      });
+    }
+  }
+
+  onDetailsClick(index: number): void {
+    localStorage.setItem('detailsIndex', JSON.stringify(index));
+    this.router.navigate(['home/task-manager/task', this.tasks[index].id]);
+  }
+
+  // Subtask service
+
+  // Add Subtask located in subtask-modal
+  addSubtask(subtask: Subtask) {}
+
+  deleteSubtask(subtaskId: number): void {
+    if (subtaskId != undefined) {
+      this.apiService.deleteSubtask(subtaskId).subscribe((_) => {
+        this.updatePage();
+      });
+    }
+  }
+
+  statusUpdateSubtask(subtaskId: number): void {
+    if (subtaskId != undefined) {
+      this.apiService.updateStatusSubtask(subtaskId).subscribe((_) => {
+        this.updatePage();
+      });
+    }
   }
 }

@@ -90,7 +90,6 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.valid = true;
-    console.log('Logging in... =>' + JSON.stringify(this.registerForm.value));
 
     let capitalized = // Making first letter uppercase
       this.registerForm.value.name.charAt(0).toUpperCase() +
@@ -98,10 +97,10 @@ export class RegisterComponent implements OnInit {
 
     this.registerDto.Name = this.capitalize(this.registerForm.value.name);
     this.registerDto.Surname = this.capitalize(this.registerForm.value.surname);
-    this.registerDto.Username = this.registerForm.value.username;
+    this.registerDto.UserName = this.registerForm.value.username;
     this.registerDto.Email = this.registerForm.value.email;
     this.registerDto.Password = this.registerForm.value.password;
-
+    console.log('RegisterDTO =>' + JSON.stringify(this.registerDto));
     this.register(this.registerDto);
 
     this.loginNameService.triggerEvent(capitalized);

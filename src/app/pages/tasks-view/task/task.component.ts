@@ -9,12 +9,13 @@ import {
 import { Subtask } from 'src/app/models/Subtask';
 import { Task } from 'src/app/models/Task';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
+import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskComponent implements OnInit {
   @Input() task: Task;
@@ -23,9 +24,13 @@ export class TaskComponent implements OnInit {
   @Output() onTaskDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() onDetailsClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() modalOpen: EventEmitter<any> = new EventEmitter<any>();
+  @Output() checkSubtask: EventEmitter<any> = new EventEmitter<any>();
   filteredSubtasks: Subtask[];
 
-  constructor(private taskManagerService: TaskManagerService) {}
+  constructor(
+    private taskManagerService: TaskManagerService,
+    private apiService: TaskManagerApiService
+  ) {}
 
   ngOnInit(): void {
     if (this.subtasks) {
@@ -48,5 +53,29 @@ export class TaskComponent implements OnInit {
 
   openModal() {
     this.modalOpen.emit(this.task.id);
+  }
+
+  onSubtaskDelete(subtaskId: number) {
+    this.apiService.deleteSubtask(subtaskId).subscribe((data) => {
+      this.updateSubtasks(subtaskId);
+    });
+  }
+
+  updateSubtasks(idToDelete: number): void {
+    this.filteredSubtasks = this.filteredSubtasks.filter(
+      (s) => s.id !== idToDelete
+    );
+
+    let subtasksFromLC: Subtask[] = JSON.parse(
+      localStorage.getItem('subtasks')
+    );
+    if (subtasksFromLC) {
+      let newsubtasks = subtasksFromLC.filter((s) => s.id !== idToDelete);
+      localStorage.setItem('subtasks', JSON.stringify(newsubtasks));
+    }
+  }
+
+  emitCheckSubtask(id: number) {
+    this.checkSubtask.emit(id);
   }
 }

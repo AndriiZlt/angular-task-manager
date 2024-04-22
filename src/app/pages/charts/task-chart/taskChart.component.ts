@@ -20,48 +20,30 @@ export class TaskChartComponent implements OnInit {
 
   constructor(private apiService: TaskManagerApiService) {}
 
+  ngOnInit(): void {}
+
   ngOnChanges(changes: SimpleChange) {
-    console.log('change...', changes);
     if (changes['tasks']) {
       this.tasks = changes['tasks'].currentValue;
     }
     if (changes['subtasks']) {
       this.subtasks = changes['subtasks'].currentValue;
     }
-
-    console.log('Subtasks/Tasks after change:', this.tasks, this.subtasks);
-
-    // this.fetchData();
     this.updateChart();
   }
 
-  ngOnInit(): void {
-    // this.fetchData();
-    // console.log('dates for chart', this.labels);
+  ngOnDestroy(): void {
+    this.chart.destroy();
   }
 
-  // fetchData(): void {
-  //   console.log('fetching data..');
-  //   this.apiService.getSubtasks().subscribe((data) => {
-  //     this.subtasks = [...(<Subtask[]>data)];
-  //   });
-
-  //   this.apiService.getTasks().subscribe((data) => {
-  //     this.tasks = [...(<Task[]>data)];
-  //     this.updateChart();
-  //   });
-  //   console.log('After fetching', this.tasks, this.subtasks);
-  // }
-
   updateChart() {
-    // console.log('update chart', this.tasks, this.subtasks);
     if (this.chart) {
       this.chart.destroy();
     }
     this.updateLabels();
     this.updateDatasets();
-
     var canvas = document.getElementById('canvas');
+
     this.chart = new Chart(canvas, {
       type: 'bar',
       data: {
@@ -87,22 +69,24 @@ export class TaskChartComponent implements OnInit {
   }
 
   shortenOneDate(dateToShorten: string): string {
-    if (dateToShorten) {
-      let date = new Date(dateToShorten);
-      let transformedDate: string =
-        date.getDate().toString() +
-        '-0' +
-        (date.getMonth() + 1).toString() +
-        '-' +
-        date.getFullYear().toString();
-      return transformedDate;
-    } else {
+    if (
+      dateToShorten === null ||
+      (dateToShorten != null && dateToShorten.length < 11)
+    ) {
       return dateToShorten;
     }
+
+    let date = new Date(dateToShorten);
+    let transformedDate: string =
+      date.getDate().toString() +
+      '-0' +
+      (date.getMonth() + 1).toString() +
+      '-' +
+      date.getFullYear().toString();
+    return transformedDate;
   }
 
   shortenAllDates() {
-    // console.log('data before shorting:', this.tasks, this.subtasks);
     for (let i = 0; i < this.tasks.length; i++) {
       this.tasks[i].dateCreated = this.shortenOneDate(
         this.tasks[i].dateCreated
@@ -124,12 +108,9 @@ export class TaskChartComponent implements OnInit {
         this.subtasks[i].dateCompleted
       );
     }
-
-    // console.log('data after shorting:', this.tasks, this.subtasks);
   }
 
   updateLabels(): void {
-    // console.log('update labels', this.tasks, this.subtasks);
     this.shortenAllDates(); // Make all dates in Tasks and Subtasks short
 
     // Take only dates to one string[]
@@ -140,23 +121,16 @@ export class TaskChartComponent implements OnInit {
       .concat(this.subtasks.map((t) => t.dateCompleted))
       .filter((s) => s != null);
 
-    // console.log('shortDates', shortDates);
-
     // Only unique dates
     let unique_values = shortDates.filter(
       (value, index, current_value) => current_value.indexOf(value) === index
     );
-    // console.log(
-    //   'unique_values',
-    //   unique_values.filter((v) => v != null)
-    // );
 
     // Sorting before updateting labels
     this.labels = unique_values.filter((v) => v != null).sort();
   }
 
   updateDatasets() {
-    // console.log('update dataset', this.tasks, this.subtasks);
     let dataset1 = [];
     let dataset2 = [];
     this.labels.map((label) => {

@@ -1,13 +1,13 @@
 <div class="friendCard">
-  <img [src]="friend.picture.large" alt="friened-photo" />
+  <img [src]="friend.picture" alt="friened-photo" />
   <div class="friendDetails">
     <div class="nameAge">
       <p style="max-width: 150px; overflow: hidden">
-        {{ friend.name.first }}
+        {{ friend.fName }}
       </p>
       <p>{{ friend.age }}</p>
     </div>
-    <p class="friendCountry">{{ friend.city }}</p>
+    <!-- <p class="friendCountry">{{ friend.city }}</p> -->
   </div>
 
   <div class="genderImg">
@@ -20,7 +20,7 @@
       alt="gender-icon"
     />
   </div>
-  <div class="removeFriendIcon" (click)="this.removeFriend.emit(friend.id)">
+  <div class="removeFriendIcon" (click)="onRemove()">
     <img src="../../assets/remove-icon.png" alt="add-friend-icon" />
   </div>
 </div>

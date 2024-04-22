@@ -20,32 +20,41 @@ export class AuthGuard implements CanActivate {
     let token = localStorage.getItem('token');
     let lastUrl = localStorage.getItem('lastUrl');
 
+    console.log(
+      'LastUrl:',
+      lastUrl,
+      'token:',
+      token ? true : false,
+      'state.url:',
+      state.url
+    );
     // login & register pages
     if (state.url === '/login' || state.url === '/register') {
       if (token) {
-        if (token) {
-          if (lastUrl) {
-            if (lastUrl === 'login' || lastUrl === 'register') {
-              this.router.navigate(['home/task-manager']);
-            } else {
-              this.router.navigate([`${lastUrl}`]);
-            }
+        if (lastUrl) {
+          if (lastUrl === 'login' || lastUrl === 'register') {
+            this.router.navigate(['home/task-manager']);
           } else {
-            this.router.navigate([`home/task-manager`]);
+            this.router.navigate([`${lastUrl}`]);
           }
+        } else {
+          this.router.navigate([`home/task-manager`]);
         }
+        console.log('Login Returning false');
         return false;
       } else {
+        console.log('Login Returning true');
         return true;
       }
     }
 
     // other pages
     if (token) {
-      console.log('Token => ' + token);
+      // console.log('Token => ' + token);
+      console.log('Other Returning true');
       return true;
     } else {
-      console.log('No token');
+      console.log('Other Returning false (no token)and navigating to Login');
       this.router.navigate(['login']);
       return false;
     }
