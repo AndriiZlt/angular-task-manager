@@ -25,6 +25,10 @@ export class SubtaskComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  openModal(){
+    
+  }
+
   onCheckClick(index: number): void {
     this.taskManagerService.triggerEvent({
       action: 'check',
