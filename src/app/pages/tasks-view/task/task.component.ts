@@ -41,10 +41,10 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  onCheckClick(index: number): void {
+  onCheckClick(): void {
     this.taskManagerService.triggerEvent({
-      action: 'check',
-      taskId: this.task.id,
+      action: 'taskStatusChange',
+      id: this.task.id,
     });
   }
 

@@ -48,7 +48,8 @@ export class TaskManagerComponent implements OnInit {
       // console.log('param:', param);
       if (param !== undefined) {
         switch (param.action) {
-          case 'check':
+          case 'taskStatusChange':
+            console.log('1', param.id);
             this.onCheckClick(param.id);
             param = undefined;
             break;
@@ -229,11 +230,11 @@ export class TaskManagerComponent implements OnInit {
   }
 
   onCheckClick(taskId: number): void {
-    if (taskId !== undefined) {
-      this.apiService.updateStatus(taskId).subscribe((_) => {
-        this.updatePage();
-      });
-    }
+    console.log('2', taskId);
+
+    this.apiService.updateStatus(taskId).subscribe((_) => {
+      this.updatePage();
+    });
   }
 
   onDetailsClick(index: number): void {
@@ -244,7 +245,6 @@ export class TaskManagerComponent implements OnInit {
   // Subtask service
 
   // Add Subtask located in subtask-modal
-  addSubtask(subtask: Subtask) {}
 
   deleteSubtask(subtaskId: number): void {
     if (subtaskId != undefined) {

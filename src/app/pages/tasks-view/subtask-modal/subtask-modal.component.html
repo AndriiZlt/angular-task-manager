@@ -20,7 +20,7 @@
     </div>
     <div class="form">
       <form class="example-form" style="max-width: 100%">
-        <h3 style="width: 250px; margin-right: 10px">SUBTASK DESCRIPTION:</h3>
+        <h3 style="width: 10%; margin-right: 10px">SUBTASK:</h3>
         <mat-form-field class="description" style="width: 100%">
           <mat-label>Description...</mat-label>
           <input
@@ -31,7 +31,7 @@
             [(ngModel)]="description"
             [ngModelOptions]="{ standalone: true }"
             (ngModelChange)="onFormChange('description', $event)"
-            style="font-size: 18px; font-weight: 500; width: 800px"
+            style="font-size: 18px; font-weight: 500; width: 70%"
           />
 
           <mat-hint align="end">{{ message2.value.length }} / 165</mat-hint>

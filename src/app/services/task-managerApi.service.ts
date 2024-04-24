@@ -31,6 +31,7 @@ export class TaskManagerApiService {
   }
 
   updateStatus(taskId: number) {
+    console.log(3);
     return this.http.put(
       this.rootURL + `/v1/Task/updatestatus?taskId=${taskId}`,
       taskId

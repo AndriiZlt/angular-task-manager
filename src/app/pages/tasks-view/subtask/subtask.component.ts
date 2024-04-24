@@ -33,7 +33,7 @@ export class SubtaskComponent implements OnInit {
 
   onCheckClick(index: number): void {
     this.taskManagerService.triggerEvent({
-      action: 'check',
+      action: 'taskStatusChange',
       taskId: this.subtask.id,
     });
 

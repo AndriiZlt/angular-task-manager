@@ -103,7 +103,7 @@ export class DetailsComponent implements OnInit {
   }
 
   checkHandler(index: number): void {
-    this.taskManagerService.triggerEvent({ action: 'check', index });
+    this.taskManagerService.triggerEvent({ action: 'taskStatusChange', index });
 
     if (this.task.status === 'completed') {
       this.task.status = 'undone';
