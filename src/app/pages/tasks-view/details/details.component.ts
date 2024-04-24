@@ -6,10 +6,10 @@ import {
   ChangeDetectionStrategy,
   SimpleChange,
 } from '@angular/core';
-import { Task } from 'src/app/models/Task';
+import { Task } from 'src/app/models/Task.nodel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
-import { Subtask } from 'src/app/models/Subtask';
+import { Subtask } from 'src/app/models/Subtask.model';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 
 @Component({
@@ -26,6 +26,8 @@ export class DetailsComponent implements OnInit {
   isDisabled: boolean = true;
   height: string;
   filteredSubtasks: Subtask[];
+  updateModalOn: boolean = false;
+  targetSubtaskId: number = null;
 
   constructor(
     private router: Router,
@@ -42,11 +44,11 @@ export class DetailsComponent implements OnInit {
 
   onSubtaskDelete(subtaskId: number): void {
     this.apiService.deleteSubtask(subtaskId).subscribe((data) => {
-      this.updateSubtasks(subtaskId);
+      this.deleteSubtask(subtaskId);
     });
   }
 
-  updateSubtasks(idToDelete: number): void {
+  deleteSubtask(idToDelete: number): void {
     this.filteredSubtasks = this.filteredSubtasks.filter(
       (s) => s.id !== idToDelete
     );
@@ -57,6 +59,21 @@ export class DetailsComponent implements OnInit {
     if (subtasksFromLC) {
       let newsubtasks = subtasksFromLC.filter((s) => s.id !== idToDelete);
       localStorage.setItem('subtasks', JSON.stringify(newsubtasks));
+    }
+  }
+
+  updateSubtaskInLC(updatedSubtask: Subtask) {
+    // console.log('subtaskToUpdate', subtaskToUpdate);
+    let subtaskToUpdate: Subtask = this.filteredSubtasks.filter(
+      (s) => s.id === updatedSubtask.id
+    )[0];
+
+    let index = this.filteredSubtasks.indexOf(subtaskToUpdate);
+
+    if (this.filteredSubtasks[index].taskId !== updatedSubtask.taskId) {
+      this.deleteSubtask(subtaskToUpdate.id);
+    } else {
+      this.filteredSubtasks[index].description = updatedSubtask.description;
     }
   }
 
@@ -187,5 +204,17 @@ export class DetailsComponent implements OnInit {
     } else {
       console.log('Empty title!');
     }
+  }
+
+  // Modal
+  modalClose() {
+    this.updateModalOn = false;
+    // this.updatePage();
+  }
+
+  openUpdateModal(subtaskId: number) {
+    console.log(2);
+    this.targetSubtaskId = subtaskId;
+    this.updateModalOn = true;
   }
 }

@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginNameService } from 'src/app/services/loginName.service';
-import { Register } from 'src/app/models/register';
-import { JwtAuth } from 'src/app/models/jwtAuth';
+import { Register } from 'src/app/models/register.model';
+import { JwtAuth } from 'src/app/models/jwtAuth.model';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({

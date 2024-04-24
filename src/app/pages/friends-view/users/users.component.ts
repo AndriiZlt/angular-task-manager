@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { User } from '../friends-view.component';
 import { Router } from '@angular/router';
-import { Friend } from 'src/app/models/Friend';
-import { FriendToAdd } from 'src/app/models/FriendToAdd';
+import { Friend } from 'src/app/models/Friend.model';
+import { FriendToAdd } from 'src/app/models/FriendToAdd.model';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
-import { Gender } from 'src/app/models/Gender';
 
 @Component({
   selector: 'app-users',

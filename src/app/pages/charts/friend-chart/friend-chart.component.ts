@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { Friend } from 'src/app/models/Friend';
+import { Friend } from 'src/app/models/Friend.model';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 
 @Component({

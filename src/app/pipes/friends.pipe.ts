@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Friend } from '../models/Friend';
+import { Friend } from '../models/Friend.model';
 
 @Pipe({
   name: 'pipe2',

@@ -6,8 +6,8 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Subtask } from 'src/app/models/Subtask';
-import { Task } from 'src/app/models/Task';
+import { Subtask } from 'src/app/models/Subtask.model';
+import { Task } from 'src/app/models/Task.nodel';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 
@@ -25,6 +25,7 @@ export class TaskComponent implements OnInit {
   @Output() onDetailsClick: EventEmitter<any> = new EventEmitter<any>();
   @Output() modalOpen: EventEmitter<any> = new EventEmitter<any>();
   @Output() checkSubtask: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openUpdateModal: EventEmitter<any> = new EventEmitter<any>();
   filteredSubtasks: Subtask[];
 
   constructor(
@@ -73,6 +74,10 @@ export class TaskComponent implements OnInit {
       let newsubtasks = subtasksFromLC.filter((s) => s.id !== idToDelete);
       localStorage.setItem('subtasks', JSON.stringify(newsubtasks));
     }
+  }
+
+  openUpdateModalHandler(event) {
+    this.openUpdateModal.emit(event);
   }
 
   emitCheckSubtask(id: number) {

@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TaskToAdd } from '../models/TaskToAdd';
-import { Task } from '../models/Task';
-import { SubtaskToAdd } from '../models/SubtaskToAdd';
-import { FriendToAdd } from '../models/FriendToAdd';
+import { TaskToAdd } from '../models/TaskToAdd.model';
+import { Task } from '../models/Task.nodel';
+import { SubtaskToAdd } from '../models/SubtaskToAdd.model';
+import { FriendToAdd } from '../models/FriendToAdd.model';
+import { Subtask } from '../models/Subtask.model';
 
 @Injectable({
   providedIn: 'root',
@@ -61,6 +62,10 @@ export class TaskManagerApiService {
       this.rootURL + `/v1/Subtask/updatestatus?taskId=${subtaskId}`,
       subtaskId
     );
+  }
+
+  updateSubtask(subtask: Subtask) {
+    return this.http.put(this.rootURL + '/v1/Subtask/updatesubtask', subtask);
   }
 
   // FRIENDS

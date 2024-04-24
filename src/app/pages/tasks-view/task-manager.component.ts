@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Task } from 'src/app/models/Task';
-import { TaskToAdd } from 'src/app/models/TaskToAdd';
+import { Task } from 'src/app/models/Task.nodel';
+import { TaskToAdd } from 'src/app/models/TaskToAdd.model';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 import { DatePipe } from '@angular/common';
-import { Subtask } from 'src/app/models/Subtask';
+import { Subtask } from 'src/app/models/Subtask.model';
 import { HttpClient } from '@angular/common/http';
 
 enum TaskFilterValue {
@@ -28,11 +28,12 @@ export class TaskManagerComponent implements OnInit {
   description: string = '';
   dueDate: string = null;
   datePickerDate: string = null;
-
+  targetSubtaskId: number;
   filter: TaskFilterValue = TaskFilterValue.all;
   isDisabled: boolean = true;
-  isModalOn: boolean = false;
-  modalTaskId: number = 1;
+  addModalOn: boolean = false;
+  updateModalOn: boolean = false;
+  modalTaskId: number;
 
   constructor(
     private router: Router,
@@ -64,7 +65,7 @@ export class TaskManagerComponent implements OnInit {
           case 'subtaskStatusUpdate':
             this.statusUpdateSubtask(param.id);
             break;
-          case 'addSubtask':
+          case 'updatePage':
             this.updatePage();
             break;
           default:
@@ -83,15 +84,14 @@ export class TaskManagerComponent implements OnInit {
       this.subtasks = <Subtask[]>data;
       localStorage.setItem('subtasks', JSON.stringify(this.subtasks));
       console.log('Subtasks:', this.subtasks);
-    });
 
-    this.apiService.getTasks().subscribe((data) => {
-      this.tasks = [...(<Task[]>data)];
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+      this.apiService.getTasks().subscribe((data) => {
+        this.tasks = [...(<Task[]>data)];
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+        console.log('Tasks:', this.tasks);
+      });
       this.updateInput(`New task #${this.tasks.length + 1}`);
       this.updateFilter();
-
-      console.log('Tasks:', this.tasks);
     });
   }
 
@@ -119,7 +119,6 @@ export class TaskManagerComponent implements OnInit {
   }
 
   onFormChange(field: string, value: string): void {
-    console.log('form change:', field, value);
     if (
       this.title === '' ||
       (this.title === `New task #${this.tasks.length + 1}` &&
@@ -181,12 +180,21 @@ export class TaskManagerComponent implements OnInit {
 
   modalOpen(id: number) {
     this.modalTaskId = id;
-    this.isModalOn = true;
+    this.addModalOn = true;
   }
 
   modalClose() {
-    this.isModalOn = false;
+    this.addModalOn = false;
+    this.updateModalOn = false;
     this.updatePage();
+  }
+
+  openUpdateModal(subtaskId: number) {
+    this.modalTaskId = this.subtasks.filter(
+      (s) => s.id === subtaskId
+    )[0].taskId;
+    this.targetSubtaskId = subtaskId;
+    this.updateModalOn = true;
   }
 
   // Task service

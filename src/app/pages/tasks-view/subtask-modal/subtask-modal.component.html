@@ -1,48 +1,58 @@
-<form class="example-form" style="max-width: 100%">
-    <mat-form-field class="title">
-      <mat-label>Title...</mat-label>
-      <input
-        class="message"
-        matInput
-        #message1
-        maxlength="43"
-        [(ngModel)]="title"
-        [ngModelOptions]="{ standalone: true }"
-        style="font-size: 18px; font-weight: 500; width: 200px"
-        (ngModelChange)="onFormChange('title', $event)"
-      />
-
-      <mat-hint align="end">{{ message1.value.length }} / 43</mat-hint>
-    </mat-form-field>
-    <mat-form-field class="description">
-      <mat-label>Description...</mat-label>
-      <input
-        class="message"
-        matInput
-        #message2
-        maxlength="165"
-        [(ngModel)]="description"
-        [ngModelOptions]="{ standalone: true }"
-        (ngModelChange)="onFormChange('description', $event)"
-        style="font-size: 18px; font-weight: 500; width: 500px"
-      />
-
-      <mat-hint align="end">{{ message2.value.length }} / 165</mat-hint>
-    </mat-form-field>
-
-    <div class="buttons">
-      <button
-        class="button"
-        [disabled]="isDisabled"
-        [style]="
-          isDisabled
-            ? 'background:#545b77;color:grey;'
-            : 'background:#58AD91'
-        "
-        (click)="addSubtask()"
-      >
-        Add
+<div class="backdrop">
+  <div class="inner">
+    <div class="closeButton" (click)="closeModal()">
+      <button class="button">
+        <span class="X"></span>
+        <span class="Y"></span>
+        <div class="close">Close</div>
       </button>
-      <button (click)="updateInput()" class="button">Clear</button>
     </div>
-  </form>
+
+    <div class="top">
+      <h3>TASK:</h3>
+      <select class="drop-menu" (change)="onSelect($event.target.value)">
+        <option disabled>Select Task</option>
+        <option>{{ mainTask.title }}: {{ mainTask.description }}</option>
+        <option *ngFor="let task of filteredTasks">
+          {{ task.title }}: {{ task.description }}
+        </option>
+      </select>
+    </div>
+    <div class="form">
+      <form class="example-form" style="max-width: 100%">
+        <h3 style="width: 250px; margin-right: 10px">SUBTASK DESCRIPTION:</h3>
+        <mat-form-field class="description" style="width: 100%">
+          <mat-label>Description...</mat-label>
+          <input
+            class="message"
+            matInput
+            #message2
+            maxlength="165"
+            [(ngModel)]="description"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="onFormChange('description', $event)"
+            style="font-size: 18px; font-weight: 500; width: 800px"
+          />
+
+          <mat-hint align="end">{{ message2.value.length }} / 165</mat-hint>
+        </mat-form-field>
+
+        <div class="buttons">
+          <button
+            class="button"
+            [disabled]="isDisabled"
+            [style]="
+              isDisabled
+                ? 'background:#545b77;color:grey;'
+                : 'background:#58AD91'
+            "
+            (click)="addSubtask()"
+          >
+            {{ targetSubtaskId ? "Update" : "Add" }}
+          </button>
+          <button (click)="updateInput()" class="button">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

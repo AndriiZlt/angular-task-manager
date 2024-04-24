@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { Subtask } from 'src/app/models/Subtask';
-import { Task } from 'src/app/models/Task';
+import { Subtask } from 'src/app/models/Subtask.model';
+import { Task } from 'src/app/models/Task.nodel';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 
 @Component({

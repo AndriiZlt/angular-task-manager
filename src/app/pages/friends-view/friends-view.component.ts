@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Friend } from 'src/app/models/Friend';
+import { Friend } from 'src/app/models/Friend.model';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 
 export interface User {

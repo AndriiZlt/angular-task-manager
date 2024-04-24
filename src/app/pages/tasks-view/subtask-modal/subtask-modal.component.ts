@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Subtask } from 'src/app/models/Subtask';
-import { SubtaskToAdd } from 'src/app/models/SubtaskToAdd';
+import { Subtask } from 'src/app/models/Subtask.model';
+import { SubtaskToAdd } from 'src/app/models/SubtaskToAdd.model';
+import { Task } from 'src/app/models/Task.nodel';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 
@@ -14,62 +15,95 @@ export class SubtaskModalComponent implements OnInit {
   description: string = '';
   datePickerDate: string = null;
   isDisabled: boolean = true;
-  @Input() subtasks: Subtask[];
+  tasks: Task[];
+  subtasks: Subtask[];
+  targetSubtask: Subtask;
+  filteredTasks: Task[];
+  mainTask: Task;
+  selectedTaskId: number;
+  @Input() targetSubtaskId: number = null;
+  @Input() subtask: Subtask;
   @Input() taskId: number;
   @Output() modalClose: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateSubtask: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private taskManagerService: TaskManagerService,
     private apiService: TaskManagerApiService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.tasks = JSON.parse(localStorage.getItem('tasks'));
+    this.subtasks = JSON.parse(localStorage.getItem('subtasks'));
+    this.targetSubtask = this.targetSubtaskId
+      ? this.subtasks.filter((s) => s.id === this.targetSubtaskId)[0]
+      : null;
+
+    this.description = this.targetSubtaskId
+      ? this.targetSubtask.description
+      : '';
+
+    this.mainTask = this.tasks.filter((t) => t.id === this.taskId)[0];
+
+    this.filteredTasks = this.tasks.filter((t) => t.id !== this.taskId);
+    if (this.mainTask) {
+      this.selectedTaskId = this.mainTask.id;
+    }
+
+    this.title = this.targetSubtaskId ? 'Update Subtask' : 'Create Subtask';
+  }
+
+  onSelect(event: string) {
+    let selectedTitle = event.split(':')[0];
+    this.selectedTaskId = this.tasks.filter(
+      (t) => t.title === selectedTitle
+    )[0].id;
+    this.isDisabled = false;
+    console.log('Task CHanged to :', this.selectedTaskId);
+  }
 
   onFormChange(field: string, value: string): void {
-    if (this.title === '' || this.description === '') {
+    if (this.description === '') {
       this.isDisabled = true;
     } else {
       this.isDisabled = false;
     }
 
-    switch (field) {
-      case 'title':
-        this.title = this.capitalize(value);
-        break;
-      case 'description':
-        this.description = this.capitalize(value);
-        break;
-    }
+    this.description = this.capitalize(value);
   }
 
   capitalize(value: string): string {
-    let capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
-    return capitalizedValue;
+    return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
   updateInput(title: string = ''): void {
     this.description = '';
-    this.title = title;
   }
 
   addSubtask(): void {
-    if (this.title !== '') {
+    if (!this.targetSubtaskId) {
       let subtaskToAdd: SubtaskToAdd = {
-        title: this.capitalize(this.title),
+        title: '',
         description: this.capitalize(this.description),
-        taskId: this.taskId,
+        taskId: this.selectedTaskId,
       };
-
       this.apiService.addSubtask(subtaskToAdd).subscribe((data) => {
         this.closeModal();
-        this.taskManagerService.triggerEvent({
-          action: 'addSubtask',
-          id: subtaskToAdd.taskId,
-        });
       });
     } else {
-      alert('The title is empty!');
+      let subtaskToUpdate: Subtask = this.targetSubtask;
+      subtaskToUpdate.description = this.capitalize(this.description);
+      subtaskToUpdate.taskId = this.selectedTaskId;
+      this.apiService.updateSubtask(subtaskToUpdate).subscribe((res) => {
+        this.updateSubtask.emit(subtaskToUpdate);
+        this.closeModal();
+      });
     }
+
+    this.taskManagerService.triggerEvent({
+      action: 'updatePage',
+      id: null,
+    });
   }
 
   closeModal() {

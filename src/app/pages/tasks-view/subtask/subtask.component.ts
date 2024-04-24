@@ -6,7 +6,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Subtask } from 'src/app/models/Subtask';
+import { Subtask } from 'src/app/models/Subtask.model';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 
 @Component({
@@ -20,13 +20,15 @@ export class SubtaskComponent implements OnInit {
   @Input() subtaskIndex: number;
   @Output() onSubtaskDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() checkSubtask: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateSubtask: EventEmitter<any> = new EventEmitter<any>();
+  @Output() openUpdateModal: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private taskManagerService: TaskManagerService) {}
 
   ngOnInit(): void {}
 
-  openModal(){
-    
+  openModal() {
+    this.openUpdateModal.emit(this.subtask.id);
   }
 
   onCheckClick(index: number): void {

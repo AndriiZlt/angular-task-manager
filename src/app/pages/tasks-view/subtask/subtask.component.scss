@@ -1,88 +1,79 @@
 @import "../../../../assets/scss/mixins";
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  margin-bottom: 20px;
+  width: 97%;
+
+  ::first-letter {
+    text-transform: capitalize;
+  }
+  .text {
+    width: 400px;
+    h3 {
+      // display: block;
+      height: 22px;
+      margin-bottom: 0px;
+      font-size: 16px;
+      line-height: 24px;
+      font-family: "Roboto", sans-serif;
+      font-weight: 500;
+      font-style: normal;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      span {
+        font-weight: 500;
+        color: cadetblue;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+    }
+
+    #titleH3 {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    h5 {
+      margin: 0;
+      span {
+        font-weight: 500;
+        color: rgb(8, 107, 110);
+        font-size: 14px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  p {
+    align-self: center;
+    width: 30px;
+    margin: 0;
+    font-size: 16px;
+    align-self: center;
+  }
+}
+
 .card {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  align-self: flex-end;
-  width: 700px;
-  height: 80px;
+  height: 40px;
+  padding: 0 20px;
+  margin-left: 20px;
   margin-bottom: 10px;
-  padding: 0 10px;
-
-  // font-family: "Raleway", sans-serif;
-  // font-optical-sizing: auto;
-  // font-weight: 400;
-  // font-style: normal;
 
   .mat-card {
     // font-family: Roboto, sans-serif;
     font-family: "Roboto", sans-serif;
     font-weight: 300;
     font-style: normal;
-  }
-
-  .task {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 700px;
-    // text-transform: capitalize;
-    font-weight: 600;
-    margin: 0;
-    :not(:last-child) {
-      margin-right: 10px;
-    }
-    ::first-letter {
-      text-transform: capitalize;
-    }
-    .text {
-      width: 400px;
-      h3 {
-        // display: block;
-        height: 26px;
-        margin-bottom: 0px;
-        font-size: 18px;
-        line-height: 24px;
-        font-family: "Roboto", sans-serif;
-        font-weight: 500;
-        font-style: normal;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        span {
-          font-weight: 500;
-          color: cadetblue;
-          font-size: 14px;
-          margin-right: 10px;
-        }
-      }
-
-      #titleH3 {
-        font-weight: 600;
-        font-size: 20px;
-      }
-      h5 {
-        margin: 0;
-        span {
-          font-weight: 500;
-          color: rgb(8, 107, 110);
-          font-size: 14px;
-          margin-right: 10px;
-        }
-      }
-    }
-
-    p {
-      align-self: center;
-      width: 30px;
-      margin: 0;
-      font-size: 18px;
-      align-self: center;
-    }
   }
 
   button {
@@ -93,71 +84,17 @@
     margin: 0 12px;
   }
 
-  mat-checkbox::ng-deep .mat-checkbox-inner-container {
-    width: 24px;
-    height: 24px;
-  }
-
-  .cta {
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  .cta span {
-    padding-bottom: 7px;
-    letter-spacing: 4px;
-    font-size: 14px;
-    padding-right: 15px;
-    text-transform: uppercase;
-  }
-
-  .cta svg {
-    transform: translateX(-8px);
-    transition: all 0.3s ease;
-  }
-
-  .cta:hover svg {
-    transform: translateX(0);
-  }
-
-  .cta:active svg {
-    transform: scale(0.9);
-  }
-
-  .hover-underline-animation {
-    position: relative;
-    color: black;
-    padding-bottom: 20px;
-  }
-
-  .hover-underline-animation:after {
-    content: "";
-    position: absolute;
-    width: 75%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #000000;
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
-
-  .cta:hover .hover-underline-animation:after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-
   // New delete button
   .bin-button {
+    position: absolute;
+    top: 0;
+    right: -50px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     border-radius: 15px;
     background-color: rgb(255, 95, 95);
     cursor: pointer;
@@ -183,24 +120,79 @@
   }
 }
 
-// #a:hover #b {
-//   transition: 0.5s;
-//   -webkit-animation: btn-content 1s;
-//   animation: btn-content 1s;
-//   outline: 0.1em solid transparent;
-//   outline-offset: 0.2em;
-//   box-shadow: 0 0 0.4em 0 var(--color-background);
-// }
+.button {
+  position: relative;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #15f5ba;
+  background-color: #15f5ba;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.button,
+.button__icon,
+.button__text {
+  transition: all 0.3s;
+}
+
+.button .button__text {
+  transform: translateX(30px);
+  color: #094d4d;
+  font-weight: 600;
+}
+
+.button .button__icon {
+  position: absolute;
+  transform: translateX(109px);
+  height: 100%;
+  width: 39px;
+  background-color: #15f5ba;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button .svg {
+  width: 30px;
+  stroke: #094d4d;
+}
+
+.button:hover {
+  background: #15f5ba;
+}
+
+.button:hover .button__text {
+  color: transparent;
+}
+
+.button:hover .button__icon {
+  width: 148px;
+  transform: translateX(0);
+}
+
+.button:active .button__icon {
+  background-color: #15f5ba;
+}
+
+.button:active {
+  border: 1px solid #15f5ba;
+}
 
 // Arrow
 #b {
+  position: absolute;
+  left: -80px;
+  top: -3px;
   display: flex;
   justify-content: center;
   --color-text: #9ee5fa;
   --color-background: #353535;
   --color-outline: #9ee5fa80;
   --color-shadow: #00000080;
-  margin-right: 50px;
 }
 
 .btn-content {

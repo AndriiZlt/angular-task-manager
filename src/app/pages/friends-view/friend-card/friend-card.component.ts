@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Friend } from 'src/app/models/Friend';
+import { Friend } from 'src/app/models/Friend.model';
 
 @Component({
   selector: 'app-friend-card',

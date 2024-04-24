@@ -22,7 +22,7 @@
   </div>
 
   <div class="form-container">
-    <h2 class="title" style="margin-bottom: 30px">
+    <h2 class="title">
       Detailed view of task #{{ taskIndex === -1 ? "" : taskIndex + 1 }}
     </h2>
     <h2 *ngIf="taskIndex < 0">No task</h2>
@@ -107,19 +107,21 @@
               </svg>
             </button>
           </div>
+          <div class="saveDiv">
+            <button
+              class="form-submit-btn"
+              [disabled]="isDisabled"
+              type="submit"
+              (click)="saveHandler()"
+              [ngStyle]="{
+                'background-color': isDisabled ? '#545b77' : '#59cca6'
+              }"
+            >
+              Save
+            </button>
+          </div>
         </div>
       </form>
-      <div class="saveDiv">
-        <button
-          class="form-submit-btn"
-          [disabled]="isDisabled"
-          type="submit"
-          (click)="saveHandler()"
-          [ngStyle]="{ 'background-color': isDisabled ? '#545b77' : '#59cca6' }"
-        >
-          Save
-        </button>
-      </div>
     </div>
   </div>
   <div class="subtasks">
@@ -129,6 +131,17 @@
       [subtaskIndex]="taskIndex"
       (onSubtaskDelete)="this.onSubtaskDelete($event)"
       (checkSubtask)="this.checkSubtask($event)"
+      (openUpdateModal)="openUpdateModal($event)"
     ></app-subtask>
+  </div>
+
+  <!-- Update Subtask Modal -->
+  <div class="subtaskModal" *ngIf="updateModalOn">
+    <app-subtask-modal
+      [taskId]="taskId"
+      (modalClose)="modalClose()"
+      [targetSubtaskId]="targetSubtaskId"
+      (updateSubtask)="updateSubtaskInLC($event)"
+    ></app-subtask-modal>
   </div>
 </div>

@@ -2,7 +2,7 @@
   <div class="card">
     <mat-card
       style="
-        width: 730px;
+        width: 400px;
         height: 25px;
         display: flex;
         align-items: center;
@@ -11,9 +11,9 @@
       "
     >
       <div class="task">
-        <p style="margin-right: 5px">
+        <!-- <p style="margin-right: 5px">
           {{ taskIndex + 1 }}
-        </p>
+        </p> -->
         <div class="text">
           <h3 id="titleH3"><span>TITLE:</span>{{ task.title }}</h3>
           <h3 [style.color]="task.status === 'completed' ? 'grey' : 'black'">
@@ -32,7 +32,9 @@
       </div>
     </mat-card>
     <button class="cta" (click)="onCardClick(this.taskIndex)">
-      <span class="hover-underline-animation"> Details </span>
+      <span class="hover-underline-animation" style="font-size: 11px">
+        Details
+      </span>
     </button>
 
     <button class="bin-button" (click)="this.onTaskDelete.emit(task.id)">
@@ -96,5 +98,6 @@
     [subtaskIndex]="filteredSubtasks.indexOf(subtask)"
     (onSubtaskDelete)="onSubtaskDelete($event)"
     (checkSubtask)="emitCheckSubtask($event)"
+    (openUpdateModal)="openUpdateModalHandler($event)"
   ></app-subtask>
 </div>

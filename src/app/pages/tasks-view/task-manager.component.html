@@ -16,7 +16,7 @@
     "
   >
     <div class="mat-app-background basic-container">
-      <form class="example-form" style="max-width: 100%">
+      <form class="example-form">
         <mat-form-field class="title">
           <mat-label>Title...</mat-label>
           <input
@@ -95,6 +95,8 @@
       </mat-button-toggle-group>
     </div>
 
+    <!-- Tasks -->
+
     <div class="tasks">
       <div *ngIf="tasks.length === 0"><h2>No tasks</h2></div>
       <app-task
@@ -106,6 +108,7 @@
         (onDetailsClick)="onDetailsClick($event)"
         (modalOpen)="modalOpen($event)"
         (checkSubtask)="statusUpdateSubtask($event)"
+        (openUpdateModal)="openUpdateModal($event)"
       ></app-task>
     </div>
 
@@ -118,23 +121,19 @@
     </div>
   </div>
 
-  <!-- Modal -->
-  <div class="subtaskModal" *ngIf="isModalOn">
-    <div class="backdrop">
-      <div class="inner">
-        <div class="closeButton" (click)="modalClose()">
-          <button class="button">
-            <span class="X"></span>
-            <span class="Y"></span>
-            <div class="close">Close</div>
-          </button>
-        </div>
-
-        <app-subtask-modal
-          [taskId]="modalTaskId"
-          (modalClose)="modalClose()"
-        ></app-subtask-modal>
-      </div>
-    </div>
+  <!-- Add Subtask Modal -->
+  <div class="subtaskModal" *ngIf="addModalOn">
+    <app-subtask-modal
+      [taskId]="modalTaskId"
+      (modalClose)="modalClose()"
+    ></app-subtask-modal>
+  </div>
+  <!-- Update Subtask Modal -->
+  <div class="subtaskModal" *ngIf="updateModalOn">
+    <app-subtask-modal
+      [taskId]="modalTaskId"
+      (modalClose)="modalClose()"
+      [targetSubtaskId]="targetSubtaskId"
+    ></app-subtask-modal>
   </div>
 </div>
