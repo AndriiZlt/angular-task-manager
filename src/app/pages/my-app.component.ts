@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginNameService } from '../services/loginName.service';
 import { TaskManagerApiService } from '../services/task-managerApi.service';
+import { HubConnectionService } from '../services/hub-connection.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-my-app',
@@ -9,18 +11,29 @@ import { TaskManagerApiService } from '../services/task-managerApi.service';
   styleUrls: ['./my-app.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyAppComponent implements OnInit {
+export class MyAppComponent implements OnInit, OnDestroy {
   token: string;
   loginName: string;
   lastUrl: string;
+  // messageFromBackend: string = 'initial';
+
+  get message$(): Observable<string> | undefined {
+    return this.signalrService.message$;
+  }
 
   constructor(
     private router: Router,
-    private apiService: TaskManagerApiService,
-    private loginNameService: LoginNameService
+    private loginNameService: LoginNameService,
+    private signalrService: HubConnectionService
   ) {}
 
   ngOnInit(): void {
+    this.signalrService.startConnection();
+    setTimeout(() => {
+      this.signalrService.askServerListener();
+      this.signalrService.askServer(this.loginName);
+    }, 2000);
+
     this.getDataFromLocalStorage();
 
     if (this.lastUrl) {
@@ -29,16 +42,16 @@ export class MyAppComponent implements OnInit {
       this.router.navigate([`home/task-manager`]);
     }
 
-    // this.apiService.getTasks().subscribe((data) => {
-    //   console.log('Tasks from backend:', data);
-    // });
-
     this.loginNameService.getLoginData().subscribe((param: any) => {
       if (param !== undefined && param !== '' && param !== null) {
         this.loginName = param;
         localStorage.setItem('loginName', param);
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.signalrService.connection.off('askServerResponse');
   }
 
   getDataFromLocalStorage(): void {

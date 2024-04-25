@@ -49,7 +49,6 @@ export class TaskManagerComponent implements OnInit {
       if (param !== undefined) {
         switch (param.action) {
           case 'taskStatusChange':
-            console.log('1', param.id);
             this.onCheckClick(param.id);
             param = undefined;
             break;
