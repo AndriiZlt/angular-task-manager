@@ -6,13 +6,14 @@ import { MaterialModule } from './material-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MyAppComponent } from './pages/my-app.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { FriendsViewModule } from './pages/friends-view/friends-view.module';
 import { StoreModule } from '@ngrx/store';
 import { sutaskReducer } from './reducers/tm.reducer';
+import { Interceptor } from './helpers/interceptor';
 
 @NgModule({
   declarations: [AppComponent, MyAppComponent],
@@ -35,6 +36,11 @@ import { sutaskReducer } from './reducers/tm.reducer';
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'fill' },
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

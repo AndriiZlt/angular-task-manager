@@ -118,9 +118,9 @@ export class RegisterComponent implements OnInit {
 
   register(registerDto: Register) {
     try {
-      this.authService.register(registerDto).subscribe((data) => {
-        // console.log('Registration data:', data);
-        localStorage.setItem('token', data.token);
+      this.authService.register(registerDto).subscribe((res) => {
+        console.log('Response:', res);
+        localStorage.setItem('token', res.token);
         localStorage.setItem('lastUrl', 'home/task-manager');
         this.router.navigate(['home/task-manager']);
       });

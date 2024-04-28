@@ -39,7 +39,7 @@
             matInput
             #message2
             maxlength="165"
-            [(ngModel)]="this.description"
+            [(ngModel)]="description"
             [ngModelOptions]="{ standalone: true }"
             (ngModelChange)="onFormChange('description', $event)"
             style="font-size: 18px; font-weight: 500; width: 500px"
@@ -78,7 +78,7 @@
           >
             Add
           </button>
-          <button (click)="updateInput()" class="button">Clear</button>
+          <button (click)="updateTitle()" class="button">Clear</button>
         </div>
       </form>
       <hr />

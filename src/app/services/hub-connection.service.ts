@@ -1,8 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SignalrClient, SignalrConnection } from 'ngx-signalr-websocket';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import * as signalR from '@aspnet/signalr';
 
 @Injectable({
@@ -35,7 +32,7 @@ export class HubConnectionService {
   askServerListener() {
     this.connection.on('askServerResponse', (response) => {
       this.message$ = response;
-      console.log('Response from signalR:', response);
+      // console.log('Response from signalR:', response);
     });
   }
 

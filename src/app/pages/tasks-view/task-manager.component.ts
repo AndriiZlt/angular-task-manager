@@ -89,9 +89,9 @@ export class TaskManagerComponent implements OnInit {
         this.tasks = [...(<Task[]>data)];
         localStorage.setItem('tasks', JSON.stringify(this.tasks));
         console.log('Tasks:', this.tasks);
+        this.updateTitle(`New task #${this.tasks.length + 1}`);
+        this.updateFilter();
       });
-      this.updateInput(`New task #${this.tasks.length + 1}`);
-      this.updateFilter();
     });
   }
 
@@ -135,7 +135,6 @@ export class TaskManagerComponent implements OnInit {
         break;
       case 'description':
         this.description = this.capitalize(value);
-        console.log('description:', this.description);
         break;
     }
   }
@@ -145,7 +144,7 @@ export class TaskManagerComponent implements OnInit {
     this.dueDate = this.datePipe.transform(event.value, 'yyyy-MM-ddThh:mm:ss');
   }
 
-  updateInput(title: string = ''): void {
+  updateTitle(title: string = ''): void {
     this.description = '';
     this.title = title;
   }
@@ -165,13 +164,13 @@ export class TaskManagerComponent implements OnInit {
     }
   }
 
-  resetPage(): void {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['./'], {
-      relativeTo: this.route,
-    });
-  }
+  // resetPage(): void {
+  //   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  //   this.router.onSameUrlNavigation = 'reload';
+  //   this.router.navigate(['./'], {
+  //     relativeTo: this.route,
+  //   });
+  // }
 
   capitalize(value: string): string {
     let capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);

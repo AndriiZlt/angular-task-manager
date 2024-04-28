@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
 import { TaskToAdd } from '../models/TaskToAdd.model';
 import { Task } from '../models/Task.nodel';
 import { SubtaskToAdd } from '../models/SubtaskToAdd.model';
@@ -20,7 +20,6 @@ export class TaskManagerApiService {
   }
 
   addTask(task: TaskToAdd) {
-    console.log('Http Posted task:', task);
     return this.http.post(this.rootURL + '/v1/Task/addtask', task);
   }
 
