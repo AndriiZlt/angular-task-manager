@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { TaskToAdd } from '../models/TaskToAdd.model';
-import { Task } from '../models/Task.nodel';
+import { Task } from '../models/Task.model';
 import { SubtaskToAdd } from '../models/SubtaskToAdd.model';
 import { FriendToAdd } from '../models/FriendToAdd.model';
 import { Subtask } from '../models/Subtask.model';
@@ -14,7 +14,16 @@ export class TaskManagerApiService {
 
   constructor(private http: HttpClient) {}
 
-  // Tasks
+  // USERS
+  getUsers() {
+    return this.http.get(this.rootURL + '/v1/User/getusers');
+  }
+
+  getCurrentUser() {
+    return this.http.get(this.rootURL + '/v1/User/getuser');
+  }
+
+  // TASK
   getTasks() {
     return this.http.get(this.rootURL + '/v1/Task/gettasks');
   }
@@ -41,7 +50,7 @@ export class TaskManagerApiService {
     return this.http.put(this.rootURL + '/v1/Task/updatetask', task);
   }
 
-  // SubTasks
+  // SUBTASK
   getSubtasks() {
     return this.http.get(this.rootURL + '/v1/Subtask/getsubtasks');
   }

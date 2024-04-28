@@ -58,6 +58,13 @@
         </div>
 
         <div class="right">
+          <select class="drop-menu" (change)="onSelect($event.target.value)">
+            <option disabled>Select User</option>
+            <!-- <option>{{ }}</option> -->
+            <option *ngFor="let user of users">
+              {{ user.userName }}
+            </option>
+          </select>
           <div class="checkbox">
             <h3>Check if done:</h3>
             <div class="checkboxx">

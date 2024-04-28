@@ -16,9 +16,41 @@
     "
   >
     <div class="mat-app-background basic-container">
+      <div class="top">
+        <h3>
+          <span>USER: &nbsp;</span>{{ selectedUser.name }}&nbsp;{{
+            selectedUser.surname
+          }}
+          &nbsp;({{ selectedUser.userName }})
+        </h3>
+        <div class="matSelect">
+          <mat-form-field>
+            <mat-label style="font-size: 15px; font-weight: 500"
+              >Select another User</mat-label
+            >
+            <mat-select
+              [(value)]="selectedUser.userName"
+              style="
+                font-size: 18px;
+                font-weight: 500;
+                width: 200px;
+                height: 15px;
+              "
+            >
+              <mat-option
+                *ngFor="let user of filteredUsers"
+                [value]="user.id"
+                (click)="onSelect(user.id)"
+                >{{ user.userName }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
       <form class="example-form">
         <mat-form-field class="title">
-          <mat-label>Title...</mat-label>
+          <mat-label style="font-size: 14px">Title</mat-label>
           <input
             class="message"
             matInput
@@ -26,14 +58,14 @@
             maxlength="43"
             [(ngModel)]="title"
             [ngModelOptions]="{ standalone: true }"
-            style="font-size: 18px; font-weight: 500; width: 200px"
+            style="font-size: 14px; height: 15px"
             (ngModelChange)="onFormChange('title', $event)"
           />
 
           <mat-hint align="end">{{ message1.value.length }} / 43</mat-hint>
         </mat-form-field>
-        <mat-form-field class="description">
-          <mat-label>Description...</mat-label>
+        <mat-form-field class="description" style="width: 40%">
+          <mat-label style="font-size: 14px">Description</mat-label>
           <input
             class="message"
             matInput
@@ -42,14 +74,14 @@
             [(ngModel)]="description"
             [ngModelOptions]="{ standalone: true }"
             (ngModelChange)="onFormChange('description', $event)"
-            style="font-size: 18px; font-weight: 500; width: 500px"
+            style="font-size: 14px; font-weight: 500; height: 15px"
           />
 
           <mat-hint align="end">{{ message2.value.length }} / 165</mat-hint>
         </mat-form-field>
 
-        <mat-form-field style="margin-bottom: 80px; height: 0px; width: 200px">
-          <mat-label>Due date</mat-label>
+        <mat-form-field style="margin-bottom: 80px; height: 0px; width: 20%">
+          <mat-label style="font-size: 14px">Due date</mat-label>
           <input
             matInput
             [matDatepicker]="picker"
@@ -57,6 +89,7 @@
             [(ngModel)]="datePickerDate"
             (dateChange)="onDatePickerChange($event)"
             [ngModelOptions]="{ standalone: true }"
+            style="font-size: 14px"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -113,11 +146,15 @@
     </div>
 
     <!-- Chart -->
-    <div class="chart">
-      <app-task-chart
-        [tasks]="this.tasks"
-        [subtasks]="this.subtasks"
-      ></app-task-chart>
+
+    <div class="chart-container">
+      <h3>DAY CREATED TASKS & SUBTASKS</h3>
+      <div class="chart">
+        <app-task-chart
+          [tasks]="this.tasks"
+          [subtasks]="this.subtasks"
+        ></app-task-chart>
+      </div>
     </div>
   </div>
 

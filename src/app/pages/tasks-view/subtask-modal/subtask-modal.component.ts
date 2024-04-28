@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subtask } from 'src/app/models/Subtask.model';
 import { SubtaskToAdd } from 'src/app/models/SubtaskToAdd.model';
-import { Task } from 'src/app/models/Task.nodel';
+import { Task } from 'src/app/models/Task.model';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 

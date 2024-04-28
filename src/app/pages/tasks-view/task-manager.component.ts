@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Task } from 'src/app/models/Task.nodel';
+import { Task } from 'src/app/models/Task.model';
 import { TaskToAdd } from 'src/app/models/TaskToAdd.model';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
 import { DatePipe } from '@angular/common';
 import { Subtask } from 'src/app/models/Subtask.model';
-import { HttpClient } from '@angular/common/http';
+import { UserTM } from 'src/app/models/UserTM.model';
 
 enum TaskFilterValue {
   'all' = 1,
@@ -24,6 +24,9 @@ enum TaskFilterValue {
 export class TaskManagerComponent implements OnInit {
   tasks: Task[] = [];
   subtasks: Subtask[] = [];
+  users: UserTM[] = [];
+  filteredUsers: UserTM[] = [];
+  currentUser: UserTM;
   title: string = '';
   description: string = '';
   dueDate: string = null;
@@ -34,10 +37,16 @@ export class TaskManagerComponent implements OnInit {
   addModalOn: boolean = false;
   updateModalOn: boolean = false;
   modalTaskId: number;
+  selectedUser: UserTM = {
+    id: null,
+    email: 'null',
+    userName: '',
+    name: 'string',
+    surname: 'string',
+  };
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private taskManagerService: TaskManagerService,
     private apiService: TaskManagerApiService,
     private datePipe: DatePipe
@@ -80,19 +89,42 @@ export class TaskManagerComponent implements OnInit {
   }
 
   updatePage(): void {
-    this.apiService.getSubtasks().subscribe((data) => {
-      this.subtasks = <Subtask[]>data;
+    this.apiService.getSubtasks().subscribe((res) => {
+      this.subtasks = <Subtask[]>res;
       localStorage.setItem('subtasks', JSON.stringify(this.subtasks));
       console.log('Subtasks:', this.subtasks);
 
-      this.apiService.getTasks().subscribe((data) => {
-        this.tasks = [...(<Task[]>data)];
+      this.apiService.getTasks().subscribe((res) => {
+        this.tasks = [...(<Task[]>res)];
         localStorage.setItem('tasks', JSON.stringify(this.tasks));
         console.log('Tasks:', this.tasks);
         this.updateTitle(`New task #${this.tasks.length + 1}`);
         this.updateFilter();
       });
     });
+
+    this.apiService.getUsers().subscribe((res) => {
+      this.users = [...(<UserTM[]>res)];
+      localStorage.setItem('users', JSON.stringify(this.users));
+
+      console.log('Users:', this.users);
+    });
+
+    this.apiService.getCurrentUser().subscribe((res) => {
+      console.log('Current User=>', res);
+      if (res) {
+        this.currentUser = <UserTM>res;
+        this.selectedUser = this.currentUser;
+        this.filteredUsers = this.users.filter(
+          (u) => u.id !== this.selectedUser.id
+        );
+      }
+    });
+  }
+
+  onSelect(userId: number): void {
+    this.selectedUser = this.users.filter((u) => u.id === userId)[0];
+    this.filteredUsers = this.users.filter((u) => u.id !== userId);
   }
 
   updateFilter() {
@@ -164,14 +196,6 @@ export class TaskManagerComponent implements OnInit {
     }
   }
 
-  // resetPage(): void {
-  //   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-  //   this.router.onSameUrlNavigation = 'reload';
-  //   this.router.navigate(['./'], {
-  //     relativeTo: this.route,
-  //   });
-  // }
-
   capitalize(value: string): string {
     let capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
     return capitalizedValue;
@@ -204,9 +228,13 @@ export class TaskManagerComponent implements OnInit {
         title: this.capitalize(this.title),
         description: this.capitalize(this.description),
         dateDue: this.dueDate,
+        userId: this.selectedUser.id,
       };
       this.apiService.addTask(taskToAdd).subscribe((_) => {
         this.updatePage();
+        if (this.selectedUser.id !== this.currentUser.id) {
+          alert('Task created for different user');
+        }
       });
     } else {
       this.isDisabled = true;

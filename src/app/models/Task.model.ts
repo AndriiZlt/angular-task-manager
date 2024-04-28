@@ -6,4 +6,5 @@ export interface Task {
   dateCreated: string;
   dateDue: string;
   dateCompleted: string;
+  userId: number;
 }

@@ -48,10 +48,3 @@ import { Interceptor } from './helpers/interceptor';
 })
 export class AppModule {}
 
-// bootstrapApplication(AppComponent, {
-//   providers: [
-//     provideAnimations(),
-//     provideHttpClient(),
-//     importProvidersFrom(MatNativeDateModule),
-//   ],
-// }).catch((err) => console.error(err));

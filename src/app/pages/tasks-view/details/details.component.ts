@@ -1,16 +1,10 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  SimpleChange,
-} from '@angular/core';
-import { Task } from 'src/app/models/Task.nodel';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Task } from 'src/app/models/Task.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { Subtask } from 'src/app/models/Subtask.model';
 import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
+import { UserTM } from 'src/app/models/UserTM.model';
 
 @Component({
   selector: 'app-details',
@@ -26,8 +20,11 @@ export class DetailsComponent implements OnInit {
   isDisabled: boolean = true;
   height: string;
   filteredSubtasks: Subtask[];
+  users: UserTM[];
+  currentUser: UserTM;
   updateModalOn: boolean = false;
   targetSubtaskId: number = null;
+  selectedUserId: number;
 
   constructor(
     private router: Router,
@@ -40,6 +37,15 @@ export class DetailsComponent implements OnInit {
     this.taskId = Number(this.route.snapshot.params.id);
     this.getFromLocalStorage();
     localStorage.setItem('lastUrl', `home/task-manager/task/${this.taskId}`);
+  }
+
+  onSelect(selectedUsername: string) {
+    this.selectedUserId = this.users.filter(
+      (u) => u.userName === selectedUsername
+    )[0].id;
+
+    this.task.userId = this.selectedUserId;
+    this.isDisabled = false;
   }
 
   onSubtaskDelete(subtaskId: number): void {
@@ -125,10 +131,14 @@ export class DetailsComponent implements OnInit {
   }
 
   getFromLocalStorage(): void {
-    this.taskIndex = JSON.parse(localStorage.getItem('detailsIndex'));
-
+    // USERS
+    let usersLC = localStorage.getItem('users');
+    if (usersLC !== null && usersLC !== 'undefined') {
+      this.users = JSON.parse(usersLC);
+      // this.currentUser = users.filter(u=>u.id===this.task.userId)
+    }
+    // SUBTASK
     let subtasksFromLC = localStorage.getItem('subtasks');
-    console.log('subtasks from local storage:', JSON.parse(subtasksFromLC));
     if (
       subtasksFromLC !== '' &&
       subtasksFromLC !== null &&
@@ -139,7 +149,7 @@ export class DetailsComponent implements OnInit {
       );
       console.log('Friltered subtasks:', this.filteredSubtasks);
     }
-
+    // TASK
     let tasksFromLC = localStorage.getItem('tasks');
     if (
       tasksFromLC !== '' &&
@@ -149,6 +159,7 @@ export class DetailsComponent implements OnInit {
       this.task = JSON.parse(tasksFromLC).filter(
         (task: Task) => task.id === this.taskId
       )[0];
+      this.selectedUserId = this.task.id;
 
       if (this.task.status === 'completed') {
         this.isChecked = true;
@@ -156,6 +167,8 @@ export class DetailsComponent implements OnInit {
         this.isChecked = false;
       }
     }
+
+    this.taskIndex = JSON.parse(localStorage.getItem('detailsIndex'));
   }
 
   back(): void {
@@ -196,6 +209,7 @@ export class DetailsComponent implements OnInit {
 
   saveHandler(): void {
     if (this.task.title !== '') {
+      console.log('Sending this task:', this.task);
       this.taskManagerService.triggerEvent({
         action: 'edit',
         task: this.task,
