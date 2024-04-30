@@ -29,10 +29,10 @@ export class MyAppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.signalrService.startConnection();
-    setTimeout(() => {
-      this.signalrService.askServerListener();
-      this.signalrService.askServer(this.loginName);
-    }, 2000);
+    // setTimeout(() => {
+    //   this.signalrService.askServerListener();
+    //   this.signalrService.askServer(this.loginName);
+    // }, 2000);
 
     this.getDataFromLocalStorage();
 

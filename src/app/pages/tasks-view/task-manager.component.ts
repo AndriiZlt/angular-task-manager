@@ -7,6 +7,7 @@ import { TaskManagerApiService } from 'src/app/services/task-managerApi.service'
 import { DatePipe } from '@angular/common';
 import { Subtask } from 'src/app/models/Subtask.model';
 import { UserTM } from 'src/app/models/UserTM.model';
+import { HubConnectionService } from 'src/app/services/hub-connection.service';
 
 enum TaskFilterValue {
   'all' = 1,
@@ -49,7 +50,8 @@ export class TaskManagerComponent implements OnInit {
     private router: Router,
     private taskManagerService: TaskManagerService,
     private apiService: TaskManagerApiService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private signalrService: HubConnectionService
   ) {
     localStorage.setItem('lastUrl', 'home/task-manager');
 
@@ -85,6 +87,7 @@ export class TaskManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.signalrService.askServerListener();
     this.updatePage();
   }
 
@@ -231,6 +234,7 @@ export class TaskManagerComponent implements OnInit {
         userId: this.selectedUser.id,
       };
       this.apiService.addTask(taskToAdd).subscribe((_) => {
+        this.signalrService.askServer(this.currentUser.id.toString());
         this.updatePage();
         if (this.selectedUser.id !== this.currentUser.id) {
           alert('Task created for different user');

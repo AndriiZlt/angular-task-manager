@@ -9,30 +9,37 @@ export class HubConnectionService {
   connection: signalR.HubConnection;
   message$?: Observable<string>;
 
-  startConnection = () => {
+  startConnection = async () => {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7027/chat-hub', {
+      .withUrl('https://localhost:7027/signal-hub', {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
       })
       .build();
 
-    this.connection
+    await this.connection
       .start()
       .then(() => {
         console.log('Connection started');
+        this.askServerListener();
       })
       .catch((err) => console.log('Error while strating connection:', err));
   };
 
   askServer(name: string) {
     this.connection.invoke('askServer', name).catch((e) => console.log(e));
+    this.connection
+      .invoke('sendNotification', name)
+      .catch((e) => console.log(e));
   }
 
   askServerListener() {
-    this.connection.on('askServerResponse', (response) => {
-      this.message$ = response;
-      // console.log('Response from signalR:', response);
+    this.connection.on('send', (res) => {
+      console.log('send:', res);
+    });
+
+    this.connection.on('askServerResponse', (res) => {
+      console.log('askServerResponse', res);
     });
   }
 
@@ -53,4 +60,10 @@ export class HubConnectionService {
   //       .pipe(map(([name]) => name));
   //     console.log('message in HUB:', this.message$);
   //   }
+
+  sendNotification(message: string) {
+    this.connection
+      .invoke('SendNotification', message)
+      .catch((e) => console.log(e));
+  }
 }
