@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { Friend } from 'src/app/models/Friend.model';
-import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
+import { TaskManagerApiService } from 'src/app/services/API.service';
 
 @Component({
   selector: 'friend-chart',

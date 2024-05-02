@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Task } from 'src/app/models/Task.model';
 import { TaskToAdd } from 'src/app/models/TaskToAdd.model';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
-import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
+import { TaskManagerApiService } from 'src/app/services/API.service';
 import { DatePipe } from '@angular/common';
 import { Subtask } from 'src/app/models/Subtask.model';
 import { UserTM } from 'src/app/models/UserTM.model';
@@ -87,7 +87,7 @@ export class TaskManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.signalrService.askServerListener();
+    this.signalrService.onDataUpdate(this.updatePage.bind(this));
     this.updatePage();
   }
 
@@ -95,33 +95,33 @@ export class TaskManagerComponent implements OnInit {
     this.apiService.getSubtasks().subscribe((res) => {
       this.subtasks = <Subtask[]>res;
       localStorage.setItem('subtasks', JSON.stringify(this.subtasks));
-      console.log('Subtasks:', this.subtasks);
+      // console.log('Subtasks:', this.subtasks);
 
       this.apiService.getTasks().subscribe((res) => {
         this.tasks = [...(<Task[]>res)];
         localStorage.setItem('tasks', JSON.stringify(this.tasks));
-        console.log('Tasks:', this.tasks);
         this.updateTitle(`New task #${this.tasks.length + 1}`);
         this.updateFilter();
+        // console.log('Tasks:', this.tasks);
       });
     });
 
     this.apiService.getUsers().subscribe((res) => {
       this.users = [...(<UserTM[]>res)];
       localStorage.setItem('users', JSON.stringify(this.users));
+      // console.log('Users:', this.users);
+      this.apiService.getCurrentUser().subscribe((res) => {
+        // console.log('Current User=>', res);
+        if (res) {
+          this.currentUser = <UserTM>res;
+          this.selectedUser = this.currentUser;
 
-      console.log('Users:', this.users);
-    });
-
-    this.apiService.getCurrentUser().subscribe((res) => {
-      console.log('Current User=>', res);
-      if (res) {
-        this.currentUser = <UserTM>res;
-        this.selectedUser = this.currentUser;
-        this.filteredUsers = this.users.filter(
-          (u) => u.id !== this.selectedUser.id
-        );
-      }
+          this.filteredUsers = this.users.filter(
+            (u) => u.id !== this.selectedUser.id
+          );
+          // console.log('filteredUsers:', this.filteredUsers);
+        }
+      });
     });
   }
 
@@ -234,10 +234,13 @@ export class TaskManagerComponent implements OnInit {
         userId: this.selectedUser.id,
       };
       this.apiService.addTask(taskToAdd).subscribe((_) => {
-        this.signalrService.askServer(this.currentUser.id.toString());
+        this.signalrService.sendMessage(
+          taskToAdd.userId.toString(),
+          taskToAdd.title
+        );
         this.updatePage();
         if (this.selectedUser.id !== this.currentUser.id) {
-          alert('Task created for different user');
+          alert(`Task created for user with ID: ${this.selectedUser.id}`);
         }
       });
     } else {
@@ -260,8 +263,6 @@ export class TaskManagerComponent implements OnInit {
   }
 
   onCheckClick(taskId: number): void {
-    console.log('2', taskId);
-
     this.apiService.updateStatus(taskId).subscribe((_) => {
       this.updatePage();
     });

@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.valid = true;
-    console.log('Logging in... =>' + JSON.stringify(this.loginForm.value));
+    console.log('Logging in=>' + JSON.stringify(this.loginForm.value));
 
     this.loginDto.username = this.loginForm.value.username;
     this.loginDto.password = this.loginForm.value.password;
@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token', jwtDto.token);
       localStorage.setItem('lastUrl', 'home/task-manager');
       this.router.navigate(['home/task-manager']);
-      this.loginNameService.triggerEvent(jwtDto.name);
+      this.loginNameService.triggerEvent(loginDto.username);
     });
   }
 

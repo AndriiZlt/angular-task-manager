@@ -3,7 +3,7 @@ import { User } from '../friends-view.component';
 import { Router } from '@angular/router';
 import { Friend } from 'src/app/models/Friend.model';
 import { FriendToAdd } from 'src/app/models/FriendToAdd.model';
-import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
+import { TaskManagerApiService } from 'src/app/services/API.service';
 
 @Component({
   selector: 'app-users',

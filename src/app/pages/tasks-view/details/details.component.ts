@@ -3,7 +3,7 @@ import { Task } from 'src/app/models/Task.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
 import { Subtask } from 'src/app/models/Subtask.model';
-import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
+import { TaskManagerApiService } from 'src/app/services/API.service';
 import { UserTM } from 'src/app/models/UserTM.model';
 
 @Component({

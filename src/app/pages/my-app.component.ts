@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginNameService } from '../services/loginName.service';
-import { TaskManagerApiService } from '../services/task-managerApi.service';
 import { HubConnectionService } from '../services/hub-connection.service';
-import { Observable } from 'rxjs';
+import { TaskManagerApiService } from '../services/API.service';
+import { UserTM } from '../models/UserTM.model';
 
 @Component({
   selector: 'app-my-app',
@@ -15,25 +15,32 @@ export class MyAppComponent implements OnInit, OnDestroy {
   token: string;
   loginName: string;
   lastUrl: string;
-  // messageFromBackend: string = 'initial';
-
-  get message$(): Observable<string> | undefined {
-    return this.signalrService.message$;
-  }
+  signalRStatus: string = '';
+  userId: number;
+  currentUser: UserTM;
 
   constructor(
     private router: Router,
     private loginNameService: LoginNameService,
-    private signalrService: HubConnectionService
-  ) {}
+    private signalrService: HubConnectionService,
+    private apiService: TaskManagerApiService
+  ) {
+    //
+    this.signalrService.getData().subscribe((param: any) => {
+      this.signalRStatus = param.text;
+
+      this.apiService.getCurrentUser().subscribe((res) => {
+        // console.log('Current User=>', res);
+        if (res) {
+          this.currentUser = <UserTM>res;
+          this.signalrService.saveId(this.currentUser.id);
+        }
+      });
+    });
+  }
 
   ngOnInit(): void {
     this.signalrService.startConnection();
-    // setTimeout(() => {
-    //   this.signalrService.askServerListener();
-    //   this.signalrService.askServer(this.loginName);
-    // }, 2000);
-
     this.getDataFromLocalStorage();
 
     if (this.lastUrl) {

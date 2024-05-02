@@ -3,7 +3,7 @@ import { Subtask } from 'src/app/models/Subtask.model';
 import { SubtaskToAdd } from 'src/app/models/SubtaskToAdd.model';
 import { Task } from 'src/app/models/Task.model';
 import { TaskManagerService } from 'src/app/services/task-manager.service';
-import { TaskManagerApiService } from 'src/app/services/task-managerApi.service';
+import { TaskManagerApiService } from 'src/app/services/API.service';
 
 @Component({
   selector: 'app-subtask-modal',

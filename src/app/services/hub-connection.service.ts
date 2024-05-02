@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import * as signalR from '@aspnet/signalr';
+import { HttpClient } from '@angular/common/http';
+import { UrlService } from './url-service.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,10 +10,17 @@ import * as signalR from '@aspnet/signalr';
 export class HubConnectionService {
   connection: signalR.HubConnection;
   message$?: Observable<string>;
+  private sinalStatus = new Subject<any>();
+  private updateData!: () => void;
+  private _apiUrl;
+
+  constructor(private http: HttpClient, private urlService: UrlService) {
+    this._apiUrl = this.urlService.apiUrl;
+  }
 
   startConnection = async () => {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7027/signal-hub', {
+      .withUrl(`${this._apiUrl}/signal-hub`, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
       })
@@ -20,50 +29,43 @@ export class HubConnectionService {
     await this.connection
       .start()
       .then(() => {
-        console.log('Connection started');
-        this.askServerListener();
+        console.log('SignalR connection started');
+        this.connection.on('status', (res) => {
+          this.sendData('connected');
+        });
+        this.serverListenerOn();
       })
-      .catch((err) => console.log('Error while strating connection:', err));
+      .catch((err) => console.log('Error while starting connection:', err));
   };
 
-  askServer(name: string) {
-    this.connection.invoke('askServer', name).catch((e) => console.log(e));
+  onDataUpdate(fn: () => void) {
+    this.updateData = fn;
+  }
+
+  saveId(userId: number) {
+    this.connection.invoke('Register', userId).catch((e) => console.log(e));
+  }
+
+  serverListenerOn() {
+    this.connection.on('recieveMessage', (res) => {
+      console.log('Signal message:', res);
+      this.message$ = res;
+      this.updateData();
+    });
+  }
+
+  sendMessage(targetUserId: string, taskTitle: string) {
     this.connection
-      .invoke('sendNotification', name)
+      .invoke('SendMessage', targetUserId, taskTitle)
       .catch((e) => console.log(e));
   }
 
-  askServerListener() {
-    this.connection.on('send', (res) => {
-      console.log('send:', res);
-    });
-
-    this.connection.on('askServerResponse', (res) => {
-      console.log('askServerResponse', res);
-    });
+  // Observable service
+  sendData(data: any) {
+    this.sinalStatus.next({ text: data });
   }
 
-  //   constructor(httpClient: HttpClient) {
-  //     const client = SignalrClient.create(httpClient);
-  //     client
-  //       .connect('https://localhost:7027/chat-hub')
-  //       .subscribe((connection) => (this.connection = connection));
-  //   }
-
-  //   register(name: string) {
-  //     // let response = 'initial';
-
-  //     this.connection?.send('OnLoginAsync', name);
-
-  //     this.message$ = this.connection
-  //       .on<[string]>('Logged')
-  //       .pipe(map(([name]) => name));
-  //     console.log('message in HUB:', this.message$);
-  //   }
-
-  sendNotification(message: string) {
-    this.connection
-      .invoke('SendNotification', message)
-      .catch((e) => console.log(e));
+  getData(): Observable<any> {
+    return this.sinalStatus.asObservable();
   }
 }
