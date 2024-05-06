@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { MyAppComponent } from './pages/my-app.component';
+import { AlpacaChartComponent } from './pages/alpaca-api/alpaca-chart/alpaca-chart.component';
+import { AlpacaTradingComponent } from './pages/alpaca-api/alpaca-trading/alpaca-trading/alpaca-trading.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -41,6 +43,14 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
     ],
+  },
+  {
+    path: 'alpaca-chart',
+    component: AlpacaChartComponent,
+  },
+  {
+    path: 'alpaca-trading',
+    component: AlpacaTradingComponent,
   },
 
   { path: '**', redirectTo: 'login' },

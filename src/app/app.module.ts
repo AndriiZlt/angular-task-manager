@@ -14,9 +14,16 @@ import { FriendsViewModule } from './pages/friends-view/friends-view.module';
 import { StoreModule } from '@ngrx/store';
 import { sutaskReducer } from './reducers/tm.reducer';
 import { Interceptor } from './helpers/interceptor';
+import { AlpacaChartComponent } from './pages/alpaca-api/alpaca-chart/alpaca-chart.component';
+import { AlpacaTradingComponent } from './pages/alpaca-api/alpaca-trading/alpaca-trading/alpaca-trading.component';
 
 @NgModule({
-  declarations: [AppComponent, MyAppComponent],
+  declarations: [
+    AppComponent,
+    MyAppComponent,
+    AlpacaChartComponent,
+    AlpacaTradingComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -47,4 +54,3 @@ import { Interceptor } from './helpers/interceptor';
   entryComponents: [AppComponent],
 })
 export class AppModule {}
-

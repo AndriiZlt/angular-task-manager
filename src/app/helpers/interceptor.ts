@@ -13,6 +13,10 @@ export class Interceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+
+    // skip interceptor if request to Alpaca API
+    // if (req.headers.get('skip')) return next.handle(req);
+
     const token = localStorage.getItem('token');
 
     if (token) {

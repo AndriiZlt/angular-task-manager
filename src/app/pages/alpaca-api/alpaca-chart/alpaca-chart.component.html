@@ -1,0 +1,15 @@
+<div class="alpaca-container">
+  <div class="canvas">
+    <h3>{{ selectedStock }}</h3>
+    <canvas id="canvas"></canvas>
+  </div>
+  <div class="menu">
+    <select class="drop-menu" (change)="onSelect($event.target.value)">
+      <option disabled>Select a stock symbol</option>
+      <!-- <option>{{ }}</option> -->
+      <option *ngFor="let stock of nasdaq100">
+        {{ stock }}
+      </option>
+    </select>
+  </div>
+</div>
