@@ -13,9 +13,9 @@
         ></path>
       </svg>
     </div> -->
-  <div class="info__title side"></div>
-  <div class="info__title symbol"></div>
-  <div class="info__title name"></div>
+  <div class="info__title side">{{ activity["side"] }}</div>
+  <div class="info__title symbol">{{ activity["symbol"] }}</div>
+  <div class="info__title name">{{ activityName }}</div>
   <div class="info__title quantity">
     <div class="col-inner">
       <p class="title">QTY</p>
@@ -26,12 +26,12 @@
   <div class="prices">
     <div class="col-inner">
       <p class="title">START</p>
-      <p class="figures">$</p>
+      <p class="figures">${{ activity.price }}</p>
     </div>
     <div class="col-arrow"></div>
     <div class="col-inner">
       <p class="title">CURRENT</p>
-      <p class="figures">$</p>
+      <p class="figures">${{ currentPrice }}</p>
     </div>
   </div>
 

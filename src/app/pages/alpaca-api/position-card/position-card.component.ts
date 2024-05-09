@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlpacaService } from 'src/app/services/alpaca.service';
 
 @Component({
@@ -10,6 +10,7 @@ export class PositionCardComponent implements OnInit {
   @Input() position: any;
   @Input() assets: any[];
   @Input() index: number;
+  @Output() sellAsset: EventEmitter<any> = new EventEmitter<any>();
   positionName: string;
   currentPrice: string;
 
@@ -26,5 +27,10 @@ export class PositionCardComponent implements OnInit {
     this.alpacaService.getLastTrades(this.position.symbol).subscribe((res) => {
       this.currentPrice = res['trade'].p;
     });
+  }
+
+  sellPosition() {
+    console.log('Emiting event:', this.position.asset_id);
+    this.sellAsset.emit(this.position.asset_id);
   }
 }

@@ -13,6 +13,11 @@ export class AlpacaPositionsComponent implements OnInit {
   positions: any[] = [];
 
   ngOnInit(): void {
+    this.resetPage();
+  }
+
+  resetPage() {
+    this.positions = [];
     this.alpacaService.getPositions().subscribe((res) => {
       for (const item in res) {
         this.positions.push(res[item]);
@@ -32,5 +37,13 @@ export class AlpacaPositionsComponent implements OnInit {
     // console.log('Assets:', assets.getAssets());
 
     this.assets = [...assets.getAssets()]; //comment out
+  }
+
+  sellAsset(asset_id: any) {
+    console.log('sell asset:', event);
+    this.alpacaService.closePosition(asset_id).subscribe((res) => {
+      console.log('res', res);
+      setTimeout(() => this.resetPage(), 500);
+    });
   }
 }

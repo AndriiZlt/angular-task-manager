@@ -60,6 +60,13 @@ export class AlpacaService {
     });
   }
 
+  closePosition(asset_id: string) {
+    console.log('position_id', asset_id);
+    return this.http.delete(`${this.tradingApiUrl}/v2/positions/${asset_id}`, {
+      headers: this.headers,
+    });
+  }
+
   getAsset() {
     return this.http.get(
       `https://paper-api.sandbox.alpaca.markets/v2/assets/GOOGL`,
