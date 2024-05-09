@@ -22,6 +22,9 @@
         >
           <p id="friends-list" style="cursor: pointer">Friends List</p>
         </li>
+        <li id="alpaca-app" (click)="onViewChange($event)">
+          <p style="cursor: pointer">Alpaca-App</p>
+        </li>
       </ul>
     </nav>
     <p style="margin-bottom: 0">SignalR:{{ this.signalRStatus }}</p>

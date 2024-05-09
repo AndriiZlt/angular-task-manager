@@ -1,0 +1,9 @@
+<div class="assets-conainer">
+  <p>sdsdsd</p>
+  <app-position-card
+    *ngFor="let position of positions"
+    [position]="position"
+    [assets]="assets"
+    [index]="positions.indexOf(position)"
+  ></app-position-card>
+</div>

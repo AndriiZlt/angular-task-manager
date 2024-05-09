@@ -13,12 +13,13 @@ export class Interceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-
+    // return next.handle(req);
     // skip interceptor if request to Alpaca API
-    // if (req.headers.get('skip')) return next.handle(req);
-
+    // if (req.headers.get('Authorization')) {
+    //   console.log('Skip adding token');
+    //   return next.handle(req);
+    // }
     const token = localStorage.getItem('token');
-
     if (token) {
       const reqClone = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${token}`),

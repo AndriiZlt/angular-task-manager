@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Subtask } from '../models/Subtask.model';
+import { Subtask } from '../../models/Subtask.model';
 
 export const ADD_SUBTASK = '[SUBTASK] Add';
 

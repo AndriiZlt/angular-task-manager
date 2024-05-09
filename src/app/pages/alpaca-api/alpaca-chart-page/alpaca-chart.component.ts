@@ -15,10 +15,6 @@ export class AlpacaChartComponent implements OnInit {
   dataset1: number[] = [];
   dataset2: number[] = [];
   rootURL = 'https://data.alpaca.markets';
-  headers = new HttpHeaders({
-    'APCA-API-KEY-ID': 'AKQMYK77LB4OAAYYJWVI',
-    'APCA-API-SECRET-KEY': 'PVyopT7FMZ4KAAaNuummqWWbE7h9a0myLtVORpQB',
-  });
   assets: string[] = [];
   selectedStock: string = 'AAPL';
   nasdaq100: string[] = [
@@ -125,14 +121,13 @@ export class AlpacaChartComponent implements OnInit {
     'ZS',
   ];
 
-  constructor(private http: HttpClient, private alpacaService: AlpacaService) {
-  }
+  constructor(private http: HttpClient, private alpacaService: AlpacaService) {}
 
   ngOnInit(): void {
     this.updateChart();
   }
 
-  onSelect(event) {
+  onSelect(event):void {
     this.selectedStock = event;
     this.updateChart();
   }
@@ -151,16 +146,17 @@ export class AlpacaChartComponent implements OnInit {
   // });
   // }
 
-  updateChart() {
+  updateChart():void {
     if (this.chart) {
       this.chart.destroy();
     }
     this.alpacaService.getAssetData(this.selectedStock).subscribe((data) => {
       this.createChart(data['bars']);
+      console.log('Bars:', this.selectedStock, data['bars']);
     });
   }
 
-  createChart(bars) {
+  createChart(bars):void {
     let data = {
       labels: bars.map((d) => d.t),
       datasets: [
@@ -259,5 +255,4 @@ export class AlpacaChartComponent implements OnInit {
 
     this.chart = new Chart(document.getElementById('canvas'), config);
   }
-
 }

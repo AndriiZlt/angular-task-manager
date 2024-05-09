@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginNameService } from '../services/loginName.service';
-import { HubConnectionService } from '../services/hub-connection.service';
-import { TaskManagerApiService } from '../services/API.service';
-import { UserTM } from '../models/UserTM.model';
+import { LoginNameService } from '../../services/loginName.service';
+import { HubConnectionService } from '../../services/hub-connection.service';
+import { TaskManagerApiService } from '../../services/API.service';
+import { UserTM } from '../../models/UserTM.model';
 
 @Component({
   selector: 'app-my-app',
@@ -81,6 +81,10 @@ export class MyAppComponent implements OnInit, OnDestroy {
   }
 
   onViewChange(event): void {
+    if (event.target.innerHTML === 'Alpaca-App') {
+      this.router.navigate(['/alpaca/transactions']);
+      return;
+    }
     this.lastUrl = 'home/' + event.target.id;
     localStorage.setItem('lastUrl', this.lastUrl);
     switch (this.lastUrl) {

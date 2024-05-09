@@ -1,32 +1,6 @@
-@import "../../assets/scss/mixins";
-@import "../../assets/scss/variables";
-@import "../../styles.scss";
-@import url("https://fonts.googleapis.com/css?family=Roboto");
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa");
+// HEADER
 
-.containerr {
-  max-width: 1300px;
-  margin-right: auto;
-  margin-left: auto;
-  font-family: "Roboto", sans-serif;
-  // font-family: "Comfortaa";
-  font-weight: 400;
-  font-style: normal;
-  font-optical-sizing: auto;
-}
-
-.headerContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1300px;
-  width: 100%;
-  height: 100%;
-  padding: 0 30px;
-}
-
-.header {
+.alpaca-header {
   height: 50px;
   background: linear-gradient(90deg, #596678, #50587a);
   display: flex;
@@ -39,6 +13,17 @@
   font-weight: 500;
   font-style: normal;
 
+  .headerContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1800px;
+    width: 100%;
+    height: 100%;
+    padding: 0 30px;
+  }
+
   .navUl {
     display: flex;
     font-size: 20px;
@@ -50,7 +35,7 @@
     }
     a {
       text-decoration: none;
-      color: $blue-700;
+      color: blue;
     }
     p {
       margin: 0;
@@ -137,46 +122,4 @@
       margin-left: 20px;
     }
   }
-}
-
-.container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-section {
-  display: table;
-}
-
-.example-label {
-  display: table-cell;
-  font-size: 14px;
-  margin-left: 8px;
-  min-width: 120px;
-}
-
-.example-button-row {
-  display: table-cell;
-  max-width: 600px;
-}
-
-.example-button-row .mat-mdc-button-base {
-  margin: 8px 8px 8px 0;
-}
-
-.example-flex-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.example-button-container {
-  display: flex;
-  justify-content: center;
-  width: 120px;
-}
-
-.footer {
-  height: 300px;
 }

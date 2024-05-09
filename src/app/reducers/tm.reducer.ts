@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Subtask } from '../models/Subtask.model';
-import * as SubtaskActions from './../actions/tm.actions';
+import * as SubtaskActions from '../state/actions/tm.actions';
 
 export function sutaskReducer(
   state: Subtask[] = [],

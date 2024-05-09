@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './auth.guard';
-import { MyAppComponent } from './pages/my-app.component';
-import { AlpacaChartComponent } from './pages/alpaca-api/alpaca-chart/alpaca-chart.component';
-import { AlpacaTradingComponent } from './pages/alpaca-api/alpaca-trading/alpaca-trading/alpaca-trading.component';
+import { AuthGuard } from './helpers/auth.guard';
+import { MyAppComponent } from './pages/my-app/my-app.component';
+import { AlpacaChartComponent } from './pages/alpaca-api/alpaca-chart-page/alpaca-chart.component';
+import { AlpacaTradingComponent } from './pages/alpaca-api/alpaca-transactions-page/alpaca-trasactions.component';
+import { AlpacaAppComponent } from './pages/alpaca-api/alpaca-app/alpaca-app.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -45,12 +46,31 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'alpaca-chart',
-    component: AlpacaChartComponent,
-  },
-  {
-    path: 'alpaca-trading',
-    component: AlpacaTradingComponent,
+    path: 'alpaca',
+    component: AlpacaAppComponent,
+    children: [
+      {
+        path: 'transactions',
+        loadChildren: () =>
+          import(
+            './pages/alpaca-api/alpaca-transactions-page/transactions.module'
+          ).then((module) => module.AlpacaTransactionsModule),
+      },
+      {
+        path: 'chart',
+        loadChildren: () =>
+          import(
+            './pages/alpaca-api/alpaca-chart-page/alpaca-chart.module'
+          ).then((module) => module.AlpacaChartModule),
+      },
+      {
+        path: 'assets',
+        loadChildren: () =>
+          import(
+            './pages/alpaca-api/alpaca-positions-page/positions.module'
+          ).then((module) => module.AlpacaAssetsModule),
+      },
+    ],
   },
 
   { path: '**', redirectTo: 'login' },
