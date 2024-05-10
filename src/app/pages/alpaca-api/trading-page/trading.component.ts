@@ -40,8 +40,13 @@ export class AlpacaTradingComponent implements OnInit {
         if (this.nasdaq100.includes(data[item].symbol)) {
           this.assets.push(data[item]);
         }
+
+        //this.assets.push(data[item]); //All
       }
-      console.log('Assets:', this.assets);
+      console.log(
+        'Tradable assets:',
+        this.assets.filter((a) => a.tradable)
+      );
       this.filteredAssets = this.assets.map((asset) => asset.name);
     });
 
@@ -121,6 +126,12 @@ export class AlpacaTradingComponent implements OnInit {
       this.clearSelect();
       this.updatePage();
       console.log('Order response:', res);
+    });
+  }
+
+  closeOrder(order_id: any) {
+    this.alpacaService.closeOrder(order_id).subscribe((res) => {
+      setTimeout(() => this.updatePage(), 500);
     });
   }
 }

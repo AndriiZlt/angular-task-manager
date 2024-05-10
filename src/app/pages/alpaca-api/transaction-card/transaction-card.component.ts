@@ -10,13 +10,14 @@ export class ActivityComponent implements OnInit {
   @Input() activity: any;
   activityName: string;
   currentPrice: string;
+  date: string;
 
   constructor(private alpacaService: AlpacaService) {}
 
   ngOnInit(): void {
-    // this.activityName = this.assets.filter(
-    //   (a) => a.symbol === this.activity.symbol
-    // )[0].name;
+    let date = new Date(this.activity.transaction_time);
+    let dateUTC = date.toUTCString();
+    this.date = dateUTC.substring(0, dateUTC.length - 4);
 
     // Getting full name of the asset
     this.alpacaService.getAssetById(this.activity.symbol).subscribe((res) => {
@@ -26,17 +27,6 @@ export class ActivityComponent implements OnInit {
     // Getting current price of the stock
     this.alpacaService.getLastTrades(this.activity.symbol).subscribe((res) => {
       this.currentPrice = res['trade'].p;
-
-      // this.alpacaService.getLastBar(this.activity.symbol).subscribe((res) => {
-      // this.currentPrice = res['trade'].p;
-      // console.log(
-      //   res['symbol'],
-      //   '= last bar:',
-      //   res['bar'].c,
-      //   'last trade:',
-      //   this.currentPrice
-      // );
-      // });
     });
   }
 }

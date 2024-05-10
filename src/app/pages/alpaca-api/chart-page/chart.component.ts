@@ -12,11 +12,10 @@ import * as nasdaq100 from '../nasdaq100';
 export class AlpacaChartComponent implements OnInit {
   chart: Chart;
   labels: string[];
-  dataset1: number[] = [];
-  dataset2: number[] = [];
   rootURL = 'https://data.alpaca.markets';
   assets: string[] = [];
   selectedStock: string = 'AAPL';
+
   nasdaq100: string[] = [
     'AAPL',
     'ABNB',
@@ -125,6 +124,11 @@ export class AlpacaChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateChart();
+
+    // let yesterday = new Date();
+    // console.log(yesterday.toISOString());
+
+    console.log(this.dateToISO());
   }
 
   onSelect(event): void {
@@ -140,6 +144,24 @@ export class AlpacaChartComponent implements OnInit {
       this.createChart(data['bars']);
       // console.log('Bars:', this.selectedStock, data['bars']);
     });
+  }
+
+  dateToISO() {
+    const today = new Date();
+    const yesterday = today.setDate(today.getDate() - 1);
+    // const yyyy = yesterday.getFullYear();
+    // let mm = today.getMonth() + 1; // Months start at 0!
+    // let dd = today.getDate();
+
+    //   dd = Number('0' + dd.toString());
+    // }
+    // if (mm < 10) {
+    //   mm = Number('0' + mm.toString());
+    // }
+
+    // const yesterday = yyyy + '-' + mm + '-' + dd;
+
+    console.log(yesterday);
   }
 
   createChart(bars): void {

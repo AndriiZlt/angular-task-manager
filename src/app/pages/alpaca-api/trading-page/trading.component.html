@@ -2,12 +2,13 @@
   <!-- TOP -->
   <div class="top-row">
     <div class="top-column column-1">
-      <h4>Select Asset</h4>
+      <h4 *ngIf="assets.length === 0">Updating assets...</h4>
+      <h4 *ngIf="assets.length != 0">Select Asset</h4>
       <form class="example-form">
         <mat-form-field class="example-full-width">
           <input
             type="text"
-            placeholder="Pick one"
+            [placeholder]="assets.length === 0 ? 'Please wait...' : 'Pick one'"
             aria-label="Number"
             matInput
             [formControl]="myControl"
@@ -107,6 +108,7 @@
         <app-order-card
           *ngFor="let order of orders"
           [order]="order"
+          (closeOrder)="closeOrder($event)"
         ></app-order-card>
       </div>
     </div>

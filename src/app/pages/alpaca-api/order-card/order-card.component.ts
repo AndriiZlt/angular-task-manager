@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlpacaService } from 'src/app/services/alpaca.service';
 
 @Component({
@@ -8,9 +8,10 @@ import { AlpacaService } from 'src/app/services/alpaca.service';
 })
 export class OrderCardComponent implements OnInit {
   @Input() order: any;
+  @Output() closeOrder: EventEmitter<any> = new EventEmitter<any>();
   orderName: string;
   currentPrice: string;
-  date: any;
+  date: string;
 
   constructor(private alpacaService: AlpacaService) {}
 
@@ -18,7 +19,6 @@ export class OrderCardComponent implements OnInit {
     let date = new Date(this.order.created_at);
     let dateUTC = date.toUTCString();
     this.date = dateUTC.substring(0, dateUTC.length - 4);
-    console.log(this.date);
 
     // Getting full name of the order
     this.alpacaService.getAssetById(this.order.symbol).subscribe((res) => {
@@ -29,5 +29,10 @@ export class OrderCardComponent implements OnInit {
     this.alpacaService.getLastTrades(this.order.symbol).subscribe((res) => {
       this.currentPrice = res['trade'].p;
     });
+  }
+
+  cancelOrder() {
+    console.log(this.order.id);
+    this.closeOrder.emit(this.order.id);
   }
 }

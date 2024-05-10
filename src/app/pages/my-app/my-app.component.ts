@@ -82,7 +82,7 @@ export class MyAppComponent implements OnInit, OnDestroy {
 
   onViewChange(event): void {
     if (event.target.innerHTML === 'Alpaca-App') {
-      this.router.navigate(['/alpaca/transactions']);
+      this.router.navigate(['/alpaca/trading']);
       return;
     }
     this.lastUrl = 'home/' + event.target.id;
