@@ -4,12 +4,12 @@ import { AlpacaTradingComponent } from './alpaca-trading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/modules/material-module';
 import { RouterModule } from '@angular/router';
-import { AssetCardComponent } from '../asset-card/asset-card.component';
+import { OrderCardComponent } from '../order-card/order-card.component';
 import { ActivityComponent } from '../transaction-card/transaction-card.component';
 import { AlpacaTradingRoutingModule } from './trading-routing.module';
 
 @NgModule({
-  declarations: [AlpacaTradingComponent, AssetCardComponent, ActivityComponent],
+  declarations: [AlpacaTradingComponent, OrderCardComponent, ActivityComponent],
   imports: [
     CommonModule,
     FormsModule,

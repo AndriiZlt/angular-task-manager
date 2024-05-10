@@ -3,10 +3,10 @@ import { AlpacaService } from 'src/app/services/alpaca.service';
 
 @Component({
   selector: 'app-order-card',
-  templateUrl: './asset-card.component.html',
-  styleUrls: ['./asset-card.component.scss'],
+  templateUrl: './order-card.component.html',
+  styleUrls: ['./order-card.component.scss'],
 })
-export class AssetCardComponent implements OnInit {
+export class OrderCardComponent implements OnInit {
   @Input() order: any;
   orderName: string;
   currentPrice: string;
