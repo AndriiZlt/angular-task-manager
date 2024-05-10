@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AlpacaService } from 'src/app/services/alpaca.service';
-import * as asset_storage from '../assets';
+// import * as asset_storage from '../assets';
 import * as nasdaq100 from '../nasdaq100';
 import { AssetToBuy } from 'src/app/models/AssetToBuy.model';
 
@@ -43,7 +43,6 @@ export class AlpacaTradingComponent implements OnInit {
       }
       console.log('Assets:', this.assets);
       this.filteredAssets = this.assets.map((asset) => asset.name);
-      asset_storage.set(this.assets);
     });
 
     this.alpacaService.getAccount().subscribe((acc) => {

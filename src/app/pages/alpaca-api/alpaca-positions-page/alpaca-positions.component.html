@@ -1,9 +1,0 @@
-<div class="assets-conainer">
-  <h4>All active position:</h4>
-  <app-position-card
-    *ngFor="let position of positions"
-    [position]="position"
-    [index]="positions.indexOf(position)"
-    (sellAsset)="sellAsset($event)"
-  ></app-position-card>
-</div>

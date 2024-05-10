@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlpacaService } from 'src/app/services/alpaca.service';
 
 @Component({
-  selector: 'app-position-card',
-  templateUrl: './position-card.component.html',
-  styleUrls: ['./position-card.component.scss'],
+  selector: 'app-asset-card',
+  templateUrl: './asset-card.component.html',
+  styleUrls: ['./asset-card.component.scss'],
 })
 export class PositionCardComponent implements OnInit {
   @Input() position: any;

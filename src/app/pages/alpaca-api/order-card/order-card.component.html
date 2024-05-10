@@ -13,8 +13,14 @@
       ></path>
     </svg>
   </div> -->
-  <div class="info__title symbol">{{ order.symbol }}</div>
-  <div class="info__title name">{{ orderName }}</div>
+  <div class="col-info">
+    <p class="date">{{ date }}</p>
+    <div class="asset_info">
+      <div class="symbol">{{ order.symbol }}</div>
+      <div class="name">{{ orderName }}</div>
+    </div>
+  </div>
+
   <div class="info__title quantity">
     <div class="col-inner">
       <p class="title">QTY</p>

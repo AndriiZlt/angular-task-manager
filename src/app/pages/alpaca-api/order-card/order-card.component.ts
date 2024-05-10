@@ -10,10 +10,16 @@ export class OrderCardComponent implements OnInit {
   @Input() order: any;
   orderName: string;
   currentPrice: string;
+  date: any;
 
   constructor(private alpacaService: AlpacaService) {}
 
   ngOnInit(): void {
+    let date = new Date(this.order.created_at);
+    let dateUTC = date.toUTCString();
+    this.date = dateUTC.substring(0, dateUTC.length - 4);
+    console.log(this.date);
+
     // Getting full name of the order
     this.alpacaService.getAssetById(this.order.symbol).subscribe((res) => {
       this.orderName = res['name'];

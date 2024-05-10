@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlpacaAssetsRoutingModule } from './positions-routing.module';
-import { AlpacaPositionsComponent } from './alpaca-positions.component';
-import { PositionCardComponent } from '../position-card/position-card.component';
+import { AlpacaAssetsRoutingModule } from './assets-routing.module';
+import { AlpacaPositionsComponent } from './assets.component';
+import { PositionCardComponent } from '../asset-card/asset-card.component';
 
 @NgModule({
   declarations: [AlpacaPositionsComponent, PositionCardComponent],

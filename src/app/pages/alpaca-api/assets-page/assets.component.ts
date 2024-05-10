@@ -4,9 +4,9 @@ import * as asset_storage from '../assets';
 import * as nasdaq100 from '../nasdaq100';
 
 @Component({
-  selector: 'app-alpaca-positions',
-  templateUrl: './alpaca-positions.component.html',
-  styleUrls: ['./alpaca-positions.component.scss'],
+  selector: 'app-assets',
+  templateUrl: './assets.component.html',
+  styleUrls: ['./assets.component.scss'],
 })
 export class AlpacaPositionsComponent implements OnInit {
   assets: any[] = [];

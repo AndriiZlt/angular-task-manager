@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Chart from 'chart.js/auto';
 import { AlpacaService } from 'src/app/services/alpaca.service';
-// import {CandlestickElement} from "chart.js/types"
+import * as nasdaq100 from '../nasdaq100';
 
 @Component({
   selector: 'app-alpaca-chart',
-  templateUrl: './alpaca-chart.component.html',
-  styleUrls: ['./alpaca-chart.component.scss'],
+  templateUrl: './chart.component.html',
+  styleUrls: ['./chart.component.scss'],
 })
 export class AlpacaChartComponent implements OnInit {
   chart: Chart;
@@ -127,36 +127,22 @@ export class AlpacaChartComponent implements OnInit {
     this.updateChart();
   }
 
-  onSelect(event):void {
+  onSelect(event): void {
     this.selectedStock = event;
     this.updateChart();
   }
 
-  // getAssets() {
-  //   return this.http.get('https://api.alpaca.markets/v2/assets', {
-  //     headers: this.headers,
-  //   });
-
-  // this.getAssets().subscribe((data) => {
-  //   for (const item in data) {
-  //     if (data[item].exchange == 'NASDAQ') {
-  //       this.assets.push(data[item]);
-  //     }
-  //   }
-  // });
-  // }
-
-  updateChart():void {
+  updateChart(): void {
     if (this.chart) {
       this.chart.destroy();
     }
     this.alpacaService.getAssetData(this.selectedStock).subscribe((data) => {
       this.createChart(data['bars']);
-      console.log('Bars:', this.selectedStock, data['bars']);
+      // console.log('Bars:', this.selectedStock, data['bars']);
     });
   }
 
-  createChart(bars):void {
+  createChart(bars): void {
     let data = {
       labels: bars.map((d) => d.t),
       datasets: [

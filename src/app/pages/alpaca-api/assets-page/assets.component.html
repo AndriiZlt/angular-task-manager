@@ -1,0 +1,11 @@
+<div class="assets-conainer">
+  <h4 *ngIf="positions.length === 0">No active positions</h4>
+  <a href="alpaca/trading" *ngIf="positions.length === 0">To Trading page</a>
+  <h4 *ngIf="positions.length != 0">All active positions:</h4>
+  <app-asset-card
+    *ngFor="let position of positions"
+    [position]="position"
+    [index]="positions.indexOf(position)"
+    (sellAsset)="sellAsset($event)"
+  ></app-asset-card>
+</div>

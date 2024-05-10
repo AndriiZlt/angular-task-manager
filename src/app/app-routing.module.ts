@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './helpers/auth.guard';
 import { MyAppComponent } from './pages/my-app/my-app.component';
-import { AlpacaChartComponent } from './pages/alpaca-api/alpaca-chart-page/alpaca-chart.component';
+import { AlpacaChartComponent } from './pages/alpaca-api/chart-page/chart.component';
 import { AlpacaTradingComponent } from './pages/alpaca-api/trading-page/trading.component';
 import { AlpacaAppComponent } from './pages/alpaca-api/alpaca-app/alpaca-app.component';
 
@@ -59,16 +59,16 @@ const routes: Routes = [
       {
         path: 'chart',
         loadChildren: () =>
-          import(
-            './pages/alpaca-api/alpaca-chart-page/alpaca-chart.module'
-          ).then((module) => module.AlpacaChartModule),
+          import('./pages/alpaca-api/chart-page/chart.module').then(
+            (module) => module.AlpacaChartModule
+          ),
       },
       {
         path: 'assets',
         loadChildren: () =>
-          import(
-            './pages/alpaca-api/alpaca-positions-page/positions.module'
-          ).then((module) => module.AlpacaAssetsModule),
+          import('./pages/alpaca-api/assets-page/assets.module').then(
+            (module) => module.AlpacaAssetsModule
+          ),
       },
     ],
   },
