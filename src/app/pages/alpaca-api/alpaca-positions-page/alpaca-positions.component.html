@@ -3,7 +3,6 @@
   <app-position-card
     *ngFor="let position of positions"
     [position]="position"
-    [assets]="assets"
     [index]="positions.indexOf(position)"
     (sellAsset)="sellAsset($event)"
   ></app-position-card>

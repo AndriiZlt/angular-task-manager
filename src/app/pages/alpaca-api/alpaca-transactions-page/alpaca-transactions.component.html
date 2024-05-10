@@ -43,12 +43,12 @@
           type="number"
           required=""
           autocomplete="off"
-          [(value)]="selectedPrice"
+          [(ngModel)]="selectedPrice"
           [style]="
             selectedPrice > 0 ? 'border-color:#006bb3' : 'border-color:#c8c8c8'
           "
         />
-        <label for="$">$</label>
+        <label for="">$</label>
       </div>
     </div>
     <div class="top-column column-3">
@@ -70,9 +70,9 @@
     <div class="top-column column-4">
       <button
         class="button"
-        [disabled]="isDisabled"
+        [disabled]="buttonDisabled"
         [style]="
-          isDisabled
+          buttonDisabled
             ? 'background-color:grey'
             : 'background-color:rgb(0 107 179)'
         "

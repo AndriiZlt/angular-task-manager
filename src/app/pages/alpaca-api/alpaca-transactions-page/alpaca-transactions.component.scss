@@ -159,13 +159,13 @@
         width: 20px;
       }
 
-      .inputGroup :is(input:focus, input:valid) ~ label {
-        // transform: translateY(-50%) scale(0.9);
-        margin: 0em;
-        margin-left: 1.3em;
-        padding: 0.4em;
-        background-color: rgba(242, 251, 253);
-      }
+      // .inputGroup :is(input:focus, input:valid) ~ label {
+      //   // transform: translateY(-50%) scale(0.9);
+      //   margin: 0em;
+      //   margin-left: 1.3em;
+      //   padding: 0.4em;
+      //   background-color: rgba(242, 251, 253);
+      // }
 
       .inputGroup :is(input:focus, input:valid) {
         border-color: rgb(150, 150, 200);

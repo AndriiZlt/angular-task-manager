@@ -24,7 +24,8 @@ export class AlpacaTradingComponent implements OnInit {
   quantity: number = 1;
   inputValue: string;
   myControl = new FormControl();
-  isDisabled: boolean = true;
+  buttonDisabled: boolean = true;
+  inputDisabled: boolean = true;
 
   constructor(private alpacaService: AlpacaService) {
     this.nasdaq100 = nasdaq100.get();
@@ -75,7 +76,7 @@ export class AlpacaTradingComponent implements OnInit {
       (a) => a.name == event.option.value
     )[0];
 
-    this.isDisabled = false;
+    this.buttonDisabled = false;
 
     this.alpacaService
       .getLastTrades(this.selectedAsset['symbol'])
@@ -102,7 +103,7 @@ export class AlpacaTradingComponent implements OnInit {
     this.inputValue = '';
     this.selectedPrice = null;
     this.selectedAsset = null;
-    this.isDisabled = true;
+    this.buttonDisabled = true;
     this.filteredAssets = this.assets.map((asset) => asset.name);
   }
 
@@ -116,7 +117,7 @@ export class AlpacaTradingComponent implements OnInit {
       time_in_force: 'gtc',
     };
     let body = JSON.stringify(assetToBuy);
-
+    console.log('assetToBuy', assetToBuy);
     this.alpacaService.createOrder(body).subscribe((res) => {
       this.clearSelect();
       this.updatePage();
