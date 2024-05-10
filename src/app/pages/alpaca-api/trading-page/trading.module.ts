@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlpacaTradingComponent } from './alpaca-trasactions.component';
+import { AlpacaTradingComponent } from './alpaca-trading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/modules/material-module';
 import { RouterModule } from '@angular/router';
@@ -19,4 +19,4 @@ import { AlpacaTradingRoutingModule } from './trading-routing.module';
     AlpacaTradingRoutingModule,
   ],
 })
-export class AlpacaTransactionsModule {}
+export class AlpacaTradingModule {}

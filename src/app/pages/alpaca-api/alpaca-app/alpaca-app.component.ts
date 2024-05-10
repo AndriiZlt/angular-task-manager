@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./alpaca-app.component.scss'],
 })
 export class AlpacaAppComponent implements OnInit {
-  currentView: string = 'transactions';
+  currentView: string = 'trading';
   constructor(private router: Router) {}
 
   ngOnInit(): void {}

@@ -7,9 +7,9 @@ import * as nasdaq100 from '../nasdaq100';
 import { AssetToBuy } from 'src/app/models/AssetToBuy.model';
 
 @Component({
-  selector: 'app-transactions',
-  templateUrl: './alpaca-transactions.component.html',
-  styleUrls: ['./alpaca-transactions.component.scss'],
+  selector: 'app-trading',
+  templateUrl: './alpaca-trading.component.html',
+  styleUrls: ['./alpaca-trading.component.scss'],
 })
 export class AlpacaTradingComponent implements OnInit {
   mainUserId: string = 'd986b6ed-afda-464b-afb7-07e6fa9d7227';

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './helpers/auth.guard';
 import { MyAppComponent } from './pages/my-app/my-app.component';
 import { AlpacaChartComponent } from './pages/alpaca-api/alpaca-chart-page/alpaca-chart.component';
-import { AlpacaTradingComponent } from './pages/alpaca-api/alpaca-transactions-page/alpaca-trasactions.component';
+import { AlpacaTradingComponent } from './pages/alpaca-api/trading-page/alpaca-trading.component';
 import { AlpacaAppComponent } from './pages/alpaca-api/alpaca-app/alpaca-app.component';
 
 const routes: Routes = [
@@ -50,11 +50,11 @@ const routes: Routes = [
     component: AlpacaAppComponent,
     children: [
       {
-        path: 'transactions',
+        path: 'trading',
         loadChildren: () =>
-          import(
-            './pages/alpaca-api/alpaca-transactions-page/transactions.module'
-          ).then((module) => module.AlpacaTransactionsModule),
+          import('./pages/alpaca-api/trading-page/trading.module').then(
+            (module) => module.AlpacaTradingModule
+          ),
       },
       {
         path: 'chart',

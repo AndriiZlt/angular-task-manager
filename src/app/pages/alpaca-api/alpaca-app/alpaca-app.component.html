@@ -4,13 +4,13 @@
       <ul class="navUl">
         <li
           [style]="
-            this.currentView === 'transactions'
+            this.currentView === 'trading'
               ? 'color:#cbf64b;text-decoration:underline'
               : ''
           "
           (click)="onViewChange($event)"
         >
-          <p style="cursor: pointer">Transactions</p>
+          <p style="cursor: pointer">Trading</p>
         </li>
         <li
           (click)="onViewChange($event)"

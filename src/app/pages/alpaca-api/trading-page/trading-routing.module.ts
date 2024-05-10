@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AlpacaTradingComponent } from './alpaca-trasactions.component';
+import { AlpacaTradingComponent } from './alpaca-trading.component';
 
 const routes: Routes = [
   {

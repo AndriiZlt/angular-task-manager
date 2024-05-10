@@ -14,7 +14,7 @@ import { FriendsViewModule } from '../pages/friends-view/friends-view.module';
 import { StoreModule } from '@ngrx/store';
 import { sutaskReducer } from '../reducers/tm.reducer';
 import { Interceptor } from '../helpers/interceptor';
-import { AlpacaTransactionsModule } from '../pages/alpaca-api/alpaca-transactions-page/transactions.module';
+import { AlpacaTradingModule } from '../pages/alpaca-api/trading-page/trading.module';
 import { AlpacaAppComponent } from '../pages/alpaca-api/alpaca-app/alpaca-app.component';
 import { AlpacaChartModule } from '../pages/alpaca-api/alpaca-chart-page/alpaca-chart.module';
 import { AlpacaAssetsModule } from '../pages/alpaca-api/alpaca-positions-page/positions.module';
@@ -34,7 +34,7 @@ import { AlpacaAssetsModule } from '../pages/alpaca-api/alpaca-positions-page/po
     StoreModule.forRoot({
       subtask: sutaskReducer,
     }),
-    AlpacaTransactionsModule,
+    AlpacaTradingModule,
     AlpacaChartModule,
     AlpacaAssetsModule,
   ],
