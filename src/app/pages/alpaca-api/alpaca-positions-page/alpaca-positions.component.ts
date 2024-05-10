@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlpacaService } from 'src/app/services/alpaca.service';
-import * as assets from '../assets';
+import * as asset_storage from '../assets';
 import * as nasdaq100 from '../nasdaq100';
 
 @Component({
@@ -29,22 +29,10 @@ export class AlpacaPositionsComponent implements OnInit {
       }
       console.log('Positions:', res);
     });
-
-    this.alpacaService.getAssets().subscribe((data) => {
-      console.log('data', data[0]);
-      for (const item in data) {
-        if (this.nasdaq100.includes(data[item].symbol)) {
-          this.assets.push(data[item]);
-        }
-      }
-      console.log('Assets:', this.assets[1]);
-    });
-
-    //this.assets = [...assets.getAssets()]; //comment out
   }
 
   sellAsset(asset_id: any) {
-    console.log('sell asset:', event);
+    console.log('sell asset:', asset_id);
     this.alpacaService.closePosition(asset_id).subscribe((res) => {
       console.log('res', res);
       setTimeout(() => this.updatePage(), 500);

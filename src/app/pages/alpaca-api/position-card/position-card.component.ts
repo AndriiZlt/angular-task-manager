@@ -8,7 +8,6 @@ import { AlpacaService } from 'src/app/services/alpaca.service';
 })
 export class PositionCardComponent implements OnInit {
   @Input() position: any;
-  @Input() assets: any[];
   @Input() index: number;
   @Output() sellAsset: EventEmitter<any> = new EventEmitter<any>();
   positionName: string;
@@ -17,11 +16,10 @@ export class PositionCardComponent implements OnInit {
   constructor(private alpacaService: AlpacaService) {}
 
   ngOnInit(): void {
-    // console.log('Index:', this.index);
-
-    this.positionName = this.assets.filter(
-      (a) => a.symbol === this.position.symbol
-    )[0].name;
+    // Getting full name of the order
+    this.alpacaService.getAssetById(this.position.symbol).subscribe((res) => {
+      this.positionName = res['name'];
+    });
 
     // Getting current price of the stock
     this.alpacaService.getLastTrades(this.position.symbol).subscribe((res) => {
