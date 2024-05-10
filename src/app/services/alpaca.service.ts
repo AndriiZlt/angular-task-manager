@@ -23,6 +23,12 @@ export class AlpacaService {
 
   constructor(private http: HttpClient) {}
 
+  getAssets() {
+    return this.http.get(`${this.tradingApiUrl}/v2/assets`, {
+      headers: this.headers,
+    });
+  }
+
   getPositions() {
     return this.http.get(`${this.tradingApiUrl}/v2/positions`, {
       headers: this.headers,
@@ -67,20 +73,14 @@ export class AlpacaService {
     });
   }
 
-  getAsset() {
-    return this.http.get(
-      `https://paper-api.sandbox.alpaca.markets/v2/assets/GOOGL`,
-      {
-        headers: this.headers,
-      }
-    );
-  }
-
-  getAssets(headers: HttpHeaders) {
-    return this.http.get(`${this.brokerApiUrl}/v1/assets`, {
-      headers: headers,
-    });
-  }
+  // getAsset() {
+  //   return this.http.get(
+  //     `https://paper-api.sandbox.alpaca.markets/v2/assets/GOOGL`,
+  //     {
+  //       headers: this.headers,
+  //     }
+  //   );
+  // }
 
   getLastTrades(symbol: string) {
     return this.http.get(`${this.dataURL}/v2/stocks/${symbol}/trades/latest`, {

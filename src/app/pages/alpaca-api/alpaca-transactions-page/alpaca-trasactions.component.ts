@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AlpacaService } from 'src/app/services/alpaca.service';
 import * as assets from '../assets';
+import * as nasdaq100 from '../nasdaq100';
 import { AssetToBuy } from 'src/app/models/AssetToBuy.model';
 
 @Component({
@@ -16,109 +17,7 @@ export class AlpacaTradingComponent implements OnInit {
   orders: any[] = [];
   activities: any[] = [];
   assets: any[] = [];
-  nasdaq100: string[] = [
-    'AAPL',
-    'ABNB',
-    'ADBE',
-    'ADI',
-    'ADP',
-    'ADSK',
-    'AEP',
-    'AMAT',
-    'AMD',
-    'AMGN',
-    'AMZN',
-    'ANSS',
-    'ASML',
-    'AVGO',
-    'AZN',
-    'BIIB',
-    'BKNG',
-    'BKR',
-    'CCEP',
-    'CDNS',
-    'CDW',
-    'CEG',
-    'CHTR',
-    'CMCSA',
-    'COST',
-    'CPRT',
-    'CRWD',
-    'CSCO',
-    'CSGP',
-    'CSX',
-    'CTAS',
-    'CTSH',
-    'DASH',
-    'DDOG',
-    'DLTR',
-    'DXC',
-    'EA',
-    'EXC',
-    'FANG',
-    'FAST',
-    'FTNT',
-    'GEHC',
-    'GFS',
-    'GILD',
-    'GOOG',
-    'GOOGL',
-    'HON',
-    'IDXX',
-    'ILMN',
-    'INTC',
-    'INTU',
-    'ISRG',
-    'KDP',
-    'KHC',
-    'KLAC',
-    'LIN',
-    'LRCX',
-    'LULU',
-    'MAR',
-    'MCHP',
-    'MDB',
-    'MDLZ',
-    'MELI',
-    'META',
-    'MNST',
-    'MRNA',
-    'MRVL',
-    'MSFT',
-    'MU',
-    'NFLX',
-    'NVDA',
-    'NXPI',
-    'ODFL',
-    'ON',
-    'ORLY',
-    'PANW',
-    'PAYX',
-    'PCAR',
-    'PDD',
-    'PEP',
-    'PYPL',
-    'QCOM',
-    'REGN',
-    'ROP',
-    'ROST',
-    'SBUX',
-    'SIRI',
-    'SNPS',
-    'TEAM',
-    'TMUS',
-    'TSLA',
-    'TTD',
-    'TTWO',
-    'TXN',
-    'VRSK',
-    'VRTX',
-    'WBA',
-    'WBD',
-    'WDAY',
-    'XEL',
-    'ZS',
-  ];
+  nasdaq100: string[];
   filteredAssets: string[];
   selectedAsset = new Object();
   selectedPrice: number;
@@ -133,21 +32,23 @@ export class AlpacaTradingComponent implements OnInit {
   // options: string[] = ['One', 'Two', 'Three'];
   isDisabled: boolean = true;
 
-  constructor(private alpacaService: AlpacaService) {}
+  constructor(private alpacaService: AlpacaService) {
+    this.nasdaq100 = nasdaq100.get();
+  }
 
   ngOnInit(): void {
-    // this.alpacaService.getAssets(this.headers).subscribe((data) => {
-    //   console.log('data', data);
-    //   for (const item in data) {
-    //     if (this.nasdaq100.includes(data[item].symbol)) {
-    //       this.assets.push(data[item]);
-    //     }
-    //   }
-    // });
+    this.alpacaService.getAssets().subscribe((data) => {
+      console.log('data', data);
+      for (const item in data) {
+        if (this.nasdaq100.includes(data[item].symbol)) {
+          this.assets.push(data[item]);
+        }
+      }
+    });
 
-    // console.log('Assets:', assets.getAssets());
+    console.log('Assets:', this.assets);
 
-    this.assets = [...assets.getAssets()]; //comment out
+    //this.assets = [...assets.getAssets()]; //comment out
     this.filteredAssets = this.assets.map((asset) => asset.name);
 
     this.alpacaService.getAccount().subscribe((acc) => {

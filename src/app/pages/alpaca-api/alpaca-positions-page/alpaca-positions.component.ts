@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlpacaService } from 'src/app/services/alpaca.service';
 import * as assets from '../assets';
+import * as nasdaq100 from '../nasdaq100';
 
 @Component({
   selector: 'app-alpaca-positions',
@@ -9,8 +10,12 @@ import * as assets from '../assets';
 })
 export class AlpacaPositionsComponent implements OnInit {
   assets: any[] = [];
-  constructor(private alpacaService: AlpacaService) {}
+  nasdaq100: string[];
   positions: any[] = [];
+
+  constructor(private alpacaService: AlpacaService) {
+    this.nasdaq100 = nasdaq100.get();
+  }
 
   ngOnInit(): void {
     this.resetPage();
@@ -25,18 +30,18 @@ export class AlpacaPositionsComponent implements OnInit {
       console.log('Positions:', res);
     });
 
-    // this.alpacaService.getAssets(this.headers).subscribe((data) => {
-    //   console.log('data', data);
-    //   for (const item in data) {
-    //     if (this.nasdaq100.includes(data[item].symbol)) {
-    //       this.assets.push(data[item]);
-    //     }
-    //   }
-    // });
+    this.alpacaService.getAssets().subscribe((data) => {
+      console.log('data', data);
+      for (const item in data) {
+        if (this.nasdaq100.includes(data[item].symbol)) {
+          this.assets.push(data[item]);
+        }
+      }
+    });
 
-    // console.log('Assets:', assets.getAssets());
+    console.log('Assets:', this.assets);
 
-    this.assets = [...assets.getAssets()]; //comment out
+    //this.assets = [...assets.getAssets()]; //comment out
   }
 
   sellAsset(asset_id: any) {

@@ -1,4 +1,4 @@
-const assets = [
+const assets: any[] = [
   {
     id: '0ebf2aad-3ac3-4274-9710-d4aaf455636f',
     class: 'us_equity',
@@ -1516,6 +1516,6 @@ const assets = [
   },
 ];
 
-export function getAssets() {
+export function get() {
   return assets;
 }
