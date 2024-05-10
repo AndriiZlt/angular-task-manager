@@ -22,14 +22,8 @@ export class AlpacaTradingComponent implements OnInit {
   selectedAsset = new Object();
   selectedPrice: number;
   quantity: number = 1;
-  authHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization:
-      'Basic Q0tMMVAyQkE4TVRNUkhSWDBCT1I6MmVIRWJxamkyakRmdmxuZkMwU25DWTJobFRKWVhwVEowRFJLREQ0Sg==',
-  });
   inputValue: string;
   myControl = new FormControl();
-  // options: string[] = ['One', 'Two', 'Three'];
   isDisabled: boolean = true;
 
   constructor(private alpacaService: AlpacaService) {
@@ -37,6 +31,8 @@ export class AlpacaTradingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.updatePage();
+
     this.alpacaService.getAssets().subscribe((data) => {
       console.log('data', data);
       for (const item in data) {
@@ -44,18 +40,15 @@ export class AlpacaTradingComponent implements OnInit {
           this.assets.push(data[item]);
         }
       }
+      console.log('Assets:', this.assets);
+      this.filteredAssets = this.assets.map((asset) => asset.name);
     });
 
-    console.log('Assets:', this.assets);
-
-    //this.assets = [...assets.getAssets()]; //comment out
-    this.filteredAssets = this.assets.map((asset) => asset.name);
+    //this.assets = [...assets.get()]; //comment out
 
     this.alpacaService.getAccount().subscribe((acc) => {
       console.log('acc', acc);
     });
-
-    this.updatePage();
   }
 
   updatePage() {

@@ -98,19 +98,16 @@
         <app-transaction-card
           *ngFor="let activity of activities"
           [activity]="activity"
-          [assets]="assets"
         ></app-transaction-card>
       </div>
     </div>
     <div class="bottom-column right">
       <div class="my-assets-list">
         <h5>Pending orders</h5>
-        <app-asset-card
+        <app-order-card
           *ngFor="let order of orders"
           [order]="order"
-          [assets]="assets"
-          [authHeaders]="authHeaders"
-        ></app-asset-card>
+        ></app-order-card>
       </div>
     </div>
   </div>

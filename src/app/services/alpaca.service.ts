@@ -29,6 +29,12 @@ export class AlpacaService {
     });
   }
 
+  getAssetById(asset_id: string) {
+    return this.http.get(`${this.tradingApiUrl}/v2/assets/${asset_id}`, {
+      headers: this.headers,
+    });
+  }
+
   getPositions() {
     return this.http.get(`${this.tradingApiUrl}/v2/positions`, {
       headers: this.headers,
