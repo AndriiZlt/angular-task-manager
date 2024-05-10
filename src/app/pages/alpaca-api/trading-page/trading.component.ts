@@ -8,8 +8,8 @@ import { AssetToBuy } from 'src/app/models/AssetToBuy.model';
 
 @Component({
   selector: 'app-trading',
-  templateUrl: './alpaca-trading.component.html',
-  styleUrls: ['./alpaca-trading.component.scss'],
+  templateUrl: './trading.component.html',
+  styleUrls: ['./trading.component.scss'],
 })
 export class AlpacaTradingComponent implements OnInit {
   mainUserId: string = 'd986b6ed-afda-464b-afb7-07e6fa9d7227';
