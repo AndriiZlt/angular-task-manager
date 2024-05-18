@@ -2,24 +2,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MaterialModule } from './modules/material-module';
+import { MaterialModule } from './shared/modules/material-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { MyAppComponent } from './pages/my-app/my-app.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { FriendsViewModule } from './pages/friends-view/friends-view.module';
-import { StoreModule } from '@ngrx/store';
-import { sutaskReducer } from './reducers/tm.reducer';
-import { Interceptor } from './helpers/interceptor';
-import { AlpacaTradingModule } from './pages/alpaca-api/trading-page/trading.module';
-import { AlpacaAppComponent } from './pages/alpaca-api/alpaca-app/alpaca-app.component';
-import { AlpacaChartModule } from './pages/alpaca-api/chart-page/chart.module';
-import { AlpacaAssetsModule } from './pages/alpaca-api/assets-page/assets.module';
+import { CoreModule } from './core/core.module';
+import { FeaturesModule } from './features/features.module';
+import { SharedModule } from './shared/shared.module';
+import { AuthInterceptor } from './core/auth/services/auth.interceptor';
+
 @NgModule({
-  declarations: [AppComponent, MyAppComponent, AlpacaAppComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,13 +26,9 @@ import { AlpacaAssetsModule } from './pages/alpaca-api/assets-page/assets.module
     HttpClientModule,
     FormsModule,
     RouterModule,
-    FriendsViewModule,
-    StoreModule.forRoot({
-      subtask: sutaskReducer,
-    }),
-    AlpacaTradingModule,
-    AlpacaChartModule,
-    AlpacaAssetsModule,
+    CoreModule,
+    FeaturesModule,
+    SharedModule,
   ],
   providers: [
     {
@@ -45,7 +37,7 @@ import { AlpacaAssetsModule } from './pages/alpaca-api/assets-page/assets.module
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: Interceptor,
+      useClass: AuthInterceptor,
       multi: true,
     },
   ],

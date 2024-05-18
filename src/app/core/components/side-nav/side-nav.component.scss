@@ -1,0 +1,12 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  outline: 1px solid blue;
+}
+
+.navbar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
