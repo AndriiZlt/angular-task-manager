@@ -53,7 +53,6 @@ export class TaskManagerComponent implements OnInit {
     private datePipe: DatePipe,
     private signalrService: HubConnectionService
   ) {
-    localStorage.setItem('lastUrl', 'task-manager');
 
     this.taskManagerService.getEvent().subscribe((param: any) => {
       // console.log('param:', param);

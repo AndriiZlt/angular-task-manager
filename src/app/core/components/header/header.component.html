@@ -1,29 +1,24 @@
-<div class="header">
+<header class="header">
   <div class="headerContainer">
     <nav *ngIf="token">
       <ul class="navUl">
         <li
-          [style]="
-            this.lastUrl === 'task-manager'
-              ? 'color:#cbf64b;text-decoration:underline'
-              : ''
-          "
+          [style]="currentView === 1 ? 'color:#7fffd4' : ''"
           (click)="onViewChange($event)"
         >
-          <p id="task-manager" style="cursor: pointer">Task Manager</p>
+          <p id="tasks" style="cursor: pointer">Task Manager</p>
         </li>
         <li
           (click)="onViewChange($event)"
-          [style]="
-            this.lastUrl === 'friends-list'
-              ? 'color:#cbf64b;text-decoration:underline'
-              : ''
-          "
+          [style]="currentView === 2 ? 'color:#7fffd4' : ''"
         >
-          <p id="friends-list" style="cursor: pointer">Friends List</p>
+          <p id="friends">Friends List</p>
         </li>
-        <li id="alpaca-app" (click)="onViewChange($event)">
-          <p style="cursor: pointer">Alpaca-App</p>
+        <li
+          (click)="onViewChange($event)"
+          [style]="currentView === 3 ? 'color:#7fffd4' : ''"
+        >
+          <p id="alpaca">Alpaca-App</p>
         </li>
       </ul>
     </nav>
@@ -43,7 +38,7 @@
       </button>
     </div>
   </div>
-</div>
+</header>
 <!-- <div class="containerr">
     <router-outlet> </router-outlet>
   </div> -->

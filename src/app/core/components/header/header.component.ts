@@ -5,10 +5,16 @@ import { HubConnectionService } from '../../services/hub-connection.service';
 import { TaskManagerApiService } from 'src/app/features/tasks-app/services/task.service';
 import { UserTM } from '../../user/models/UserTM.model';
 
+enum View {
+  'tasks' = 1,
+  'friends' = 2,
+  'alpaca' = 3,
+}
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   token: string;
@@ -17,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   signalRStatus: string = '';
   userId: number;
   currentUser: UserTM;
+  currentView: View;
 
   constructor(
     private router: Router,
@@ -80,20 +87,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onViewChange(event): void {
-    if (event.target.innerHTML === 'Alpaca-App') {
-      this.router.navigate(['/alpaca/trading']);
-      return;
-    }
-    this.lastUrl = event.target.id;
-    localStorage.setItem('lastUrl', this.lastUrl);
-    switch (this.lastUrl) {
-      case 'task-manager':
+    console.log('event in header', event.target.id);
+    switch (event.target.id) {
+      case 'tasks':
+        this.currentView = View.tasks;
+        this.lastUrl = 'task-manager';
         this.router.navigate(['task-manager']);
         break;
-      case 'friends-list':
+      case 'friends':
+        this.currentView = View.friends;
+        this.lastUrl = 'friends-list';
         this.router.navigate(['friends-list']);
         break;
+      case 'alpaca':
+        this.currentView = View.alpaca;
+        let lastUrl = localStorage.getItem('lastUrl');
+        if (lastUrl.includes('alpaca')) {
+          this.router.navigate([lastUrl]);
+        } else {
+          this.router.navigate(['alpaca/trading']);
+        }
+
+        break;
       default:
+        this.currentView = View.tasks;
+        this.lastUrl = 'task-manager';
         this.router.navigate(['task-manager']);
     }
   }
@@ -101,6 +119,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout(): void {
     console.log('Loging out...');
     localStorage.clear();
-    this.router.navigate(['login']);
+    this.router.navigate(['auth/login']);
   }
 }

@@ -35,7 +35,7 @@ export class TradingComponent implements OnInit {
     this.updatePage();
 
     this.alpacaService.getAssets().subscribe((data) => {
-      console.log('data', data);
+      // console.log('data', data);
       for (const item in data) {
         if (this.nasdaq100.includes(data[item].symbol)) {
           this.assets.push(data[item]);
@@ -43,15 +43,15 @@ export class TradingComponent implements OnInit {
 
         //this.assets.push(data[item]); //All
       }
-      console.log(
-        'Tradable assets:',
-        this.assets.filter((a) => a.tradable)
-      );
+      // console.log(
+      //   'Tradable assets:',
+      //   this.assets.filter((a) => a.tradable)
+      // );
       this.filteredAssets = this.assets.map((asset) => asset.name);
     });
 
     this.alpacaService.getAccount().subscribe((acc) => {
-      console.log('acc', acc);
+      // console.log('acc', acc);
     });
   }
 
@@ -62,7 +62,7 @@ export class TradingComponent implements OnInit {
       for (const item in res) {
         this.orders.push(res[item]);
       }
-      console.log('Orders:', this.orders);
+      // console.log('Orders:', this.orders);
     });
 
     this.alpacaService.getActivity().subscribe((res) => {
@@ -71,7 +71,7 @@ export class TradingComponent implements OnInit {
           this.activities.push(res[item]);
         }
       }
-      console.log('Activity:', this.activities);
+      // console.log('Activity:', this.activities);
     });
   }
 
@@ -121,11 +121,11 @@ export class TradingComponent implements OnInit {
       time_in_force: 'gtc',
     };
     let body = JSON.stringify(assetToBuy);
-    console.log('assetToBuy', assetToBuy);
+    // console.log('assetToBuy', assetToBuy);
     this.alpacaService.createOrder(body).subscribe((res) => {
       this.clearSelect();
       this.updatePage();
-      console.log('Order response:', res);
+      // console.log('Order response:', res);
     });
   }
 

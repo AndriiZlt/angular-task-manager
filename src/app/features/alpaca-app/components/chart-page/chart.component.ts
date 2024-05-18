@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Chart from 'chart.js/auto';
 import { AlpacaService } from '../../services/alpaca.service';
@@ -9,7 +9,7 @@ import * as nasdaq100 from '../../../../../assets/nasdaq100';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnDestroy {
   chart: Chart;
   labels: string[];
   rootURL = 'https://data.alpaca.markets';
@@ -131,6 +131,12 @@ export class ChartComponent implements OnInit {
     this.dateToISO();
   }
 
+  ngOnDestroy() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+  }
+
   onSelect(event): void {
     this.selectedStock = event;
     this.updateChart();
@@ -161,7 +167,7 @@ export class ChartComponent implements OnInit {
 
     // const yesterday = yyyy + '-' + mm + '-' + dd;
 
-    console.log(yesterday);
+    // console.log(yesterday);
   }
 
   createChart(bars): void {

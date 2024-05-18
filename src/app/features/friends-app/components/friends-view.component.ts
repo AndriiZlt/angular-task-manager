@@ -38,7 +38,6 @@ export class FriendsViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    localStorage.setItem('lastUrl', 'friends-list');
     this.updateFriends();
     this.updateFilterFromLC();
   }

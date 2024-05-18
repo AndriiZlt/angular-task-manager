@@ -22,7 +22,6 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    localStorage.setItem('lastUrl', 'friends-list/users');
     this.fetchUsers();
     this.updateFriendsFromLC();
   }

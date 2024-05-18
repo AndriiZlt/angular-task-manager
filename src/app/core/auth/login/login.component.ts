@@ -28,13 +28,10 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loginNameService: LoginNameService,
     private authService: AuthService
-  ) {
-    localStorage.setItem('lastUrl', 'login');
-  }
+  ) {}
 
   ngOnInit(): void {
     localStorage.clear();
-    localStorage.setItem('lastUrl', 'login');
     this.loginForm = this.formBuilder.group({
       username: [
         null,
@@ -90,7 +87,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(loginDto).subscribe((jwtDto) => {
       console.log('Logged user from backend:', jwtDto);
       localStorage.setItem('token', jwtDto.token);
-      localStorage.setItem('lastUrl', 'task-manager');
       this.router.navigate(['task-manager']);
       this.loginNameService.triggerEvent(loginDto.username);
     });
@@ -109,6 +105,6 @@ export class LoginComponent implements OnInit {
   }
 
   toRegisterPage(): void {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/auth/register']);
   }
 }

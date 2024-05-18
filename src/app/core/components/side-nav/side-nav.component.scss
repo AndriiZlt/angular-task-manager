@@ -2,11 +2,27 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  outline: 1px solid blue;
+  background-color: #3a4664;
+  font-size: 15px;
+  font-weight: 500;
+  height: 100%;
+  min-height: 100vw;
 }
 
 .navbar-nav {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 10px;
+  color: beige;
+
+  a {
+    text-decoration: none;
+    color: rgb(247, 247, 241);
+  }
+
+  a:active {
+    color: #7fffd4;
+  }
 }

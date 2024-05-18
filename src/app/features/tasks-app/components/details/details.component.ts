@@ -36,7 +36,6 @@ export class DetailsComponent implements OnInit {
   ngOnInit(): void {
     this.taskId = Number(this.route.snapshot.params.id);
     this.getFromLocalStorage();
-    localStorage.setItem('lastUrl', `task-manager/task/${this.taskId}`);
   }
 
   onSelect(selectedUsername: string) {

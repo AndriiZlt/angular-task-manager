@@ -29,7 +29,6 @@ export class RegisterComponent implements OnInit {
     private loginNameService: LoginNameService,
     private authService: AuthService
   ) {
-    localStorage.setItem('lastUrl', 'register');
   }
 
   ngOnInit(): void {
@@ -121,7 +120,6 @@ export class RegisterComponent implements OnInit {
       this.authService.register(registerDto).subscribe((res) => {
         console.log('Response:', res);
         localStorage.setItem('token', res.token);
-        localStorage.setItem('lastUrl', 'task-manager');
         this.router.navigate(['task-manager']);
       });
     } catch (error) {
@@ -150,6 +148,6 @@ export class RegisterComponent implements OnInit {
   }
 
   toLoginPage(): void {
-    this.router.navigate(['login']);
+    this.router.navigate(['auth/login']);
   }
 }

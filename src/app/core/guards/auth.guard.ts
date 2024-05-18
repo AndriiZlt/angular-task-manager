@@ -19,10 +19,11 @@ export class AuthGuard implements CanActivate {
   ): boolean {
     let token = localStorage.getItem('token');
     let lastUrl = localStorage.getItem('lastUrl');
-    if (state.url === '/login' || state.url === '/register') {
+    console.log('last url in guard:', lastUrl, 'state.url:', state.url);
+    if (state.url === '/auth/login' || state.url === '/auth/register') {
       if (token) {
         if (lastUrl) {
-          if (lastUrl === 'login' || lastUrl === 'register') {
+          if (lastUrl === 'auth/login' || lastUrl === 'auth/register') {
             this.router.navigate(['task-manager']);
           } else {
             this.router.navigate([`${lastUrl}`]);
@@ -37,10 +38,12 @@ export class AuthGuard implements CanActivate {
       }
     }
     // other pages
+
     if (token) {
       return true;
     } else {
-      this.router.navigate(['login']);
+      console.log('Unauthorized');
+      this.router.navigate(['auth/login']);
       return false;
     }
   }
