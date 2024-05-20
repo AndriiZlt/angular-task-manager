@@ -4,13 +4,12 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class TaskManagerService {
+export class TaskChangeService {
   constructor() {}
 
   private eventSubject = new BehaviorSubject<any>(undefined);
 
   triggerEvent(param: any): void {
-    console.log('triggered event', param);
     this.eventSubject.next(param);
   }
 

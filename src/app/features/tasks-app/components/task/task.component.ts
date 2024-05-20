@@ -4,18 +4,16 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Subtask } from '../../models/Subtask.model';
 import { Task } from '../../models/Task.model';
-import { TaskManagerService } from '../../services/task-manager.service';
+import { TaskChangeService } from '../../services/task-manager.service';
 import { TaskManagerApiService } from '../../services/task.service';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskComponent implements OnInit {
   @Input() task: Task;
@@ -29,7 +27,7 @@ export class TaskComponent implements OnInit {
   filteredSubtasks: Subtask[];
 
   constructor(
-    private taskManagerService: TaskManagerService,
+    private taskChangeService: TaskChangeService,
     private apiService: TaskManagerApiService
   ) {}
 
@@ -42,7 +40,7 @@ export class TaskComponent implements OnInit {
   }
 
   onCheckClick(): void {
-    this.taskManagerService.triggerEvent({
+    this.taskChangeService.triggerEvent({
       action: 'taskStatusChange',
       id: this.task.id,
     });

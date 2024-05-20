@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subtask } from '../../models/Subtask.model';
 import { SubtaskToAdd } from '../../models/SubtaskToAdd.model';
 import { Task } from '../../models/Task.model';
-import { TaskManagerService } from '../../services/task-manager.service';
+import { TaskChangeService } from '../../services/task-manager.service';
 import { TaskManagerApiService } from '../../services/task.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class SubtaskModalComponent implements OnInit {
   @Output() updateSubtask: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
-    private taskManagerService: TaskManagerService,
+    private taskChangeService: TaskChangeService,
     private apiService: TaskManagerApiService
   ) {}
 
@@ -100,7 +100,7 @@ export class SubtaskModalComponent implements OnInit {
       });
     }
 
-    this.taskManagerService.triggerEvent({
+    this.taskChangeService.triggerEvent({
       action: 'updatePage',
       id: null,
     });

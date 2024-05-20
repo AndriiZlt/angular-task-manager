@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Subtask } from '../../models/Subtask.model';
-import { TaskManagerService } from '../../services/task-manager.service';
+import { TaskChangeService } from '../../services/task-manager.service';
 
 @Component({
   selector: 'app-subtask',
@@ -23,7 +23,7 @@ export class SubtaskComponent implements OnInit {
   @Output() updateSubtask: EventEmitter<any> = new EventEmitter<any>();
   @Output() openUpdateModal: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private taskManagerService: TaskManagerService) {}
+  constructor(private taskChangeService: TaskChangeService) {}
 
   ngOnInit(): void {}
 
@@ -32,7 +32,7 @@ export class SubtaskComponent implements OnInit {
   }
 
   onCheckClick(index: number): void {
-    this.taskManagerService.triggerEvent({
+    this.taskChangeService.triggerEvent({
       action: 'taskStatusChange',
       taskId: this.subtask.id,
     });

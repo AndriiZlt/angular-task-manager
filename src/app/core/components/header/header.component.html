@@ -3,20 +3,20 @@
     <nav *ngIf="token">
       <ul class="navUl">
         <li
-          [style]="currentView === 1 ? 'color:#7fffd4' : ''"
+          [style]="headerView === 1 ? 'color:#7fffd4' : ''"
           (click)="onViewChange($event)"
         >
-          <p id="tasks" style="cursor: pointer">Task Manager</p>
+          <p id="task" style="cursor: pointer">Task Manager</p>
         </li>
         <li
           (click)="onViewChange($event)"
-          [style]="currentView === 2 ? 'color:#7fffd4' : ''"
+          [style]="headerView === 2 ? 'color:#7fffd4' : ''"
         >
           <p id="friends">Friends List</p>
         </li>
         <li
           (click)="onViewChange($event)"
-          [style]="currentView === 3 ? 'color:#7fffd4' : ''"
+          [style]="headerView === 3 ? 'color:#7fffd4' : ''"
         >
           <p id="alpaca">Alpaca-App</p>
         </li>

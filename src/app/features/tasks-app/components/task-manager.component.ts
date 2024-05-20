@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Task } from '../models/Task.model';
 import { TaskToAdd } from '../models/TaskToAdd.model';
-import { TaskManagerService } from '../services/task-manager.service';
+import { TaskChangeService } from '../services/task-manager.service';
 import { TaskManagerApiService } from '../services/task.service';
 import { DatePipe } from '@angular/common';
 import { Subtask } from '../models/Subtask.model';
@@ -20,7 +20,6 @@ enum TaskFilterValue {
   templateUrl: './task-manager.component.html',
   styleUrls: ['./task-manager.component.scss'],
   providers: [DatePipe],
-  // changeDetection: ChangeDetectionStrategy.Default,
 })
 export class TaskManagerComponent implements OnInit {
   tasks: Task[] = [];
@@ -48,14 +47,12 @@ export class TaskManagerComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private taskManagerService: TaskManagerService,
+    private taskChangeService: TaskChangeService,
     private apiService: TaskManagerApiService,
     private datePipe: DatePipe,
     private signalrService: HubConnectionService
   ) {
-
-    this.taskManagerService.getEvent().subscribe((param: any) => {
-      // console.log('param:', param);
+    this.taskChangeService.getEvent().subscribe((param: any) => {
       if (param !== undefined) {
         switch (param.action) {
           case 'taskStatusChange':
@@ -94,23 +91,19 @@ export class TaskManagerComponent implements OnInit {
     this.apiService.getSubtasks().subscribe((res) => {
       this.subtasks = <Subtask[]>res;
       localStorage.setItem('subtasks', JSON.stringify(this.subtasks));
-      // console.log('Subtasks:', this.subtasks);
 
       this.apiService.getTasks().subscribe((res) => {
         this.tasks = [...(<Task[]>res)];
         localStorage.setItem('tasks', JSON.stringify(this.tasks));
         this.updateTitle(`New task #${this.tasks.length + 1}`);
         this.updateFilter();
-        // console.log('Tasks:', this.tasks);
       });
     });
 
     this.apiService.getUsers().subscribe((res) => {
       this.users = [...(<UserTM[]>(<unknown>res))];
       localStorage.setItem('users', JSON.stringify(this.users));
-      // console.log('Users:', this.users);
       this.apiService.getCurrentUser().subscribe((res) => {
-        // console.log('Current User=>', res);
         if (res) {
           this.currentUser = <UserTM>res;
           this.selectedUser = this.currentUser;

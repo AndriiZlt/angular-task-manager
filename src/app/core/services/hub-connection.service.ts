@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import * as signalR from '@aspnet/signalr';
 import { HttpClient } from '@angular/common/http';
-import { UrlService } from './url-service.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,8 @@ export class HubConnectionService {
   private updateData!: () => void;
   private _apiUrl;
 
-  constructor(private http: HttpClient, private urlService: UrlService) {
-    this._apiUrl = this.urlService.apiUrl;
+  constructor(private http: HttpClient) {
+    this._apiUrl = environment.apiUrl;
   }
 
   startConnection = async () => {

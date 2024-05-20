@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Task } from '../../models/Task.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TaskManagerService } from '../../services/task-manager.service';
+import { TaskChangeService } from '../../services/task-manager.service';
 import { Subtask } from '../../models/Subtask.model';
 import { TaskManagerApiService } from '../../services/task.service';
 import { UserTM } from 'src/app/core/user/models/UserTM.model';
@@ -29,7 +29,7 @@ export class DetailsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private taskManagerService: TaskManagerService,
+    private taskChangeService: TaskChangeService,
     private apiService: TaskManagerApiService
   ) {}
 
@@ -108,7 +108,7 @@ export class DetailsComponent implements OnInit {
   }
 
   checkHandler(index: number): void {
-    this.taskManagerService.triggerEvent({ action: 'taskStatusChange', index });
+    this.taskChangeService.triggerEvent({ action: 'taskStatusChange', index });
 
     if (this.task.status === 'completed') {
       this.task.status = 'undone';
@@ -122,7 +122,7 @@ export class DetailsComponent implements OnInit {
   }
 
   deleteHandler(index: number): void {
-    this.taskManagerService.triggerEvent({
+    this.taskChangeService.triggerEvent({
       action: 'delete',
       taskId: this.task.id,
     });
@@ -209,7 +209,7 @@ export class DetailsComponent implements OnInit {
   saveHandler(): void {
     if (this.task.title !== '') {
       console.log('Sending this task:', this.task);
-      this.taskManagerService.triggerEvent({
+      this.taskChangeService.triggerEvent({
         action: 'edit',
         task: this.task,
       });
@@ -222,11 +222,9 @@ export class DetailsComponent implements OnInit {
   // Modal
   modalClose() {
     this.updateModalOn = false;
-    // this.updatePage();
   }
 
   openUpdateModal(subtaskId: number) {
-    console.log(2);
     this.targetSubtaskId = subtaskId;
     this.updateModalOn = true;
   }

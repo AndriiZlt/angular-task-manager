@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Chart from 'chart.js/auto';
 import { AlpacaService } from '../../services/alpaca.service';
-import * as nasdaq100 from '../../../../../assets/nasdaq100';
 
 @Component({
   selector: 'app-alpaca-chart',
@@ -124,10 +123,6 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updateChart();
-
-    // let yesterday = new Date();
-    // console.log(yesterday.toISOString());
-
     this.dateToISO();
   }
 
@@ -208,7 +203,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
     const candlestick = {
       id: 'candlestick',
-      beforeDatasetsDraw(chart, args, pluginOptions) {
+      beforeDatasetsDraw(chart) {
         const {
           ctx,
           data,

@@ -4,6 +4,7 @@ import { Login } from '../models/login.model';
 import { Register } from '../models/register.model';
 import { Observable } from 'rxjs';
 import { JwtAuth } from '../models/jwtAuth.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -15,16 +16,10 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   public register(user: Register): Observable<JwtAuth> {
-    return this.http.post<JwtAuth>(
-      'https://localhost:7027/' + this.registerUrl,
-      user
-    );
+    return this.http.post<JwtAuth>(environment.apiUrl + this.registerUrl, user);
   }
 
   public login(user: Login): Observable<JwtAuth> {
-    return this.http.post<JwtAuth>(
-      'https://localhost:7027/' + this.loginUrl,
-      user
-    );
+    return this.http.post<JwtAuth>(environment.apiUrl + this.loginUrl, user);
   }
 }

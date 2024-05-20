@@ -1,13 +1,14 @@
-<ng-container *ngIf="showHeader">
+<ng-container *ngIf="layout.showHeader">
   <app-header></app-header>
 </ng-container>
 
 <div class="row">
-  <div class="left" *ngIf="showNavbar"><app-side-nav></app-side-nav></div>
+  <div class="left" *ngIf="layout.showSidenav">
+    <app-side-nav></app-side-nav>
+  </div>
 
-  <div class="right" [style]="showNavbar ? 'width:85%' : 'width:100%'">
+  <div class="right" [style]="layout.showSidenav ? 'width:85%' : 'width:100%'">
     <router-outlet> </router-outlet>
   </div>
 </div>
 
-<!-- <h1>test</h1> -->
