@@ -150,27 +150,24 @@ export class ChartComponent implements OnInit, OnDestroy {
   dateToISO() {
     const today = new Date();
     const yesterday = today.setDate(today.getDate() - 1);
-    // const yyyy = yesterday.getFullYear();
-    // let mm = today.getMonth() + 1; // Months start at 0!
-    // let dd = today.getDate();
-
-    //   dd = Number('0' + dd.toString());
-    // }
-    // if (mm < 10) {
-    //   mm = Number('0' + mm.toString());
-    // }
-
-    // const yesterday = yyyy + '-' + mm + '-' + dd;
-
-    // console.log(yesterday);
   }
 
   createChart(bars): void {
+    let labels = bars.map((d) => {
+      return (
+        d.t.substring(8, 10) +
+        '-' +
+        d.t.substring(5, 7) +
+        '-' +
+        d.t.substring(0, 4)
+      );
+    });
+
     let data = {
-      labels: bars.map((d) => d.t),
+      labels: labels,
       datasets: [
         {
-          label: 'Financial Graph',
+          label: 'Last month bars',
           data: bars.map(({ c, h, l, o, t }) => {
             return {
               x: new Date(t), //date
@@ -195,8 +192,6 @@ export class ChartComponent implements OnInit, OnDestroy {
             return o < c ? 'rgb(26, 152, 129)' : 'rgb(239, 57, 74)'; // for better presentation
           }),
           barPercentage: 0.5,
-          // borderWidth: 1,
-          // borderSkipped: false,
         },
       ],
     };

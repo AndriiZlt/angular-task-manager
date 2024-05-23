@@ -2,7 +2,7 @@ import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { Subtask } from '../../../models/Subtask.model';
 import { Task } from '../../../models/Task.model';
-import { TaskManagerApiService } from '../../../services/task.service';
+import { TaskApiService } from '../../../services/task.service';
 
 @Component({
   selector: 'app-task-chart',
@@ -18,7 +18,7 @@ export class TaskChartComponent implements OnInit {
   dataset1: number[] = [];
   dataset2: number[] = [];
 
-  constructor(private apiService: TaskManagerApiService) {}
+  constructor(private apiService: TaskApiService) {}
 
   ngOnInit(): void {}
 

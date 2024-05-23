@@ -1,19 +1,11 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Subtask } from '../../models/Subtask.model';
-import { TaskChangeService } from '../../services/task-manager.service';
+import { TaskChangeService } from '../../services/task-change.service';
 
 @Component({
   selector: 'app-subtask',
   templateUrl: './subtask.component.html',
   styleUrls: ['./subtask.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubtaskComponent implements OnInit {
   @Input() subtask: Subtask;

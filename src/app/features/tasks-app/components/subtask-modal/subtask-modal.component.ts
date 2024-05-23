@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subtask } from '../../models/Subtask.model';
 import { SubtaskToAdd } from '../../models/SubtaskToAdd.model';
 import { Task } from '../../models/Task.model';
-import { TaskChangeService } from '../../services/task-manager.service';
-import { TaskManagerApiService } from '../../services/task.service';
+import { TaskChangeService } from '../../services/task-change.service';
+import { SubtaskApiService } from '../../services/subtask.service';
 
 @Component({
   selector: 'app-subtask-modal',
@@ -29,7 +29,7 @@ export class SubtaskModalComponent implements OnInit {
 
   constructor(
     private taskChangeService: TaskChangeService,
-    private apiService: TaskManagerApiService
+    private apiService: SubtaskApiService
   ) {}
 
   ngOnInit(): void {

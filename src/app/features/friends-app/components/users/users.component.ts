@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../friends-view.component';
 import { Router } from '@angular/router';
 import { Friend } from '../../models/Friend.model';
 import { FriendToAdd } from '../../models/FriendToAdd.model';
-import { TaskManagerApiService } from 'src/app/features/tasks-app/services/task.service';
+import { FriendsApiService } from '../../services/friends.service';
 
 @Component({
   selector: 'app-users',
@@ -16,10 +16,7 @@ export class UsersComponent implements OnInit {
   users: User[] = [];
   isLoading: boolean = true;
 
-  constructor(
-    private router: Router,
-    private apiService: TaskManagerApiService
-  ) {}
+  constructor(private router: Router, private apiService: FriendsApiService) {}
 
   ngOnInit(): void {
     this.fetchUsers();

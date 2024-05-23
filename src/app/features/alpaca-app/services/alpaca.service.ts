@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AssetToBuy } from '../models/AssetToBuy.model';
+import { Order } from '../models/AssetToBuy.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +12,6 @@ export class AlpacaService {
     'APCA-API-SECRET-KEY': 'EWnXp2W2zq3dFtfLtO6lYVssSU1YzroK08fkS2IF',
   });
 
-  authHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization:
-      'Basic Q0tMMVAyQkE4TVRNUkhSWDBCT1I6MmVIRWJxamkyakRmdmxuZkMwU25DWTJobFRKWVhwVEowRFJLREQ0Sg==',
-  });
-
   dataURL = 'https://data.alpaca.markets'; //MARKET DATA API
   brokerApiUrl = 'https://broker-api.sandbox.alpaca.markets'; //BROKER API
   tradingApiUrl = 'https://paper-api.alpaca.markets'; //TRADING API
@@ -24,58 +19,63 @@ export class AlpacaService {
   constructor(private http: HttpClient) {}
 
   getAssets() {
-    return this.http.get(`${this.tradingApiUrl}/v2/assets`, {
+    return this.http.get(environment.apiUrl + `api/v1/Alpaca/assets`, {
       headers: this.headers,
     });
   }
 
   getAssetById(asset_id: string) {
-    return this.http.get(`${this.tradingApiUrl}/v2/assets/${asset_id}`, {
-      headers: this.headers,
-    });
+    return this.http.get(
+      environment.apiUrl + `api/v1/Alpaca/asset/${asset_id}`,
+      {
+        headers: this.headers,
+      }
+    );
   }
 
   getPositions() {
-    return this.http.get(`${this.tradingApiUrl}/v2/positions`, {
+    return this.http.get(environment.apiUrl + `api/v1/Alpaca/positions`, {
       headers: this.headers,
     });
   }
 
   getActivity() {
-    return this.http.get(`${this.tradingApiUrl}/v2/account/activities`, {
+    return this.http.get(environment.apiUrl + `api/v1/Alpaca/transactions`, {
       headers: this.headers,
     });
   }
 
-  getAssetData(selectedStock) {
-    return this.http.get(
-      `${this.dataURL}/v2/stocks/${selectedStock}/bars?timeframe=1Day&start=2024-04-01&end=2024-05-07&limit=1000&feed=sip&sort=asc`,
-      { headers: this.headers }
-    );
+  getAssetData(symbol: string) {
+    return this.http.get(environment.apiUrl + `api/v1/Alpaca/bars/${symbol}`, {
+      headers: this.headers,
+    });
   }
 
   getAccount() {
-    return this.http.get(`${this.tradingApiUrl}/v2/account`, {
+    return this.http.get(environment.apiUrl + `api/v1/Alpaca/account`, {
       headers: this.headers,
     });
   }
 
   getOrders() {
-    return this.http.get(`${this.tradingApiUrl}/v2/orders`, {
+    return this.http.get(environment.apiUrl + `api/v1/Alpaca/orders`, {
       headers: this.headers,
     });
   }
 
-  createOrder(body) {
-    return this.http.post(`${this.tradingApiUrl}/v2/orders`, body, {
+  createOrder(order: Order) {
+    return this.http.post(environment.apiUrl + `api/v1/Alpaca/order`, order, {
       headers: this.headers,
     });
   }
 
   closePosition(asset_id: string) {
-    return this.http.delete(`${this.tradingApiUrl}/v2/positions/${asset_id}`, {
-      headers: this.headers,
-    });
+    return this.http.delete(
+      environment.apiUrl + `api/v1/Alpaca/position/${asset_id}`,
+      {
+        headers: this.headers,
+      }
+    );
   }
 
   closeOrder(order_id: string) {

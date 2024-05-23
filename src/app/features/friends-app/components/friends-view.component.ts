@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Friend } from '../models/Friend.model';
-import { TaskManagerApiService } from '../../tasks-app/services/task.service';
+import { TaskApiService } from '../../tasks-app/services/task.service';
+import { FriendsApiService } from '../services/friends.service';
 
 export interface User {
   id: string;
@@ -34,7 +35,7 @@ export class FriendsViewComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private apiService: TaskManagerApiService
+    private apiService: FriendsApiService
   ) {}
 
   ngOnInit(): void {

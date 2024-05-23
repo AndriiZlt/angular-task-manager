@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { AlpacaService } from '../../services/alpaca.service';
 // import * as asset_storage from '../assets';
 import * as nasdaq100 from '../../../../../assets/nasdaq100';
-import { AssetToBuy } from '../../models/AssetToBuy.model';
+import { Order } from '../../models/AssetToBuy.model';
 
 @Component({
   selector: 'app-trading',
@@ -51,7 +51,7 @@ export class TradingComponent implements OnInit {
     });
 
     this.alpacaService.getAccount().subscribe((acc) => {
-      // console.log('acc', acc);
+      console.log('acc', acc);
     });
   }
 
@@ -112,7 +112,7 @@ export class TradingComponent implements OnInit {
   }
 
   buyAsset() {
-    let assetToBuy: AssetToBuy = {
+    let orderToCreate: Order = {
       symbol: this.selectedAsset['symbol'],
       qty: this.quantity.toString(),
       side: 'buy',
@@ -120,9 +120,9 @@ export class TradingComponent implements OnInit {
       limit_price: this.selectedPrice.toString(),
       time_in_force: 'gtc',
     };
-    let body = JSON.stringify(assetToBuy);
+    // let body = JSON.stringify(orderToCreate);
     // console.log('assetToBuy', assetToBuy);
-    this.alpacaService.createOrder(body).subscribe((res) => {
+    this.alpacaService.createOrder(orderToCreate).subscribe((res) => {
       this.clearSelect();
       this.updatePage();
       // console.log('Order response:', res);

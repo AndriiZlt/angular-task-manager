@@ -1,14 +1,8 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Subtask } from '../../models/Subtask.model';
 import { Task } from '../../models/Task.model';
-import { TaskChangeService } from '../../services/task-manager.service';
-import { TaskManagerApiService } from '../../services/task.service';
+import { TaskChangeService } from '../../services/task-change.service';
+import { SubtaskApiService } from '../../services/subtask.service';
 
 @Component({
   selector: 'app-task',
@@ -28,7 +22,7 @@ export class TaskComponent implements OnInit {
 
   constructor(
     private taskChangeService: TaskChangeService,
-    private apiService: TaskManagerApiService
+    private apiService: SubtaskApiService
   ) {}
 
   ngOnInit(): void {

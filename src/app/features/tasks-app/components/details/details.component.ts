@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Task } from '../../models/Task.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TaskChangeService } from '../../services/task-manager.service';
+import { TaskChangeService } from '../../services/task-change.service';
 import { Subtask } from '../../models/Subtask.model';
-import { TaskManagerApiService } from '../../services/task.service';
 import { UserTM } from 'src/app/core/user/models/UserTM.model';
+import { SubtaskApiService } from '../../services/subtask.service';
 
 @Component({
   selector: 'app-details',
@@ -30,7 +30,7 @@ export class DetailsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private taskChangeService: TaskChangeService,
-    private apiService: TaskManagerApiService
+    private apiService: SubtaskApiService
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +68,6 @@ export class DetailsComponent implements OnInit {
   }
 
   updateSubtaskInLC(updatedSubtask: Subtask) {
-    // console.log('subtaskToUpdate', subtaskToUpdate);
     let subtaskToUpdate: Subtask = this.filteredSubtasks.filter(
       (s) => s.id === updatedSubtask.id
     )[0];

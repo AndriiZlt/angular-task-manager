@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Task } from '../models/Task.model';
 import { TaskToAdd } from '../models/TaskToAdd.model';
-import { TaskChangeService } from '../services/task-manager.service';
-import { TaskManagerApiService } from '../services/task.service';
+import { TaskChangeService } from '../services/task-change.service';
+import { TaskApiService } from '../services/task.service';
 import { DatePipe } from '@angular/common';
 import { Subtask } from '../models/Subtask.model';
 import { UserTM } from 'src/app/core/user/models/UserTM.model';
 import { HubConnectionService } from 'src/app/core/services/hub-connection.service';
+import { SubtaskApiService } from '../services/subtask.service';
+import { UserApiService } from 'src/app/core/user/services/user.service';
 
 enum TaskFilterValue {
   'all' = 1,
@@ -48,9 +50,11 @@ export class TaskManagerComponent implements OnInit {
   constructor(
     private router: Router,
     private taskChangeService: TaskChangeService,
-    private apiService: TaskManagerApiService,
+    private taskApiService: TaskApiService,
+    private subtaskApiService: SubtaskApiService,
     private datePipe: DatePipe,
-    private signalrService: HubConnectionService
+    private signalrService: HubConnectionService,
+    private userApiService: UserApiService
   ) {
     this.taskChangeService.getEvent().subscribe((param: any) => {
       if (param !== undefined) {
@@ -88,11 +92,11 @@ export class TaskManagerComponent implements OnInit {
   }
 
   updatePage(): void {
-    this.apiService.getSubtasks().subscribe((res) => {
+    this.subtaskApiService.getSubtasks().subscribe((res) => {
       this.subtasks = <Subtask[]>res;
       localStorage.setItem('subtasks', JSON.stringify(this.subtasks));
 
-      this.apiService.getTasks().subscribe((res) => {
+      this.taskApiService.getTasks().subscribe((res) => {
         this.tasks = [...(<Task[]>res)];
         localStorage.setItem('tasks', JSON.stringify(this.tasks));
         this.updateTitle(`New task #${this.tasks.length + 1}`);
@@ -100,10 +104,10 @@ export class TaskManagerComponent implements OnInit {
       });
     });
 
-    this.apiService.getUsers().subscribe((res) => {
+    this.userApiService.getUsers().subscribe((res) => {
       this.users = [...(<UserTM[]>(<unknown>res))];
       localStorage.setItem('users', JSON.stringify(this.users));
-      this.apiService.getCurrentUser().subscribe((res) => {
+      this.userApiService.getCurrentUser().subscribe((res) => {
         if (res) {
           this.currentUser = <UserTM>res;
           this.selectedUser = this.currentUser;
@@ -225,7 +229,7 @@ export class TaskManagerComponent implements OnInit {
         dateDue: this.dueDate,
         userId: this.selectedUser.id,
       };
-      this.apiService.addTask(taskToAdd).subscribe((_) => {
+      this.taskApiService.addTask(taskToAdd).subscribe((_) => {
         this.signalrService.sendMessage(
           taskToAdd.userId.toString(),
           taskToAdd.title
@@ -241,21 +245,21 @@ export class TaskManagerComponent implements OnInit {
   }
 
   editTask(params: any): void {
-    this.apiService.updateTask(params.task).subscribe((_) => {
+    this.taskApiService.updateTask(params.task).subscribe((_) => {
       this.updatePage();
     });
   }
 
   onTaskDelete(taskId: number): void {
     if (taskId != undefined) {
-      this.apiService.deleteTask(taskId).subscribe((_) => {
+      this.taskApiService.deleteTask(taskId).subscribe((_) => {
         this.updatePage();
       });
     }
   }
 
   onCheckClick(taskId: number): void {
-    this.apiService.updateStatus(taskId).subscribe((_) => {
+    this.taskApiService.updateStatus(taskId).subscribe((_) => {
       this.updatePage();
     });
   }
@@ -271,7 +275,7 @@ export class TaskManagerComponent implements OnInit {
 
   deleteSubtask(subtaskId: number): void {
     if (subtaskId != undefined) {
-      this.apiService.deleteSubtask(subtaskId).subscribe((_) => {
+      this.subtaskApiService.deleteSubtask(subtaskId).subscribe((_) => {
         this.updatePage();
       });
     }
@@ -279,7 +283,7 @@ export class TaskManagerComponent implements OnInit {
 
   statusUpdateSubtask(subtaskId: number): void {
     if (subtaskId != undefined) {
-      this.apiService.updateStatusSubtask(subtaskId).subscribe((_) => {
+      this.subtaskApiService.updateStatusSubtask(subtaskId).subscribe((_) => {
         this.updatePage();
       });
     }

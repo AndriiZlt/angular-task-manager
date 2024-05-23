@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { Friend } from 'src/app/features/friends-app/models/Friend.model';
-import { TaskManagerApiService } from '../../../services/task.service';
+import { TaskApiService } from '../../../services/task.service';
 
 @Component({
   selector: 'friend-chart',
@@ -15,7 +15,7 @@ export class FriendChartComponent implements OnInit {
   labels: string[];
   dataset1: number[] = [];
 
-  constructor(private apiService: TaskManagerApiService) {}
+  constructor(private apiService: TaskApiService) {}
 
   ngOnInit(): void {}
 

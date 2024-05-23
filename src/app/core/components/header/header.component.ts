@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginNameService } from '../../auth/services/loginName.service';
 import { HubConnectionService } from '../../services/hub-connection.service';
-import { TaskManagerApiService } from 'src/app/features/tasks-app/services/task.service';
 import { UserTM } from '../../user/models/UserTM.model';
 import { LayoutService } from '../../services/layout.service';
 import { HeaderView } from '../../models/view.model';
 import { UrlService } from '../../services/url.service';
+import { UserApiService } from '../../user/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -26,14 +26,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private loginNameService: LoginNameService,
     private signalrService: HubConnectionService,
-    private apiService: TaskManagerApiService,
+    private apiService: UserApiService,
     private layoutService: LayoutService,
     private urlService: UrlService
   ) {
     this.lastUrl = urlService.getLastUrl();
     this.headerView = this.layoutService.getCurrentLayout().headerView;
     this.layoutService.getUpdatedLayout().subscribe((viewChange) => {
-      console.log('View change', viewChange);
       this.headerView = viewChange.headerView;
     });
     this.signalrService.getData().subscribe((param: any) => {

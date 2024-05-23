@@ -84,7 +84,6 @@ export class LayoutService {
         this.currentLayout.showHeader = false;
         this.currentLayout.showSidenav = false;
       } else if (lastUrl.includes('alpaca')) {
-        console.log('alpaca');
         this.currentLayout.showHeader = true;
         this.currentLayout.showSidenav = true;
         this.currentLayout.headerView = HeaderView.alpaca;
