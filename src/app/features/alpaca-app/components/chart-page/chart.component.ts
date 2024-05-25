@@ -143,7 +143,6 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
     this.alpacaService.getAssetData(this.selectedStock).subscribe((data) => {
       this.createChart(data['bars']);
-      // console.log('Bars:', this.selectedStock, data['bars']);
     });
   }
 

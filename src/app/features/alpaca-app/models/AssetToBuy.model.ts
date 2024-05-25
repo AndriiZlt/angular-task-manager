@@ -1,4 +1,4 @@
-export interface Order {
+export interface AssetToBuy {
   symbol: string;
   qty: string;
   side: 'buy';

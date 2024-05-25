@@ -1,10 +1,15 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Order } from '../models/AssetToBuy.model';
+import { AssetToBuy } from '../models/AssetToBuy.model';
 import { Observable } from 'rxjs';
 import { Asset } from '../models/Asset.model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { environment } from 'src/environments/environment';
+import { Position } from '../models/Positions.model';
+import { Activity } from '../models/Activity.model';
+import { Bar } from '../models/Bars.model';
+import { Account } from '../models/Account.model';
+import { Order } from '../models/Order.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,67 +30,67 @@ export class AlpacaService extends ApiService {
   }
 
   getAssetById(asset_id: string): Observable<Asset> {
-    return this.get<any>(`asset/${asset_id}`, {
+    return this.get<Asset>(`asset/${asset_id}`, {
       headers: this.headers,
     });
   }
 
-  getPositions(): Observable<any[]> {
-    return this.get<any>(`positions`, {
+  getPositions(): Observable<Position[]> {
+    return this.get<Position[]>(`positions`, {
       headers: this.headers,
     });
   }
 
-  getActivity(): Observable<any> {
-    return this.get<any>(`transactions`, {
+  closePosition(asset_id: string): Observable<Position> {
+    return this.delete<Position>(`position/${asset_id}`, {
       headers: this.headers,
     });
   }
 
-  getAssetData(symbol: string): Observable<any> {
-    return this.get<any>(`bars/${symbol}`, {
+  getActivity(): Observable<Activity> {
+    return this.get<Activity>(`transactions`, {
       headers: this.headers,
     });
   }
 
-  getAccount(): Observable<any> {
-    return this.get<any>(`account`, {
+  getAssetData(symbol: string): Observable<Bar[]> {
+    return this.get<Bar[]>(`bars/${symbol}`, {
       headers: this.headers,
     });
   }
 
-  getOrders(): Observable<any> {
-    return this.get<any[]>(`orders`, {
+  getAccount(): Observable<Account> {
+    return this.get<Account>(`account`, {
       headers: this.headers,
     });
   }
 
-  createOrder(order: Order): Observable<any> {
-    return this.post<any>(`order`, order, {
+  getOrders(): Observable<Order[]> {
+    return this.get<Order[]>(`orders`, {
       headers: this.headers,
     });
   }
 
-  closePosition(asset_id: string): Observable<any> {
-    return this.delete<any>(`position/${asset_id}`, {
+  createOrder(order: AssetToBuy): Observable<AssetToBuy> {
+    return this.post<AssetToBuy>(`order`, order, {
       headers: this.headers,
     });
   }
 
-  closeOrder(order_id: string): Observable<any> {
-    return this.delete<any>(`orders/${order_id}`, {
+  closeOrder(order_id: string): Observable<Order> {
+    return this.delete<Order>(`orders/${order_id}`, {
       headers: this.headers,
     });
   }
 
   getLastTrades(symbol: string): Observable<any[]> {
-    return this.get<any[]>(`stocks/${symbol}/trades/latest`, {
+    return this.get<any[]>(`trades/${symbol}`, {
       headers: this.headers,
     });
   }
 
   getLastBar(symbol: string): Observable<any> {
-    return this.get<any>(`stocks/${symbol}/bars/latest`, {
+    return this.get<any>(`lastbar/${symbol}`, {
       headers: this.headers,
     });
   }
