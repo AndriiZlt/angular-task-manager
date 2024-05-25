@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FriendsViewComponent } from './components/friends-view.component';
-import { UsersComponent } from './components/users/users.component';
+import { OnlineUsersComponent } from './components/online-users/online-users.component';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    component: UsersComponent,
+    component: OnlineUsersComponent,
   },
 ];
 

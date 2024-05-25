@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
   ): boolean {
     let token = localStorage.getItem('token');
     let lastUrl = localStorage.getItem('lastUrl');
-    console.log('last url in guard:', lastUrl, 'state.url:', state.url);
+    // console.log('last url in guard:', lastUrl, 'state.url:', state.url);
     if (state.url === '/auth/login' || state.url === '/auth/register') {
       if (token) {
         if (lastUrl) {

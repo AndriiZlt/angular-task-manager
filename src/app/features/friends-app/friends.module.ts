@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FriendsRoutingModule } from './friends-routing.module';
 import { FriendCardComponent } from './components/friend-card/friend-card.component';
-import { UsersComponent } from './components/users/users.component';
+import { OnlineUsersComponent } from './components/online-users/online-users.component';
 import { FriendsViewComponent } from './components/friends-view.component';
 import { UserCardComponent } from './components/user-card/user-card.component';
 import { MaterialModule } from 'src/app/shared/modules/material-module';
@@ -14,16 +14,11 @@ import { FriendChartComponent } from '../tasks-app/components/chart/friend-chart
   declarations: [
     FriendsViewComponent,
     FriendCardComponent,
-    UsersComponent,
+    OnlineUsersComponent,
     UserCardComponent,
     FriendsPipe,
     FriendChartComponent,
   ],
-  imports: [
-    CommonModule,
-    FriendsRoutingModule,
-    MaterialModule,
-    FormsModule,
-  ],
+  imports: [CommonModule, FriendsRoutingModule, MaterialModule, FormsModule],
 })
 export class FriendsModule {}

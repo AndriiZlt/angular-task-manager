@@ -4,22 +4,7 @@ import { Friend } from '../models/Friend.model';
 import { TaskApiService } from '../../tasks-app/services/task.service';
 import { FriendsApiService } from '../services/friends.service';
 
-export interface User {
-  id: string;
-  age: number;
-  email: string;
-  gender: string;
 
-  name: {
-    first: string;
-    last: string;
-  };
-  picture: {
-    large: string;
-    medium: string;
-  };
-  city: string;
-}
 
 @Component({
   selector: 'app-friends-view',
@@ -45,7 +30,7 @@ export class FriendsViewComponent implements OnInit {
 
   updateFriends(): void {
     this.apiService.getFriends().subscribe((res) => {
-      this.friends = [...(<Friend[]>res)];
+      this.friends = <Friend[]>res;
       console.log('Friends:', this.friends);
       localStorage.setItem('friends', JSON.stringify(this.friends));
     });
@@ -71,7 +56,7 @@ export class FriendsViewComponent implements OnInit {
 
   onFilterChange(): void {
     localStorage.setItem('friendsListFilter', this.inputValue);
-    // console.log('filter changed', this.inputValue);
+
   }
 
   clearFilter(): void {

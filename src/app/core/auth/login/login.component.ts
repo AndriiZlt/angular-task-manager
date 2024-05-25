@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginNameService } from '../services/loginName.service';
 import { Login } from '../models/login.model';
@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.valid = true;
-    console.log('Logging in=>' + JSON.stringify(this.loginForm.value));
+    console.log('Logging with' + JSON.stringify(this.loginForm.value));
 
     this.loginDto.username = this.loginForm.value.username;
     this.loginDto.password = this.loginForm.value.password;
@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
 
   login(loginDto: Login) {
     this.authService.login(loginDto).subscribe((jwtDto) => {
-      console.log('Logged user from backend:', jwtDto);
+      console.log('Token:', jwtDto.token);
       localStorage.setItem('token', jwtDto.token);
       this.router.navigate(['task-manager']);
       this.loginNameService.triggerEvent(loginDto.username);

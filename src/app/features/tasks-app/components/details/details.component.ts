@@ -3,7 +3,7 @@ import { Task } from '../../models/Task.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskChangeService } from '../../services/task-change.service';
 import { Subtask } from '../../models/Subtask.model';
-import { UserTM } from 'src/app/core/user/models/UserTM.model';
+import { User } from 'src/app/core/user/models/User.model';
 import { SubtaskApiService } from '../../services/subtask.service';
 
 @Component({
@@ -20,8 +20,8 @@ export class DetailsComponent implements OnInit {
   isDisabled: boolean = true;
   height: string;
   filteredSubtasks: Subtask[];
-  users: UserTM[];
-  currentUser: UserTM;
+  users: User[];
+  currentUser: User;
   updateModalOn: boolean = false;
   targetSubtaskId: number = null;
   selectedUserId: number;

@@ -16,7 +16,7 @@ export class UrlService {
     }
   }
 
-  setToLocalStorage() {
+  setToLocalStorage():void {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         localStorage.setItem('lastUrl', val.url);
@@ -25,7 +25,7 @@ export class UrlService {
     });
   }
 
-  getLastUrl() {
+  getLastUrl():string {
     return localStorage.getItem('lastUrl');
   }
 }

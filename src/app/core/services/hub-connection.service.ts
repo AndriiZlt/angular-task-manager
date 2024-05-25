@@ -20,7 +20,7 @@ export class HubConnectionService {
 
   startConnection = async () => {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl(`${this._apiUrl}signal-hub`, {
+      .withUrl(`${this._apiUrl}/signal-hub`, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
       })

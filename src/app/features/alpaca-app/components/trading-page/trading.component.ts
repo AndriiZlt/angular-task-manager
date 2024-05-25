@@ -5,6 +5,7 @@ import { AlpacaService } from '../../services/alpaca.service';
 // import * as asset_storage from '../assets';
 import * as nasdaq100 from '../../../../../assets/nasdaq100';
 import { Order } from '../../models/AssetToBuy.model';
+import { Asset } from '../../models/Asset.model';
 
 @Component({
   selector: 'app-trading',
@@ -16,7 +17,7 @@ export class TradingComponent implements OnInit {
   clientId: string = 'd6a7ad49-7d27-47f8-99de-b87f61b6b024';
   orders: any[] = [];
   activities: any[] = [];
-  assets: any[] = [];
+  assets: Asset[] = [];
   nasdaq100: string[];
   filteredAssets: string[];
   selectedAsset = new Object();
@@ -35,19 +36,20 @@ export class TradingComponent implements OnInit {
     this.updatePage();
 
     this.alpacaService.getAssets().subscribe((data) => {
-      // console.log('data', data);
+      console.log('Assets res', typeof data[0]);
       for (const item in data) {
         if (this.nasdaq100.includes(data[item].symbol)) {
           this.assets.push(data[item]);
         }
 
-        //this.assets.push(data[item]); //All
+        //   //this.assets.push(data[item]); //All
+        // }
+        // console.log(
+        //   'Tradable assets:',
+        //   this.assets.filter((a) => a.tradable)
+        // );
+        this.filteredAssets = this.assets.map((asset) => asset.name);
       }
-      // console.log(
-      //   'Tradable assets:',
-      //   this.assets.filter((a) => a.tradable)
-      // );
-      this.filteredAssets = this.assets.map((asset) => asset.name);
     });
 
     this.alpacaService.getAccount().subscribe((acc) => {
@@ -59,18 +61,19 @@ export class TradingComponent implements OnInit {
     this.orders = [];
     this.activities = [];
     this.alpacaService.getOrders().subscribe((res) => {
+      console.log('Orders res:', res);
       for (const item in res) {
         this.orders.push(res[item]);
       }
-      // console.log('Orders:', this.orders);
     });
 
     this.alpacaService.getActivity().subscribe((res) => {
-      for (const item in res) {
-        if (res[item].activity_type === 'FILL') {
-          this.activities.push(res[item]);
-        }
-      }
+      console.log('Activity res:', res);
+      // for (const item in res) {
+      //   if (res[item].activity_type === 'FILL') {
+      //     this.activities.push(res[item]);
+      //   }
+      // }
       // console.log('Activity:', this.activities);
     });
   }

@@ -6,7 +6,7 @@ import { TaskChangeService } from '../services/task-change.service';
 import { TaskApiService } from '../services/task.service';
 import { DatePipe } from '@angular/common';
 import { Subtask } from '../models/Subtask.model';
-import { UserTM } from 'src/app/core/user/models/UserTM.model';
+import { User} from 'src/app/core/user/models/User.model';
 import { HubConnectionService } from 'src/app/core/services/hub-connection.service';
 import { SubtaskApiService } from '../services/subtask.service';
 import { UserApiService } from 'src/app/core/user/services/user.service';
@@ -26,9 +26,9 @@ enum TaskFilterValue {
 export class TaskManagerComponent implements OnInit {
   tasks: Task[] = [];
   subtasks: Subtask[] = [];
-  users: UserTM[] = [];
-  filteredUsers: UserTM[] = [];
-  currentUser: UserTM;
+  users: User[] = [];
+  filteredUsers: User[] = [];
+  currentUser: User;
   title: string = '';
   description: string = '';
   dueDate: string = null;
@@ -39,7 +39,7 @@ export class TaskManagerComponent implements OnInit {
   addModalOn: boolean = false;
   updateModalOn: boolean = false;
   modalTaskId: number;
-  selectedUser: UserTM = {
+  selectedUser: User = {
     id: null,
     email: 'null',
     userName: '',
@@ -97,7 +97,7 @@ export class TaskManagerComponent implements OnInit {
       localStorage.setItem('subtasks', JSON.stringify(this.subtasks));
 
       this.taskApiService.getTasks().subscribe((res) => {
-        this.tasks = [...(<Task[]>res)];
+        this.tasks = <Task[]>res;
         localStorage.setItem('tasks', JSON.stringify(this.tasks));
         this.updateTitle(`New task #${this.tasks.length + 1}`);
         this.updateFilter();
@@ -105,17 +105,16 @@ export class TaskManagerComponent implements OnInit {
     });
 
     this.userApiService.getUsers().subscribe((res) => {
-      this.users = [...(<UserTM[]>(<unknown>res))];
+      this.users = <User[]>(<unknown>res);
       localStorage.setItem('users', JSON.stringify(this.users));
       this.userApiService.getCurrentUser().subscribe((res) => {
         if (res) {
-          this.currentUser = <UserTM>res;
+          this.currentUser = <User>res;
           this.selectedUser = this.currentUser;
 
           this.filteredUsers = this.users.filter(
             (u) => u.id !== this.selectedUser.id
           );
-          // console.log('filteredUsers:', this.filteredUsers);
         }
       });
     });

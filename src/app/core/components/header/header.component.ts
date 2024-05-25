@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginNameService } from '../../auth/services/loginName.service';
 import { HubConnectionService } from '../../services/hub-connection.service';
-import { UserTM } from '../../user/models/UserTM.model';
+import { User } from '../../user/models/User.model';
 import { LayoutService } from '../../services/layout.service';
 import { HeaderView } from '../../models/view.model';
 import { UrlService } from '../../services/url.service';
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   lastUrl: string;
   signalRStatus: string = '';
   userId: number;
-  currentUser: UserTM;
+  currentUser: User;
   headerView: HeaderView = HeaderView.task;
 
   constructor(
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.apiService.getCurrentUser().subscribe((res) => {
         // console.log('Current User=>', res);
         if (res) {
-          this.currentUser = <UserTM>res;
+          this.currentUser = <User>res;
           this.signalrService.saveId(this.currentUser.id);
         }
       });
@@ -93,18 +93,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     console.log('event in header', event.target.id);
     switch (event.target.id) {
       case 'task':
-        // this.currentView.current = 'task';
-        // this.lastUrl = 'task-manager';
         this.router.navigate(['task-manager']);
         break;
       case 'friends':
-        // this.currentView.current = 'friends';
-        // this.lastUrl = 'friends-list';
         this.router.navigate(['friends-list']);
         break;
       case 'alpaca':
-        // this.currentView.current = 'alpaca';
-        // let lastUrl = localStorage.getItem('lastUrl');
         this.lastUrl = this.urlService.getLastUrl();
         if (this.lastUrl.includes('alpaca')) {
           this.router.navigate([this.lastUrl]);
@@ -113,8 +107,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
         break;
       default:
-        // this.currentView.current = 'task';
-        // this.lastUrl = 'task-manager';
         this.router.navigate(['task-manager']);
     }
   }

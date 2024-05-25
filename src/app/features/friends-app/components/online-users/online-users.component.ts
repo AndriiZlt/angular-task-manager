@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../friends-view.component';
+import { OnlineUser } from '../../models/OnlineUser.model';
 import { Router } from '@angular/router';
 import { Friend } from '../../models/Friend.model';
 import { FriendToAdd } from '../../models/FriendToAdd.model';
 import { FriendsApiService } from '../../services/friends.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss'],
+  selector: 'app-online-users',
+  templateUrl: './online-users.component.html',
+  styleUrls: ['./online-users.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersComponent implements OnInit {
+export class OnlineUsersComponent implements OnInit {
   friends: Friend[] = [];
-  users: User[] = [];
+  users: OnlineUser[] = [];
   isLoading: boolean = true;
 
   constructor(private router: Router, private apiService: FriendsApiService) {}
@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit {
   }
 
   onAddFriend(userId: string): void {
-    let newFriend: User;
+    let newFriend: OnlineUser;
     let usersEmail = this.users.filter((u) => u.id === userId)[0].email;
     console.log('email', usersEmail);
     console.log(
@@ -92,7 +92,7 @@ export class UsersComponent implements OnInit {
   }
 
   fetchUsers(): void {
-    let c: User[] = [];
+    let c: OnlineUser[] = [];
     fetch(`https://dummyjson.com/users`)
       .then((result) => {
         return result.json();

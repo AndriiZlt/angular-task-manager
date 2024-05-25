@@ -1,25 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Login } from '../models/login.model';
 import { Register } from '../models/register.model';
 import { Observable } from 'rxjs';
-import { JwtAuth } from '../models/jwtAuth.model';
-import { environment } from 'src/environments/environment';
+import { ApiService } from '../../services/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  registerUrl = 'api/v2/Auth/register';
-  loginUrl = 'api/v2/Auth/login';
+export class AuthService extends ApiService {
+  apiName = 'Auth';
+  v = 2;
 
-  constructor(private http: HttpClient) {}
-
-  public register(user: Register): Observable<JwtAuth> {
-    return this.http.post<JwtAuth>(environment.apiUrl + this.registerUrl, user);
+  register(user: Register): Observable<any> {
+    return this.post('register', user);
   }
 
-  public login(user: Login): Observable<JwtAuth> {
-    return this.http.post<JwtAuth>(environment.apiUrl + this.loginUrl, user);
+  login(user: Login): Observable<any> {
+    return this.post('login', user);
   }
 }

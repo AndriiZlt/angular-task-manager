@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { User } from '../friends-view.component';
+import { OnlineUser } from '../../models/OnlineUser.model';
 
 @Component({
   selector: 'app-user-card',
@@ -17,7 +17,7 @@ import { User } from '../friends-view.component';
 export class UserCardComponent implements OnInit {
   constructor() {}
 
-  @Input() user: User;
+  @Input() user: OnlineUser;
   @Input() userIndex: number;
   @Output() addFriend: EventEmitter<any> = new EventEmitter<any>();
 

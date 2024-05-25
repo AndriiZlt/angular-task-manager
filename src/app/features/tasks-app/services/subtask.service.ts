@@ -1,40 +1,34 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SubtaskToAdd } from '../models/SubtaskToAdd.model';
 import { Subtask } from '../models/Subtask.model';
-import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { ApiService } from 'src/app/core/services/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SubtaskApiService {
-  readonly rootURL = `${environment.apiUrl}api`;
+export class SubtaskApiService extends ApiService {
+  apiName = 'Subtask';
+  v = 1;
 
-  constructor(private http: HttpClient) {}
-
-  getSubtasks() {
-    return this.http.get(this.rootURL + '/v1/Subtask/getsubtasks');
+  getSubtasks(): Observable<Subtask[]> {
+    return this.get<Subtask[]>('getsubtasks');
   }
 
-  addSubtask(subtask: SubtaskToAdd) {
+  addSubtask<Subtask>(subtask: SubtaskToAdd): Observable<Subtask> {
     console.log('Http Posted subtask:', subtask);
-    return this.http.post(this.rootURL + '/v1/Subtask/addsubtask', subtask);
+    return this.post<Subtask>('/addsubtask', subtask);
   }
 
-  deleteSubtask(subtaskId: number) {
-    return this.http.delete(
-      this.rootURL + `/v1/Subtask/deletesubtask?taskId=${subtaskId}`
-    );
+  deleteSubtask<Subtask>(subtaskId: number): Observable<Subtask> {
+    return this.delete<Subtask>(`deletesubtask?taskId=${subtaskId}`);
   }
 
-  updateStatusSubtask(subtaskId: number) {
-    return this.http.put(
-      this.rootURL + `/v1/Subtask/updatestatus?taskId=${subtaskId}`,
-      subtaskId
-    );
+  updateStatusSubtask<Subtask>(subtaskId: number): Observable<Subtask> {
+    return this.put<Subtask>(`updatestatus?taskId=${subtaskId}`, subtaskId);
   }
 
-  updateSubtask(subtask: Subtask) {
-    return this.http.put(this.rootURL + '/v1/Subtask/updatesubtask', subtask);
+  updateSubtask<Subtask>(subtask: Subtask): Observable<Subtask> {
+    return this.put<Subtask>('updatesubtask', subtask);
   }
 }

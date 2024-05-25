@@ -1,20 +1,19 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../../../features/friends-app/components/friends-view.component';
-import { environment } from 'src/environments/environment';
+import { ApiService } from '../../services/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserApiService {
-  constructor(private http: HttpClient) {}
+export class UserApiService extends ApiService {
+  apiName = 'User';
+  v = 1;
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(environment.apiUrl + 'api/v1/User/getusers');
+  getUsers<User>(): Observable<User[]> {
+    return this.get<User[]>('getusers');
   }
 
-  getCurrentUser() {
-    return this.http.get(environment.apiUrl + 'api/v1/User/getuser');
+  getCurrentUser<User>(): Observable<User> {
+    return this.get<User>('getuser');
   }
 }

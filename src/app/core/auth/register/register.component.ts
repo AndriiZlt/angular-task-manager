@@ -28,8 +28,7 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loginNameService: LoginNameService,
     private authService: AuthService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
@@ -115,7 +114,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  register(registerDto: Register) {
+  register(registerDto: Register): void {
     try {
       this.authService.register(registerDto).subscribe((res) => {
         console.log('Response:', res);

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AlpacaService } from '../../services/alpaca.service';
-// import * as asset_storage from '../assets';
 import * as nasdaq100 from '../../../../../assets/nasdaq100';
 
 @Component({
@@ -24,6 +23,7 @@ export class AssetsComponent implements OnInit {
   updatePage() {
     this.positions = [];
     this.alpacaService.getPositions().subscribe((res) => {
+      console.log('positions res:', res);
       for (const item in res) {
         this.positions.push(res[item]);
       }
