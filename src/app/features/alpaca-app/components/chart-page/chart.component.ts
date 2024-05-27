@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Chart from 'chart.js/auto';
 import { AlpacaService } from '../../services/alpaca.service';
+import { Bar } from '../../models/Bar.model';
 
 @Component({
   selector: 'app-alpaca-chart',
@@ -11,7 +12,6 @@ import { AlpacaService } from '../../services/alpaca.service';
 export class ChartComponent implements OnInit, OnDestroy {
   chart: Chart;
   labels: string[];
-  rootURL = 'https://data.alpaca.markets';
   assets: string[] = [];
   selectedStock: string = 'AAPL';
 

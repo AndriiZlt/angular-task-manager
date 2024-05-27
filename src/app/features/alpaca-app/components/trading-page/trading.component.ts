@@ -1,4 +1,4 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AlpacaService } from '../../services/alpaca.service';
@@ -6,6 +6,7 @@ import { AlpacaService } from '../../services/alpaca.service';
 import * as nasdaq100 from '../../../../../assets/nasdaq100';
 import { AssetToBuy } from '../../models/AssetToBuy.model';
 import { Asset } from '../../models/Asset.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-trading',
@@ -28,7 +29,7 @@ export class TradingComponent implements OnInit {
   buttonDisabled: boolean = true;
   inputDisabled: boolean = true;
 
-  constructor(private alpacaService: AlpacaService) {
+  constructor(private alpacaService: AlpacaService, private http: HttpClient) {
     this.nasdaq100 = nasdaq100.get();
   }
 
@@ -81,6 +82,18 @@ export class TradingComponent implements OnInit {
       .subscribe((res) => {
         this.selectedPrice = Number(parseFloat(res['trade'].p).toFixed(2));
       });
+  }
+
+  testFun() {
+    return this.http.get(
+      `https://data.alpaca.markets/v2/stocks/AAPL/trades/latest`,
+      {
+        headers: new HttpHeaders({
+          'APCA-API-KEY-ID': environment.API_KEY_ID,
+          'APCA-API-SECRET-KEY': environment.API_SECRET_KEY,
+        }),
+      }
+    );
   }
 
   onInputChange(event: string): void {

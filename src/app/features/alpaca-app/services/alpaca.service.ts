@@ -7,7 +7,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { environment } from 'src/environments/environment';
 import { Position } from '../models/Positions.model';
 import { Activity } from '../models/Activity.model';
-import { Bar } from '../models/Bars.model';
+import { Bar } from '../models/Bar.model';
 import { Account } from '../models/Account.model';
 import { Order } from '../models/Order.model';
 
@@ -88,6 +88,15 @@ export class AlpacaService extends ApiService {
       headers: this.headers,
     });
   }
+
+  // getLastTrades(symbol: string) {
+  //   return this.http.get(`https://data.alpaca.markets/v2/stocks/${symbol}/trades/latest`, {
+  //     headers: new HttpHeaders({
+  //       'APCA-API-KEY-ID': environment.API_KEY_ID,
+  //       'APCA-API-SECRET-KEY': environment.API_SECRET_KEY,
+  //     })
+  //   });
+  // }
 
   getLastBar(symbol: string): Observable<any> {
     return this.get<any>(`lastbar/${symbol}`, {

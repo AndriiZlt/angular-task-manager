@@ -90,7 +90,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onViewChange(event): void {
-    console.log('event in header', event.target.id);
     switch (event.target.id) {
       case 'task':
         this.router.navigate(['task-manager']);

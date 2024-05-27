@@ -32,7 +32,6 @@ export class OrderCardComponent implements OnInit {
   }
 
   cancelOrder() {
-    console.log(this.order.id);
     this.closeOrder.emit(this.order.id);
   }
 }
