@@ -1,4 +1,4 @@
-export interface Activity {
+export interface Transaction {
   activity_type: string;
   cum_qty: string;
   id: string;

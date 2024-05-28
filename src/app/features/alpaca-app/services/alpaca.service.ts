@@ -6,7 +6,7 @@ import { Asset } from '../models/Asset.model';
 import { ApiService } from 'src/app/core/services/api.service';
 import { environment } from 'src/environments/environment';
 import { Position } from '../models/Positions.model';
-import { Activity } from '../models/Activity.model';
+import { Transaction } from '../models/Transaction.model';
 import { Bar } from '../models/Bar.model';
 import { Account } from '../models/Account.model';
 import { Order } from '../models/Order.model';
@@ -47,8 +47,8 @@ export class AlpacaService extends ApiService {
     });
   }
 
-  getActivity(): Observable<Activity> {
-    return this.get<Activity>(`transactions`, {
+  getActivity(): Observable<Transaction> {
+    return this.get<Transaction>(`transactions`, {
       headers: this.headers,
     });
   }

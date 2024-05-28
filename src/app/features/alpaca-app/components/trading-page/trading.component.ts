@@ -7,6 +7,8 @@ import * as nasdaq100 from '../../../../../assets/nasdaq100';
 import { AssetToBuy } from '../../models/AssetToBuy.model';
 import { Asset } from '../../models/Asset.model';
 import { environment } from 'src/environments/environment';
+import { Transaction } from '../../models/Transaction.model';
+import { Order } from '../../models/Order.model';
 
 @Component({
   selector: 'app-trading',
@@ -16,8 +18,8 @@ import { environment } from 'src/environments/environment';
 export class TradingComponent implements OnInit {
   mainUserId: string = 'd986b6ed-afda-464b-afb7-07e6fa9d7227';
   clientId: string = 'd6a7ad49-7d27-47f8-99de-b87f61b6b024';
-  orders: any[] = [];
-  activities: any[] = [];
+  orders: Order[] = [];
+  transactions: Transaction[] = [];
   assets: Asset[] = [];
   nasdaq100: string[];
   filteredAssets: string[];
@@ -54,7 +56,7 @@ export class TradingComponent implements OnInit {
 
   updatePage() {
     this.orders = [];
-    this.activities = [];
+    this.transactions = [];
     this.alpacaService.getOrders().subscribe((res) => {
       for (const item in res) {
         this.orders.push(res[item]);
@@ -64,7 +66,7 @@ export class TradingComponent implements OnInit {
     this.alpacaService.getActivity().subscribe((res) => {
       for (const item in res) {
         if (res[item].activity_type === 'FILL') {
-          this.activities.push(res[item]);
+          this.transactions.push(res[item]);
         }
       }
     });
@@ -82,18 +84,6 @@ export class TradingComponent implements OnInit {
       .subscribe((res) => {
         this.selectedPrice = Number(parseFloat(res['trade'].p).toFixed(2));
       });
-  }
-
-  testFun() {
-    return this.http.get(
-      `https://data.alpaca.markets/v2/stocks/AAPL/trades/latest`,
-      {
-        headers: new HttpHeaders({
-          'APCA-API-KEY-ID': environment.API_KEY_ID,
-          'APCA-API-SECRET-KEY': environment.API_SECRET_KEY,
-        }),
-      }
-    );
   }
 
   onInputChange(event: string): void {
