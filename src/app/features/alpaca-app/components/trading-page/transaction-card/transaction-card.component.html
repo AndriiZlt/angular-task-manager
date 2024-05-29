@@ -27,7 +27,8 @@
     <div class="col-arrow"></div>
     <div class="col-inner">
       <p class="title">CURRENT</p>
-      <p class="figures">${{ currentPrice }}</p>
+      <p class="figures" *ngIf="!isLoading">${{ currentPrice }}</p>
+      <div class="spinner" *ngIf="isLoading"><app-spinner></app-spinner></div>
     </div>
   </div>
 </div>

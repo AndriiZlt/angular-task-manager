@@ -12,6 +12,8 @@ export class AssetCardComponent implements OnInit {
   @Output() sellAsset: EventEmitter<any> = new EventEmitter<any>();
   positionName: string;
   currentPrice: string;
+  nameIsLoading: boolean = true;
+  priceIsLoading: boolean = true;
 
   constructor(private alpacaService: AlpacaService) {}
 
@@ -19,11 +21,13 @@ export class AssetCardComponent implements OnInit {
     // Getting full name of the order
     this.alpacaService.getAssetById(this.position.symbol).subscribe((res) => {
       this.positionName = res['name'];
+      this.nameIsLoading = false;
     });
 
-    // Getting current price of the stock
+    // Getting current price of the asset
     this.alpacaService.getLastTrades(this.position.symbol).subscribe((res) => {
       this.currentPrice = res['trade'].p;
+      this.priceIsLoading = false;
     });
   }
 

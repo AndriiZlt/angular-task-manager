@@ -22,7 +22,8 @@
         </li>
       </ul>
     </nav>
-    <p style="margin-bottom: 0">SignalR:{{ this.signalRStatus }}</p>
+    <!-- <p style="margin-bottom: 0">SignalR:{{ this.signalRStatus }}</p> -->
+
     <div class="rightSide">
       <h2 class="loginName">{{ loginName }}</h2>
       <button class="Btn" (click)="logout()">
@@ -36,6 +37,11 @@
 
         <div class="text">Logout</div>
       </button>
+      <div class="status">
+        <app-status
+          [checked]="this.signalRStatus === 'connected' ? true : false"
+        ></app-status>
+      </div>
     </div>
   </div>
 </header>

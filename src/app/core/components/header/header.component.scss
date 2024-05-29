@@ -20,7 +20,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  max-width: 2100px;;
+  max-width: 2100px;
   width: 98%;
   height: 100%;
   padding: 0 30px;
@@ -183,4 +183,8 @@ section {
 
 p {
   cursor: pointer;
+}
+
+.status {
+  transform: scale(0.4);
 }

@@ -4,10 +4,11 @@ import { HeaderComponent } from './components/header/header.component';
 import { AuthModule } from './auth/auth.module';
 import { SidenavComponent } from './components/side-nav/side-nav.component';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [SidenavComponent, HeaderComponent],
-  imports: [CommonModule, AuthModule, RouterModule],
+  imports: [CommonModule, AuthModule, RouterModule, SharedModule],
   exports: [SidenavComponent, HeaderComponent],
 })
 export class CoreModule {

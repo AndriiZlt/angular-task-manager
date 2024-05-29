@@ -1,7 +1,11 @@
 <div class="info">
   <div class="info__title side">{{ index + 1 }}</div>
   <div class="info__title symbol">{{ position["symbol"] }}</div>
-  <div class="info__title name">{{ positionName }}</div>
+
+  <div class="info__title name" *ngIf="!nameIsLoading">{{ positionName }}</div>
+  <div class="info__title name spinner" *ngIf="nameIsLoading">
+    <app-spinner></app-spinner>
+  </div>
   <div class="info__title quantity">
     <div class="col-inner">
       <p class="title">QTY</p>
@@ -17,7 +21,14 @@
     <div class="col-arrow"></div>
     <div class="col-inner">
       <p class="title">CURRENT</p>
-      <p class="figures">${{ currentPrice }}</p>
+      <p class="figures" *ngIf="!priceIsLoading">${{ currentPrice }}</p>
+      <div
+        class="figures spinner"
+        *ngIf="priceIsLoading"
+        style="justify-content: center"
+      >
+        <app-spinner></app-spinner>
+      </div>
     </div>
   </div>
 

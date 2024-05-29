@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import Chart from 'chart.js/auto';
 import { AlpacaService } from '../../services/alpaca.service';
-import { Bar } from '../../models/Bar.model';
+import { FormControl } from '@angular/forms';
+import { Asset } from '../../models/Asset.model';
 
 @Component({
   selector: 'app-alpaca-chart',
@@ -12,9 +13,14 @@ import { Bar } from '../../models/Bar.model';
 export class ChartComponent implements OnInit, OnDestroy {
   chart: Chart;
   labels: string[];
-  assets: string[] = [];
+  assets: Asset[] = [];
+  filteredAssets: string[] = [];
   selectedStock: string = 'AAPL';
-
+  selectedAsset: Asset;
+  myControl = new FormControl();
+  inputValue: string = '';
+  buttonDisabled: boolean = true;
+  selectedPrice: number;
   nasdaq100: string[] = [
     'AAPL',
     'ABNB',
@@ -124,6 +130,16 @@ export class ChartComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.updateChart();
     this.dateToISO();
+    this.alpacaService.getAssets().subscribe((data) => {
+      for (const item in data) {
+        if (this.nasdaq100.includes(data[item].symbol)) {
+          this.assets.push(data[item]);
+        }
+
+        //   //this.assets.push(data[item]); //All
+      }
+      this.filteredAssets = this.assets.map((asset) => asset.name);
+    });
   }
 
   ngOnDestroy() {
@@ -132,9 +148,40 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSelect(event): void {
-    this.selectedStock = event;
+  clearSelect(): void {
+    this.inputValue = '';
+    this.selectedPrice = null;
+    this.selectedAsset = null;
+    this.buttonDisabled = true;
+    this.filteredAssets = this.assets.map((asset) => asset.name);
+  }
+
+  onInputChange(inputValue: string): void {
+    this.inputValue = inputValue;
+    this.filteredAssets = this.assets
+      .filter(
+        (a) =>
+          a.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+          a.symbol.toLowerCase().includes(inputValue.toLowerCase())
+      )
+      .map((asset) => asset.name);
+  }
+
+  onSelectionChange(event: any): void {
+    this.selectedAsset = this.assets.filter(
+      (a) => a.name == event.option.value
+    )[0];
+    console.log('selected asset:', this.selectedAsset);
+    this.selectedStock = this.selectedAsset['symbol'];
     this.updateChart();
+    // this.inputValue = event;
+    this.buttonDisabled = false;
+
+    this.alpacaService
+      .getLastTrades(this.selectedAsset['symbol'])
+      .subscribe((res) => {
+        this.selectedPrice = Number(parseFloat(res['trade'].p).toFixed(2));
+      });
   }
 
   updateChart(): void {
