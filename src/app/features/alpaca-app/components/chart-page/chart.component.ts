@@ -12,6 +12,7 @@ import { Asset } from '../../models/Asset.model';
 })
 export class ChartComponent implements OnInit, OnDestroy {
   chart: Chart;
+  chartIsReady: boolean = false;
   labels: string[];
   assets: Asset[] = [];
   filteredAssets: string[] = [];
@@ -145,6 +146,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.chart) {
       this.chart.destroy();
+      this.chartIsReady = false;
     }
   }
 
@@ -187,6 +189,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   updateChart(): void {
     if (this.chart) {
       this.chart.destroy();
+      this.chartIsReady = false;
     }
     this.alpacaService.getAssetData(this.selectedStock).subscribe((data) => {
       this.createChart(data['bars']);
@@ -302,7 +305,7 @@ export class ChartComponent implements OnInit, OnDestroy {
       },
       plugins: [candlestick],
     };
-
+    this.chartIsReady = true;
     this.chart = new Chart(document.getElementById('canvas'), config);
   }
 }

@@ -40,5 +40,6 @@
   <div class="canvas">
     <h3>{{ selectedStock }}</h3>
     <canvas id="canvas"></canvas>
+    <div class="spinner" *ngIf="!chartIsReady"><app-spinner></app-spinner></div>
   </div>
 </div>
