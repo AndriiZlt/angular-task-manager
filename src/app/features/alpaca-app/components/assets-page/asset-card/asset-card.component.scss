@@ -97,3 +97,17 @@
   align-items: center;
   justify-content: flex-start;
 }
+
+.col-arrow {
+  width: 10px;
+  height: 10px;
+  display: flex;
+}
+
+.col-arrow img {
+  height: 100%;
+  width: 100%;
+  .container img {
+    object-fit: contain;
+  }
+}

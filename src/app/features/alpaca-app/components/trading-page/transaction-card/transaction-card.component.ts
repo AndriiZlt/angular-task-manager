@@ -23,7 +23,6 @@ export class TransactionComponent extends SpinnerComponent implements OnInit {
     let date = new Date(this.transaction.transaction_time);
     let dateUTC = date.toUTCString();
     this.date = dateUTC.substring(0, dateUTC.length - 4);
-
     // Getting full name of the asset
     this.alpacaService
       .getAssetById(this.transaction.symbol)

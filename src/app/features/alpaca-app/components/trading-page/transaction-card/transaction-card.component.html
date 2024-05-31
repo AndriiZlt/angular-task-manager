@@ -1,18 +1,23 @@
-<div class="info">
-  <div class="info__title side">{{ transaction["side"] }}</div>
-  <!-- <div class="info__title symbol">{{ activity["symbol"] }}</div>
-  <div class="info__title name">{{ activityName }}</div> -->
+<div
+  class="transaction-card"
+  [style]="
+    transaction.side === 'buy'
+      ? 'background-color:#e1f0da'
+      : 'background-color:#ed9ec9'
+  "
+>
+  <div class="side">{{ transaction.side }}</div>
 
   <div class="col-info">
     <p class="date">{{ date }}</p>
     <div class="asset_info">
-      <div class="symbol">{{ transaction["symbol"] }}</div>
+      <div class="symbol">{{ transaction.symbol }}</div>
       <div class="name" *ngIf="!isLoading">{{ name }}</div>
       <div class="spinner" *ngIf="isLoading"><app-spinner></app-spinner></div>
     </div>
   </div>
 
-  <div class="info__title quantity">
+  <div class="quantity">
     <div class="col-inner">
       <p class="title">QTY</p>
       <p class="figures">{{ transaction.qty }}</p>
@@ -21,14 +26,8 @@
 
   <div class="prices">
     <div class="col-inner">
-      <p class="title">START</p>
+      <p class="title">PRICE</p>
       <p class="figures">${{ transaction.price }}</p>
-    </div>
-    <div class="col-arrow"></div>
-    <div class="col-inner">
-      <p class="title">CURRENT</p>
-      <p class="figures" *ngIf="!isLoading">${{ currentPrice }}</p>
-      <div class="spinner" *ngIf="isLoading"><app-spinner></app-spinner></div>
     </div>
   </div>
 </div>
