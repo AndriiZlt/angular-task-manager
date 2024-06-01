@@ -3,6 +3,6 @@ export interface AssetToBuy {
   qty: string;
   side: 'buy';
   type: 'limit';
-  limit_price: string;
-  time_in_force: 'gtc';
+  limit_Price: string;
+  time_In_Force: 'gtc';
 }

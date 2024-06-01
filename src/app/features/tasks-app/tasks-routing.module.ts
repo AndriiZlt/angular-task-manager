@@ -9,7 +9,7 @@ const routes: Routes = [
     component: TaskManagerComponent,
   },
   {
-    path: 'task/:id',
+    path: ':id',
     component: DetailsComponent,
   },
 ];

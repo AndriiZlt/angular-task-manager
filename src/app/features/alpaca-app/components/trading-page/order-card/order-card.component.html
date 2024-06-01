@@ -1,13 +1,11 @@
-<div class="info">
+<div class="order-card">
+  <div class="side">{{ order.side }}</div>
   <div class="col-info">
-    <p class="date">{{ date }}</p>
-    <div class="asset_info">
-      <div class="symbol">{{ order.symbol }}</div>
-      <div class="name">{{ orderName }}</div>
-    </div>
+    <div class="symbol">{{ order.symbol }}</div>
+    <div class="name">{{ orderName }}</div>
   </div>
 
-  <div class="info__title quantity">
+  <div class="quantity">
     <div class="col-inner">
       <p class="title">QTY</p>
       <p class="figures">{{ order.qty }}</p>

@@ -111,8 +111,8 @@ export class TradingComponent implements OnInit {
       qty: this.quantity.toString(),
       side: 'buy',
       type: 'limit',
-      limit_price: this.selectedPrice.toString(),
-      time_in_force: 'gtc',
+      limit_Price: this.selectedPrice.toString(),
+      time_In_Force: 'gtc',
     };
 
     this.alpacaService.createOrder(orderToCreate).subscribe((res) => {

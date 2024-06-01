@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlpacaService } from '../../../services/alpaca.service';
+import { Position } from '../../../models/Positions.model';
 
 @Component({
   selector: 'app-asset-card',
@@ -7,7 +8,7 @@ import { AlpacaService } from '../../../services/alpaca.service';
   styleUrls: ['./asset-card.component.scss'],
 })
 export class AssetCardComponent implements OnInit {
-  @Input() position: any;
+  @Input() position: Position;
   @Input() index: number;
   @Output() sellAsset: EventEmitter<any> = new EventEmitter<any>();
   positionName: string;
@@ -20,7 +21,7 @@ export class AssetCardComponent implements OnInit {
   ngOnInit(): void {
     // Getting full name of the order
     this.alpacaService.getAssetById(this.position.symbol).subscribe((res) => {
-      this.positionName = res['name'];
+      this.positionName = res.name;
       this.nameIsLoading = false;
     });
 
@@ -32,7 +33,6 @@ export class AssetCardComponent implements OnInit {
   }
 
   sellPosition() {
-    console.log('Emiting event:', this.position.asset_id);
-    this.sellAsset.emit(this.position.asset_id);
+    this.sellAsset.emit(this.position.asset_Id);
   }
 }

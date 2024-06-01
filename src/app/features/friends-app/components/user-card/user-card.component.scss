@@ -2,52 +2,52 @@
 @import "../../../../../assets/scss/variables";
 @import "../../../../../styles.scss";
 
-.userCard {
+.user-card {
   position: relative;
   background-color: $gray-100;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  height: 150px;
-  width: 390px;
-  padding: 10px;
-  font-size: 20px;
+  height: 75px;
+  width: 195px;
+  padding: 5px;
+  font-size: 12px;
   border-radius: 5px;
   box-shadow: 2px 1px 5px 0px rgba(0, 0, 0, 0.76);
   -webkit-box-shadow: 2px 1px 5px 0px rgba(0, 0, 0, 0.76);
   -moz-box-shadow: 2px 1px 5px 0px rgba(0, 0, 0, 0.76);
   margin-bottom: 15px;
-  > * {
-    margin-right: 12px;
-  }
+  // > * {
+  //   margin-right: 7px;
+  // }
 
   p {
-    line-height: 48px;
+    line-height: 20px;
     margin-bottom: 0;
   }
 
   img {
-    width: 130px;
+    width: 65px;
     border-radius: 5px;
   }
 
-  .genderImg {
+  .gender-img {
     position: absolute;
     right: 10px;
     bottom: 16px;
-    height: 30px;
+    height: 15px;
     img {
       height: 100%;
       width: 100%;
     }
   }
-  .addFriendIcon {
+  .add-friend-icon {
     position: absolute;
     right: 3px;
     top: 9px;
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     cursor: pointer;
     img {
       height: 100%;
@@ -57,30 +57,30 @@
       transform: translateY(1px);
     }
   }
-  .userDetails {
+  .user-details {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 170px;
-    height: 60px;
+    width: 85px;
+    height: 30px;
     font-weight: 500;
   }
-  .nameAge {
+  .name-age {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    font-size: 22px;
-    height: 35px;
-    line-height: 30px;
+    font-size: 12px;
+    height: 17px;
+    line-height: 20px;
     > *:not(:last-child) {
-      margin-right: 10px;
+      margin-right: 7px;
     }
   }
-  .userCountry {
-    font-size: 18px;
-    height: 35px;
-    line-height: 30px;
+  .user-country {
+    font-size: 12px;
+    height: 17px;
+    line-height: 20px;
   }
 }

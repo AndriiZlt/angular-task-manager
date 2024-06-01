@@ -1,22 +1,22 @@
 export interface Order {
-  asset_class: string;
-  asset_id: string;
+  asset_Class: string;
+  asset_Id: string;
   // canceled_at?: string;
-  client_order_id: string;
-  created_at: string;
+  client_Order_Id: string;
+  created_At: string;
   // expired_at?: string;
-  extended_hours: false;
+  extended_Hours: false;
   // failed_at?: string;
   // filled_at?: string;
   // filled_avg_price?: string;
-  filled_qty: string;
+  filled_Qty: string;
   // hwm?: string;
   id: string;
   // legs: null;
-  limit_price: string;
+  limit_Price: string;
   // notional: null;
-  order_class: string;
-  order_type: string;
+  order_Class: string;
+  order_Type: string;
   qty: string;
   // replaced_at: null;
   // replaced_by: null;
@@ -25,12 +25,12 @@ export interface Order {
   // source: null;
   status: string;
   // stop_price: null;
-  submitted_at: string;
+  submitted_At: string;
   // subtag: null;
   symbol: string;
-  time_in_force: string;
+  time_In_Force: string;
   // trail_percent: null;
   // trail_price: null;
   type: string;
-  updated_at: string;
+  updated_At: string;
 }

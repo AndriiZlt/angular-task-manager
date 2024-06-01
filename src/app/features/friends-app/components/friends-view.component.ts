@@ -4,8 +4,6 @@ import { Friend } from '../models/Friend.model';
 import { TaskApiService } from '../../tasks-app/services/task.service';
 import { FriendsApiService } from '../services/friends.service';
 
-
-
 @Component({
   selector: 'app-friends-view',
   templateUrl: './friends-view.component.html',
@@ -14,6 +12,7 @@ import { FriendsApiService } from '../services/friends.service';
 })
 export class FriendsViewComponent implements OnInit {
   friends: Friend[] = [];
+  filteredFriends: Friend[] = [];
   inputValue: string = '';
   isLoading: boolean = true;
 
@@ -31,7 +30,7 @@ export class FriendsViewComponent implements OnInit {
   updateFriends(): void {
     this.apiService.getFriends().subscribe((res) => {
       this.friends = <Friend[]>res;
-      console.log('Friends:', this.friends);
+      this.filteredFriends = this.friends;
       localStorage.setItem('friends', JSON.stringify(this.friends));
     });
   }
@@ -55,13 +54,21 @@ export class FriendsViewComponent implements OnInit {
   }
 
   onFilterChange(): void {
+    this.filteredFriends = this.friends.filter((f) => {
+      if (
+        f.fName.toLowerCase().includes(this.inputValue.toLowerCase()) ||
+        f.lName.toLowerCase().includes(this.inputValue.toLowerCase())
+      ) {
+        return true;
+      }
+    });
     localStorage.setItem('friendsListFilter', this.inputValue);
-
   }
 
   clearFilter(): void {
     this.inputValue = '';
     localStorage.setItem('friendsListFilter', '');
+    this.filteredFriends = this.friends;
   }
 
   resetPage(): void {

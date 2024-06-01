@@ -14,6 +14,7 @@ export class LayoutService {
     headerView: HeaderView.task,
     sidenavView: SidenavView.trading,
   };
+
   private updatedLayout = new BehaviorSubject<Layout>({
     showHeader: false,
     showSidenav: false,
@@ -63,12 +64,21 @@ export class LayoutService {
         sidenavView: SidenavView.trading,
       });
     } else if (url.includes('friends')) {
-      this.updatedLayout.next({
-        showHeader: true,
-        showSidenav: false,
-        headerView: HeaderView.friends,
-        sidenavView: SidenavView.trading,
-      });
+      if (url.includes('users')) {
+        this.updatedLayout.next({
+          showHeader: true,
+          showSidenav: true,
+          headerView: HeaderView.friends,
+          sidenavView: SidenavView.users,
+        });
+      } else {
+        this.updatedLayout.next({
+          showHeader: true,
+          showSidenav: true,
+          headerView: HeaderView.friends,
+          sidenavView: SidenavView.friends,
+        });
+      }
     }
   }
 
@@ -78,7 +88,6 @@ export class LayoutService {
 
   getCurrentLayout(): Layout {
     let lastUrl = localStorage.getItem('lastUrl');
-
     if (lastUrl) {
       if (lastUrl.includes('auth')) {
         this.currentLayout.showHeader = false;
@@ -100,8 +109,13 @@ export class LayoutService {
         this.currentLayout.headerView = HeaderView.task;
       } else if (lastUrl.includes('friends')) {
         this.currentLayout.showHeader = true;
-        this.currentLayout.showSidenav = false;
+        this.currentLayout.showSidenav = true;
         this.currentLayout.headerView = HeaderView.friends;
+        if (lastUrl.includes('users')) {
+          this.currentLayout.sidenavView = SidenavView.users;
+        } else {
+          this.currentLayout.sidenavView = SidenavView.friends;
+        }
       }
     } else {
       this.currentLayout.showHeader = false;

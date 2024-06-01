@@ -1,16 +1,16 @@
-<div class="userCard">
-  <img [src]="user.picture.medium" alt="user photo" />
-  <div class="userDetails">
-    <div class="nameAge">
+<div class="user-card">
+  <img [src]="user.picture.medium" alt="user_photo" />
+  <div class="user-details">
+    <div class="name-age">
       <p style="max-width: 150px; overflow: hidden">
         {{ user.name.first }}
       </p>
       <p>{{ user.age }}</p>
     </div>
-    <p class="userCountry">{{ user.city }}</p>
+    <p class="user-country">{{ user.city }}</p>
   </div>
 
-  <div class="genderImg">
+  <div class="gender-img">
     <img
       [src]="
         user.gender === 'male'
@@ -20,7 +20,7 @@
       alt="gender-icon"
     />
   </div>
-  <div class="addFriendIcon" (click)="this.addFriend.emit(user.id)">
+  <div class="add-friend-icon" (click)="this.addFriend.emit(user.id)">
     <img src="../../assets/plus.png" alt="add-friend-icon" />
   </div>
 </div>

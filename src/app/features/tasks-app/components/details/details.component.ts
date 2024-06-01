@@ -125,7 +125,7 @@ export class DetailsComponent implements OnInit {
       action: 'delete',
       taskId: this.task.id,
     });
-    this.router.navigate(['task-manager']);
+    this.router.navigate(['task']);
   }
 
   getFromLocalStorage(): void {
@@ -170,7 +170,7 @@ export class DetailsComponent implements OnInit {
   }
 
   back(): void {
-    this.router.navigate(['task-manager']);
+    this.router.navigate(['task']);
   }
 
   onEdit(field: string, value: string): void {
@@ -212,7 +212,7 @@ export class DetailsComponent implements OnInit {
         action: 'edit',
         task: this.task,
       });
-      this.router.navigate(['task-manager']);
+      this.router.navigate(['task']);
     } else {
       console.log('Empty title!');
     }

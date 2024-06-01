@@ -12,7 +12,7 @@ export class UrlService {
     if (lastUrl) {
       this.router.navigate([lastUrl]);
     } else {
-      this.router.navigate(['task-manager']);
+      this.router.navigate(['task']);
     }
   }
 

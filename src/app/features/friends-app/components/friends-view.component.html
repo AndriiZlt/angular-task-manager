@@ -1,75 +1,50 @@
-<div class="friendsViewContainer">
-  <div
-    class="col-md-10"
-    style="
-      width: 100%;
-      height: fit-content;
-      min-height: 1000px;
-      overflow: hidden;
-      background-color: rgb(235, 242, 250);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding: 30px;
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-    "
-  >
-    <nav>
-      <a
-        routerLink="users"
-        id="users-online"
-        style="text-decoration: none; font-size: 22px; font-weight: 600"
-        >Click to see online users</a
-      >
-    </nav>
-    <hr />
-    <form class="example-form">
-      <mat-form-field class="example-full-width" style="width: 220px">
-        <mat-label>Type to filter..</mat-label>
-        <input
-          class="message"
-          matInput
-          #message
-          maxlength="20"
-          [(ngModel)]="inputValue"
-          [ngModelOptions]="{ standalone: true }"
-          (ngModelChange)="onFilterChange()"
-        />
+<div class="friends-container">
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input
+        type="text"
+        [placeholder]="'Filter your friends...'"
+        aria-label="Fiend-filter"
+        matInput
+        style="width: 300px"
+        [(ngModel)]="inputValue"
+        [ngModelOptions]="{ standalone: true }"
+        (ngModelChange)="onFilterChange()"
+      />
+    </mat-form-field>
+    <button (click)="clearFilter()" class="add-btn">Clear</button>
+  </form>
 
-        <mat-hint align="end">{{ message.value.length }} / 20</mat-hint>
-      </mat-form-field>
-
-      <button (click)="clearFilter()" class="add-btn">Clear</button>
-    </form>
-
-    <h2>Friends List:</h2>
-    <div class="friendsList">
-      <div
-        class="noUserText"
-        *ngIf="this.friends.length === 0"
-        style="
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          height: 300px;
-        "
-      >
-        <h2 style="width: 400px">
-          You don't have any friends yet! <br />
-          Click here <br />
-          <span><a routerLink="users">to see online users.</a></span>
-        </h2>
-      </div>
-
+  <h2>Friends List</h2>
+  <div class="friends-list">
+    <div
+      class="no-user-text"
+      *ngIf="this.friends.length === 0"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 500px;
+      "
+    >
+      <h2 style="width: 400px">
+        You don't have any friends yet! <br />
+        Click here <br />
+        <span><a routerLink="users">to see online users.</a></span>
+      </h2>
+    </div>
+    <div class="app" *ngIf="filteredFriends.length > 0">
       <app-friend-card
-        *ngFor="let friend of friends | pipe2 : inputValue; let index = id"
+        *ngFor="let friend of filteredFriends; let index = id"
         [friend]="friend"
         (removeFriend)="onRemoveFriend($event)"
         [friendIndex]="index"
       >
       </app-friend-card>
+    </div>
+    <div class="no-user" *ngIf="filteredFriends.length === 0">
+      <h2>No users match your filter</h2>
     </div>
   </div>
 

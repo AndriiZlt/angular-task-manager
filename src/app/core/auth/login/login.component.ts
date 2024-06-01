@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(loginDto).subscribe((jwtDto) => {
       console.log('Token:', jwtDto.token);
       localStorage.setItem('token', jwtDto.token);
-      this.router.navigate(['task-manager']);
+      this.router.navigate(['task']);
       this.loginNameService.triggerEvent(loginDto.username);
     });
   }

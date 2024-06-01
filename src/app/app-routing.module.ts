@@ -7,24 +7,24 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () =>
       import('./core/auth/auth.module').then((module) => module.AuthModule),
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
-    path: 'task-manager',
+    path: 'task',
     loadChildren: () =>
       import('./features/tasks-app/tasks.module').then(
         (module) => module.TasksModule
       ),
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
 
   {
-    path: 'friends-list',
+    path: 'friends',
     loadChildren: () =>
       import('./features/friends-app/friends.module').then(
         (module) => module.FriendsModule
       ),
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'alpaca',

@@ -6,9 +6,9 @@ export interface Asset {
   status: string;
   tradable: boolean;
   class: string;
-  easy_to_borrow: boolean;
+  easy_To_Borrow: boolean;
   fractionable: boolean;
-  maintenance_margin_requirement: number;
+  maintenance_Margin_Requirement: number;
   marginable: boolean;
   shortable: boolean;
 }

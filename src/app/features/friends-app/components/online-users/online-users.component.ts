@@ -88,7 +88,7 @@ export class OnlineUsersComponent implements OnInit {
   }
 
   back(): void {
-    this.router.navigate([`friends-list`]);
+    this.router.navigate([`friends`]);
   }
 
   fetchUsers(): void {

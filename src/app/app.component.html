@@ -4,7 +4,29 @@
 
 <div class="row g-0">
   <div class="left" *ngIf="layout.showSidenav">
-    <app-side-nav></app-side-nav>
+    <div *ngIf="layout.headerView === 3">
+      <app-side-nav
+        [option_1]="'Trading Page'"
+        [option_1_link]="'alpaca/trading'"
+        [option_1_id]="'trading'"
+        [option_2]="'My Assets'"
+        [option_2_link]="'alpaca/assets'"
+        [option_2_id]="'assets'"
+        [option_3]="'Chart'"
+        [option_3_link]="'alpaca/chart'"
+        [option_3_id]="'chart'"
+      ></app-side-nav>
+    </div>
+    <div *ngIf="layout.headerView === 2">
+      <app-side-nav
+        [option_1]="'Friends List'"
+        [option_1_link]="'friends'"
+        [option_1_id]="'friends'"
+        [option_2]="'Online Users'"
+        [option_2_link]="'friends/users'"
+        [option_2_id]="'users'"
+      ></app-side-nav>
+    </div>
   </div>
 
   <div class="right" [style]="layout.showSidenav ? 'width:85%' : 'width:100%'">

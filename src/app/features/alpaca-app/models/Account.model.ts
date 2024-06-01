@@ -1,6 +1,6 @@
 export interface Account {
-  account_blocked: boolean;
-  account_number: string;
+  account_Blocked: boolean;
+  account_Number: string;
   accrued_fees: string;
   admin_configurations: object;
   balance_asof: string;

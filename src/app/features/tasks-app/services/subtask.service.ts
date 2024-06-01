@@ -17,7 +17,7 @@ export class SubtaskApiService extends ApiService {
 
   addSubtask<Subtask>(subtask: SubtaskToAdd): Observable<Subtask> {
     console.log('Http Posted subtask:', subtask);
-    return this.post<Subtask>('/addsubtask', subtask);
+    return this.post<Subtask>('addsubtask', subtask);
   }
 
   deleteSubtask<Subtask>(subtaskId: number): Observable<Subtask> {

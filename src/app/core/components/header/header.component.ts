@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.lastUrl) {
       this.router.navigate([`${this.lastUrl}`]);
     } else {
-      this.router.navigate([`task-manager`]);
+      this.router.navigate([`task`]);
     }
 
     this.loginNameService.getLoginData().subscribe((param: any) => {
@@ -92,10 +92,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onViewChange(event): void {
     switch (event.target.id) {
       case 'task':
-        this.router.navigate(['task-manager']);
+        this.router.navigate(['task']);
         break;
       case 'friends':
-        this.router.navigate(['friends-list']);
+        this.router.navigate(['friends']);
         break;
       case 'alpaca':
         this.lastUrl = this.urlService.getLastUrl();
@@ -106,7 +106,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
         break;
       default:
-        this.router.navigate(['task-manager']);
+        this.router.navigate(['task']);
     }
   }
 

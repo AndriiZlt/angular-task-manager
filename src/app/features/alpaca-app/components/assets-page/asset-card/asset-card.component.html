@@ -1,5 +1,5 @@
-<div class="transaction-card">
-  <div class="side">{{ index + 1 }}</div>
+<div class="asset-card">
+  <div class="number">{{ index + 1 }}</div>
   <div class="symbol">{{ position["symbol"] }}</div>
 
   <div class="name" *ngIf="!nameIsLoading">{{ positionName }}</div>
@@ -16,12 +16,12 @@
   <div class="prices">
     <div class="col-inner">
       <p class="title">START</p>
-      <p class="figures">${{ position.cost_basis }}</p>
+      <p class="figures">${{ position.cost_Basis }}</p>
     </div>
     <div class="col-arrow">
       <img
         [src]="
-          position.cost_basis < currentPrice
+          position.cost_Basis < currentPrice
             ? '../../../../assets/UP_trend.png'
             : '../../../../assets/Down_trend.png'
         "

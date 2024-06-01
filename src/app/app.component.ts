@@ -19,8 +19,7 @@ export class AppComponent {
     urlService.navigateToLast();
     this.layout = layoutService.getCurrentLayout();
     layoutService.getUpdatedLayout().subscribe((update: Layout) => {
-      this.layout.showHeader = update.showHeader;
-      this.layout.showSidenav = update.showSidenav;
+      this.layout = update;
     });
   }
 

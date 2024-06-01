@@ -20,7 +20,7 @@ export class TransactionComponent extends SpinnerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let date = new Date(this.transaction.transaction_time);
+    let date = new Date(this.transaction.transaction_Time);
     let dateUTC = date.toUTCString();
     this.date = dateUTC.substring(0, dateUTC.length - 4);
     // Getting full name of the asset

@@ -119,7 +119,7 @@ export class RegisterComponent implements OnInit {
       this.authService.register(registerDto).subscribe((res) => {
         console.log('Response:', res);
         localStorage.setItem('token', res.token);
-        this.router.navigate(['task-manager']);
+        this.router.navigate(['task']);
       });
     } catch (error) {
       console.log('Error:', error.message);

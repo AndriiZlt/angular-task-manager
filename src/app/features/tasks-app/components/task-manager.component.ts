@@ -6,7 +6,7 @@ import { TaskChangeService } from '../services/task-change.service';
 import { TaskApiService } from '../services/task.service';
 import { DatePipe } from '@angular/common';
 import { Subtask } from '../models/Subtask.model';
-import { User} from 'src/app/core/user/models/User.model';
+import { User } from 'src/app/core/user/models/User.model';
 import { HubConnectionService } from 'src/app/core/services/hub-connection.service';
 import { SubtaskApiService } from '../services/subtask.service';
 import { UserApiService } from 'src/app/core/user/services/user.service';
@@ -265,7 +265,7 @@ export class TaskManagerComponent implements OnInit {
 
   onDetailsClick(index: number): void {
     localStorage.setItem('detailsIndex', JSON.stringify(index));
-    this.router.navigate(['task-manager/task', this.tasks[index].id]);
+    this.router.navigate([`task/${this.tasks[index].id}`]);
   }
 
   // Subtask service

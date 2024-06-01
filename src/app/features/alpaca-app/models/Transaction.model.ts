@@ -1,14 +1,14 @@
 export interface Transaction {
-  activity_type: string;
-  cum_qty: string;
+  activity_Type: string;
+  cum_Qty: string;
   id: string;
-  leaves_qty: string;
-  order_id: string;
-  order_status: string;
+  leaves_Qty: string;
+  order_Id: string;
+  order_Status: string;
   price: string;
   qty: string;
   side: string;
   symbol: string;
-  transaction_time: string;
+  transaction_Time: string;
   type: string;
 }

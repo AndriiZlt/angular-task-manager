@@ -1,21 +1,21 @@
 export interface Position {
-  asset_id: string;
+  asset_Id: string;
   name: string;
-  status: string;
+  satus: string;
   tradable: boolean;
-  avg_entry_price: string;
-  change_today: string;
-  cost_basis: string;
-  current_price: string;
+  avg_Entry_Price: string;
+  change_Today: string;
+  cost_Basis: string;
+  current_Price: string;
   exchange: string;
-  lastday_price: string;
-  market_value: string;
+  lastday_Price: string;
+  market_Value: string;
   qty: string;
-  qty_available: string;
+  qty_Available: string;
   side: string;
   symbol: string;
-  unrealized_intraday_pl: string;
-  unrealized_intraday_plpc: string;
-  unrealized_pl: string;
-  unrealized_plpc: string;
+  unrealized_Intraday_Pl: string;
+  unrealized_Intraday_Plpc: string;
+  unrealized_Pl: string;
+  unrealized_Plpc: string;
 }
