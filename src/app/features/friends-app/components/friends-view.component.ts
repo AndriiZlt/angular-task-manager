@@ -24,7 +24,7 @@ export class FriendsViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateFriends();
-    this.updateFilterFromLC();
+    // this.updateFilterFromLC();
   }
 
   updateFriends(): void {
