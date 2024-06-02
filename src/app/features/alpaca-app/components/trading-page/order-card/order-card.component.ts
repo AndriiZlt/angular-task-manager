@@ -16,16 +16,21 @@ export class OrderCardComponent implements OnInit {
   constructor(private alpacaService: AlpacaService) {}
 
   ngOnInit(): void {
-
     // Getting full name of the order
-    this.alpacaService.getAssetById(this.order.symbol).subscribe((res) => {
-      this.orderName = res['name'];
-    });
+    let sub = this.alpacaService
+      .getAssetById(this.order.symbol)
+      .subscribe((res) => {
+        this.orderName = res['name'];
+        sub.unsubscribe();
+      });
 
     // Getting current price of the stock
-    this.alpacaService.getLastTrades(this.order.symbol).subscribe((res) => {
-      this.currentPrice = res['trade'].p;
-    });
+    let sub2 = this.alpacaService
+      .getLastTrades(this.order.symbol)
+      .subscribe((res) => {
+        this.currentPrice = res['trade'].p;
+        sub2.unsubscribe();
+      });
   }
 
   cancelOrder() {

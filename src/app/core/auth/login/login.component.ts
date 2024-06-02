@@ -83,11 +83,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginDto: Login) {
-    this.authService.login(loginDto).subscribe((jwtDto) => {
+    let subscription = this.authService.login(loginDto).subscribe((jwtDto) => {
       console.log('Token:', jwtDto.token);
       localStorage.setItem('token', jwtDto.token);
       this.router.navigate(['task']);
       this.loginNameService.triggerEvent(loginDto.username);
+      subscription.unsubscribe();
     });
   }
 

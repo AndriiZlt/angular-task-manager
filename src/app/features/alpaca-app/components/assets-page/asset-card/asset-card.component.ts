@@ -20,16 +20,22 @@ export class AssetCardComponent implements OnInit {
 
   ngOnInit(): void {
     // Getting full name of the order
-    this.alpacaService.getAssetById(this.position.symbol).subscribe((res) => {
-      this.positionName = res.name;
-      this.nameIsLoading = false;
-    });
+    let sub = this.alpacaService
+      .getAssetById(this.position.symbol)
+      .subscribe((res) => {
+        this.positionName = res.name;
+        this.nameIsLoading = false;
+        sub.unsubscribe();
+      });
 
     // Getting current price of the asset
-    this.alpacaService.getLastTrades(this.position.symbol).subscribe((res) => {
-      this.currentPrice = res['trade'].p;
-      this.priceIsLoading = false;
-    });
+    let sub2 = this.alpacaService
+      .getLastTrades(this.position.symbol)
+      .subscribe((res) => {
+        this.currentPrice = res['trade'].p;
+        this.priceIsLoading = false;
+        sub2.unsubscribe();
+      });
   }
 
   sellPosition() {

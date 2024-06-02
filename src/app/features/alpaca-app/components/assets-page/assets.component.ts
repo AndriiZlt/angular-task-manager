@@ -22,17 +22,20 @@ export class AssetsComponent implements OnInit {
 
   updatePage() {
     this.positions = [];
-    this.alpacaService.getPositions().subscribe((res) => {
+    let sub = this.alpacaService.getPositions().subscribe((res) => {
       for (const item in res) {
         this.positions.push(res[item]);
       }
-      // console.log('Positions:', res);
+      sub.unsubscribe();
     });
   }
 
   sellAsset(asset_id: any) {
-    this.alpacaService.closePosition(asset_id).subscribe((res) => {
-      setTimeout(() => this.updatePage(), 500);
+    let sub = this.alpacaService.closePosition(asset_id).subscribe((res) => {
+      setTimeout(() => {
+        this.updatePage();
+        sub.unsubscribe();
+      }, 500);
     });
   }
 }

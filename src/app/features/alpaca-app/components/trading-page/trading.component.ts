@@ -2,11 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AlpacaService } from '../../services/alpaca.service';
-// import * as asset_storage from '../assets';
 import * as nasdaq100 from '../../../../../assets/nasdaq100';
 import { AssetToBuy } from '../../models/AssetToBuy.model';
 import { Asset } from '../../models/Asset.model';
-import { environment } from 'src/environments/environment';
 import { Transaction } from '../../models/Transaction.model';
 import { Order } from '../../models/Order.model';
 
@@ -38,7 +36,7 @@ export class TradingComponent implements OnInit {
   ngOnInit(): void {
     this.updatePage();
 
-    this.alpacaService.getAssets().subscribe((data) => {
+    let subscription = this.alpacaService.getAssets().subscribe((data) => {
       for (const item in data) {
         if (this.nasdaq100.includes(data[item].symbol)) {
           this.assets.push(data[item]);
@@ -47,28 +45,32 @@ export class TradingComponent implements OnInit {
         //   //this.assets.push(data[item]); //All
       }
       this.filteredAssets = this.assets.map((asset) => asset.name);
+      subscription.unsubscribe();
     });
 
-    this.alpacaService.getAccount().subscribe((acc) => {
-      console.log('Alpaca account:', acc);
+    let subscription2 = this.alpacaService.getAccount().subscribe((acc) => {
+      console.log('Alpaca account:', acc.id);
+      subscription2.unsubscribe();
     });
   }
 
   updatePage() {
     this.orders = [];
     this.transactions = [];
-    this.alpacaService.getOrders().subscribe((res) => {
+    let subscription = this.alpacaService.getOrders().subscribe((res) => {
       for (const item in res) {
         this.orders.push(res[item]);
       }
+      subscription.unsubscribe();
     });
 
-    this.alpacaService.getActivity().subscribe((res) => {
+    let subscription2 = this.alpacaService.getActivity().subscribe((res) => {
       for (const item in res) {
         if (res[item].activity_type === 'FILL') {
           this.transactions.push(res[item]);
         }
       }
+      subscription2.unsubscribe();
     });
   }
 
@@ -79,10 +81,11 @@ export class TradingComponent implements OnInit {
 
     this.buttonDisabled = false;
 
-    this.alpacaService
+    let subscriprion = this.alpacaService
       .getLastTrades(this.selectedAsset['symbol'])
       .subscribe((res) => {
         this.selectedPrice = Number(parseFloat(res['trade'].p).toFixed(2));
+        subscriprion.unsubscribe();
       });
   }
 
@@ -115,15 +118,21 @@ export class TradingComponent implements OnInit {
       time_In_Force: 'gtc',
     };
 
-    this.alpacaService.createOrder(orderToCreate).subscribe((res) => {
-      this.clearSelect();
-      this.updatePage();
-    });
+    let subscription = this.alpacaService
+      .createOrder(orderToCreate)
+      .subscribe((res) => {
+        this.clearSelect();
+        this.updatePage();
+        subscription.unsubscribe();
+      });
   }
 
   closeOrder(order_id: any) {
-    this.alpacaService.closeOrder(order_id).subscribe((res) => {
-      setTimeout(() => this.updatePage(), 500);
-    });
+    let subscription = this.alpacaService
+      .closeOrder(order_id)
+      .subscribe((res) => {
+        setTimeout(() => this.updatePage(), 500);
+        subscription.unsubscribe();
+      });
   }
 }

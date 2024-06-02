@@ -24,18 +24,20 @@ export class TransactionComponent extends SpinnerComponent implements OnInit {
     let dateUTC = date.toUTCString();
     this.date = dateUTC.substring(0, dateUTC.length - 4);
     // Getting full name of the asset
-    this.alpacaService
+    let sub = this.alpacaService
       .getAssetById(this.transaction.symbol)
       .subscribe((res) => {
         this.isLoading = false;
         this.name = res['name'];
+        sub.unsubscribe();
       });
 
     // Getting current price of the stock
-    this.alpacaService
+    let sub2 = this.alpacaService
       .getLastTrades(this.transaction.symbol)
       .subscribe((res) => {
         this.currentPrice = res['trade'].p;
+        sub2.unsubscribe();
       });
   }
 }

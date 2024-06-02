@@ -116,11 +116,14 @@ export class RegisterComponent implements OnInit {
 
   register(registerDto: Register): void {
     try {
-      this.authService.register(registerDto).subscribe((res) => {
-        console.log('Response:', res);
-        localStorage.setItem('token', res.token);
-        this.router.navigate(['task']);
-      });
+      let subscription = this.authService
+        .register(registerDto)
+        .subscribe((res) => {
+          console.log('Response:', res);
+          localStorage.setItem('token', res.token);
+          this.router.navigate(['task']);
+          subscription.unsubscribe();
+        });
     } catch (error) {
       console.log('Error:', error.message);
     }

@@ -49,8 +49,9 @@ export class TaskComponent implements OnInit {
   }
 
   onSubtaskDelete(subtaskId: number) {
-    this.apiService.deleteSubtask(subtaskId).subscribe((data) => {
+    let sub = this.apiService.deleteSubtask(subtaskId).subscribe((data) => {
       this.updateSubtasks(subtaskId);
+      sub.unsubscribe();
     });
   }
 
