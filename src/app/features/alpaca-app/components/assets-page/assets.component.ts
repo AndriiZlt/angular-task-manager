@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlpacaService } from '../../services/alpaca.service';
-import * as nasdaq100 from '../../../../../assets/nasdaq100';
+import * as nasdaq100 from '../../assets/nasdaq100';
+import { Asset } from '../../models/Asset.model';
 
 @Component({
   selector: 'app-assets',
@@ -8,7 +9,7 @@ import * as nasdaq100 from '../../../../../assets/nasdaq100';
   styleUrls: ['./assets.component.scss'],
 })
 export class AssetsComponent implements OnInit {
-  assets: any[] = [];
+  assets: Asset[] = [];
   nasdaq100: string[];
   positions: any[] = [];
 

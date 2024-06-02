@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AlpacaService } from '../../services/alpaca.service';
-import * as nasdaq100 from '../../../../../assets/nasdaq100';
+import * as nasdaq100 from '../../assets/nasdaq100';
 import { AssetToBuy } from '../../models/AssetToBuy.model';
 import { Asset } from '../../models/Asset.model';
 import { Transaction } from '../../models/Transaction.model';
@@ -41,8 +41,6 @@ export class TradingComponent implements OnInit {
         if (this.nasdaq100.includes(data[item].symbol)) {
           this.assets.push(data[item]);
         }
-
-        //   //this.assets.push(data[item]); //All
       }
       this.filteredAssets = this.assets.map((asset) => asset.name);
       subscription.unsubscribe();
