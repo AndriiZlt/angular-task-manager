@@ -62,16 +62,14 @@ export class OnlineUsersComponent implements OnInit {
         picture: newFriend.picture.large,
       };
 
-      // console.log('FriendToAdd', friendToAdd);
-
-      this.apiService.addFriend(friendToAdd).subscribe((data) => {
-        console.log('Response:', data);
+      let sub = this.apiService.addFriend(friendToAdd).subscribe((data) => {
         if (data) {
           alert(
             `User ${friendToAdd.fName} ${friendToAdd.lName} was added to your friend list!`
           );
           this.updateFriends(<Friend>data);
         }
+        sub.unsubscribe();
       });
     } else {
       alert(`User is already in your friend list!`);

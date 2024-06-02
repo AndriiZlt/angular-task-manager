@@ -131,15 +131,14 @@ export class ChartComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.updateChart();
     this.dateToISO();
-    this.alpacaService.getAssets().subscribe((data) => {
+    let sub = this.alpacaService.getAssets().subscribe((data) => {
       for (const item in data) {
         if (this.nasdaq100.includes(data[item].symbol)) {
           this.assets.push(data[item]);
         }
-
-        //   //this.assets.push(data[item]); //All
       }
       this.filteredAssets = this.assets.map((asset) => asset.name);
+      sub.unsubscribe();
     });
   }
 
@@ -173,16 +172,15 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.selectedAsset = this.assets.filter(
       (a) => a.name == event.option.value
     )[0];
-    console.log('selected asset:', this.selectedAsset);
     this.selectedStock = this.selectedAsset['symbol'];
     this.updateChart();
-    // this.inputValue = event;
     this.buttonDisabled = false;
 
-    this.alpacaService
+    let sub = this.alpacaService
       .getLastTrades(this.selectedAsset['symbol'])
       .subscribe((res) => {
         this.selectedPrice = Number(parseFloat(res['trade'].p).toFixed(2));
+        sub.unsubscribe();
       });
   }
 
@@ -191,9 +189,12 @@ export class ChartComponent implements OnInit, OnDestroy {
       this.chart.destroy();
       this.chartIsReady = false;
     }
-    this.alpacaService.getAssetData(this.selectedStock).subscribe((data) => {
-      this.createChart(data['bars']);
-    });
+    let sub = this.alpacaService
+      .getAssetData(this.selectedStock)
+      .subscribe((data) => {
+        this.createChart(data['bars']);
+        sub.unsubscribe();
+      });
   }
 
   dateToISO() {

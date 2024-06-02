@@ -28,10 +28,11 @@ export class FriendsViewComponent implements OnInit {
   }
 
   updateFriends(): void {
-    this.apiService.getFriends().subscribe((res) => {
+    let sub = this.apiService.getFriends().subscribe((res) => {
       this.friends = <Friend[]>res;
       this.filteredFriends = this.friends;
       localStorage.setItem('friends', JSON.stringify(this.friends));
+      sub.unsubscribe();
     });
   }
 
@@ -48,9 +49,12 @@ export class FriendsViewComponent implements OnInit {
   }
 
   onRemoveFriend(friendId: string): void {
-    this.apiService.deleteFriend(Number(friendId)).subscribe((res) => {
-      this.updateFriends();
-    });
+    let sub = this.apiService
+      .deleteFriend(Number(friendId))
+      .subscribe((res) => {
+        this.updateFriends();
+        sub.unsubscribe();
+      });
   }
 
   onFilterChange(): void {

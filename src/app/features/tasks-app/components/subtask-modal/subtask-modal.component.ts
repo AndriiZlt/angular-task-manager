@@ -87,17 +87,21 @@ export class SubtaskModalComponent implements OnInit {
         description: this.capitalize(this.description),
         taskId: this.selectedTaskId,
       };
-      this.apiService.addSubtask(subtaskToAdd).subscribe((data) => {
+      let sub = this.apiService.addSubtask(subtaskToAdd).subscribe((data) => {
         this.closeModal();
+        sub.unsubscribe();
       });
     } else {
       let subtaskToUpdate: Subtask = this.targetSubtask;
       subtaskToUpdate.description = this.capitalize(this.description);
       subtaskToUpdate.taskId = this.selectedTaskId;
-      this.apiService.updateSubtask(subtaskToUpdate).subscribe((res) => {
-        this.updateSubtask.emit(subtaskToUpdate);
-        this.closeModal();
-      });
+      let sub = this.apiService
+        .updateSubtask(subtaskToUpdate)
+        .subscribe((res) => {
+          this.updateSubtask.emit(subtaskToUpdate);
+          this.closeModal();
+          sub.unsubscribe();
+        });
     }
 
     this.taskChangeService.triggerEvent({

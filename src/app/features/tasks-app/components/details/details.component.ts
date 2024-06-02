@@ -48,8 +48,9 @@ export class DetailsComponent implements OnInit {
   }
 
   onSubtaskDelete(subtaskId: number): void {
-    this.apiService.deleteSubtask(subtaskId).subscribe((data) => {
+    let sub = this.apiService.deleteSubtask(subtaskId).subscribe((data) => {
       this.deleteSubtask(subtaskId);
+      sub.unsubscribe();
     });
   }
 
@@ -82,8 +83,9 @@ export class DetailsComponent implements OnInit {
   }
 
   checkSubtask(subtaskId: number): void {
-    this.apiService.updateStatusSubtask(subtaskId).subscribe((_) => {
+    let sub = this.apiService.updateStatusSubtask(subtaskId).subscribe((_) => {
       this.updateStatusSubtask(subtaskId);
+      sub.unsubscribe();
     });
   }
 
@@ -133,7 +135,6 @@ export class DetailsComponent implements OnInit {
     let usersLC = localStorage.getItem('users');
     if (usersLC !== null && usersLC !== 'undefined') {
       this.users = JSON.parse(usersLC);
-      // this.currentUser = users.filter(u=>u.id===this.task.userId)
     }
     // SUBTASK
     let subtasksFromLC = localStorage.getItem('subtasks');
