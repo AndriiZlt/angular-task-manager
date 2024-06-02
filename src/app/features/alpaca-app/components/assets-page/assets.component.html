@@ -1,11 +1,21 @@
-<div class="assets-conainer">
-  <h4 *ngIf="positions.length === 0">No active positions</h4>
-  <a href="alpaca/trading" *ngIf="positions.length === 0">To Trading page</a>
-  <h4 *ngIf="positions.length != 0">All active positions:</h4>
-  <app-asset-card
-    *ngFor="let position of positions"
-    [position]="position"
-    [index]="positions.indexOf(position)"
-    (sellAsset)="sellAsset($event)"
-  ></app-asset-card>
+<div class="assets-container">
+  <h4 *ngIf="!isLoading && positions.length === 0">
+    No assets!
+    <span><a [routerLink]="['alpaca/trading']"> Go to the Trading Page</a></span
+    >.
+  </h4>
+  <h4 *ngIf="positions.length > 0">Your assets:</h4>
+  <h4 *ngIf="isLoading">Updating your assets</h4>
+
+  <div class="list" *ngIf="!isLoading">
+    <app-asset-card
+      *ngFor="let position of positions"
+      [position]="position"
+      [index]="positions.indexOf(position)"
+      (sellAsset)="sellAsset($event)"
+    ></app-asset-card>
+  </div>
+  <div class="spinner" *ngIf="isLoading">
+    <app-spinner></app-spinner>
+  </div>
 </div>

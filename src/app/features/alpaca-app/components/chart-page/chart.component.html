@@ -1,8 +1,14 @@
 <div class="alpaca-container">
   <div class="menu">
     <div class="top-column column-1">
-      <h4 *ngIf="assets.length === 0">Updating assets...</h4>
-      <h4 *ngIf="assets.length != 0">Select Asset</h4>
+      <div class="title" *ngIf="isLoading">
+        <h4>Updating assets &nbsp;&nbsp;</h4>
+        <app-spinner></app-spinner>
+      </div>
+      <div class="title" *ngIf="!isLoading">
+        <h4 *ngIf="!isLoading">Select Asset</h4>
+      </div>
+
       <form class="example-form">
         <mat-form-field class="example-full-width">
           <input

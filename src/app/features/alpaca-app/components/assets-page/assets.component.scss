@@ -1,10 +1,35 @@
-.assets-conainer {
+.assets-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 20px;
   width: 100%;
-  padding: 20px 15px;
   min-width: 1160px;
+  h4 {
+    text-align: center;
+    padding: 30px 10px 10px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-family: "Lato", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    color: rgb(83, 120, 122);
+    margin-bottom: 0;
+  }
+  .list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    width: 100%;
+    padding: 20px 15px;
+    min-width: 1160px;
+  }
+  .spinner {
+    padding: 70px;
+    transform: scale(4);
+  }
 }

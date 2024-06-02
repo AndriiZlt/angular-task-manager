@@ -23,7 +23,8 @@ export class ChartComponent implements OnInit, OnDestroy {
   inputValue: string = '';
   buttonDisabled: boolean = true;
   selectedPrice: number;
-  nasdaq100: string[] ;
+  nasdaq100: string[];
+  isLoading: boolean = true;
 
   constructor(private http: HttpClient, private alpacaService: AlpacaService) {
     this.nasdaq100 = nasdaq100.get();
@@ -39,6 +40,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         }
       }
       this.filteredAssets = this.assets.map((asset) => asset.name);
+      this.isLoading = false;
       sub.unsubscribe();
     });
   }
