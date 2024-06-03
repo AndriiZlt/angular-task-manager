@@ -3,7 +3,7 @@
 @import "../../../../styles.scss";
 
 .ng-tns-c134-0.ng-star-inserted {
-  font-size: 20px;
+  font-size: 14px;
 }
 
 .ng-tns-c135-2 {
@@ -15,33 +15,32 @@
   width: unset !important;
 }
 
-.container {
+.task-container {
   position: relative;
-  padding: 0;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: fit-content;
+  min-height: 1000px;
+  overflow: hidden;
+  padding: 20px;
 
-  .top {
+  .filter {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 100px;
-    h3 {
-      font-family: "Roboto", sans-serif;
-      font-size: 20px;
-      font-weight: 500;
-      span {
-        font-size: 16px;
-        color: cadetblue;
-      }
-    }
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
   }
 
   .basic-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
+    height: 115px;
+    border-radius: 5px;
   }
 
   .buttons {
@@ -49,6 +48,8 @@
     justify-content: center;
     align-items: flex-start;
     align-self: flex-start;
+    gap: 15px;
+    padding-top: 7px;
   }
 
   .ng-tns-c134-1 {
@@ -64,30 +65,24 @@
     justify-content: space-between;
     align-items: center;
     min-width: 150px;
-    // max-width: 500px;
+    gap: 15px;
     width: 100%;
   }
 
   .mat-form-field-flex {
-    // width: 100px;
-    // height: 70px;
-    margin-right: 20px;
   }
 
   .title {
-    margin-right: 20px;
-
     height: 80px;
   }
 
   .description {
-    margin-right: 20px;
     height: 80px;
   }
 
   .add-btn {
     @include btn;
-    margin: 0 0px 0 25px;
+    margin: 0;
     background-color: $cyan-600;
     color: $gray-200;
     font-weight: 600;
@@ -95,7 +90,7 @@
   }
 
   .button {
-    padding: 12.5px 30px;
+    padding: 12.5px 20px;
     border: 0;
     border-radius: 100px;
     background-color: #2ba8fb;
@@ -103,7 +98,7 @@
     font-weight: Bold;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
-    margin: 7px 0px 0 15px;
+    margin: 0;
   }
 
   .button:hover {
@@ -125,11 +120,12 @@
   }
 
   .tasks {
-    padding: 30px;
+    padding: 10px 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    // transform: scale(0.7);
   }
 
   .chart-container {
@@ -139,23 +135,12 @@
     align-items: center;
     justify-content: center;
 
-    // .chart {
-    //   width: 300px;
-    //   margin-right: 25%;
-    //   margin-left: 25%;
-    //   align-self: center;
-    // }
-
     h3 {
       font-family: "Roboto", sans-serif;
-      font-size: 20px;
+      font-size: 14px;
       font-weight: 500;
       color: cadetblue;
     }
-  }
-
-  @media screen and (max-width: 1300px) {
-    flex-direction: column;
   }
 
   .message ::first-letter {

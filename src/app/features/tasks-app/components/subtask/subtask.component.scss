@@ -63,10 +63,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 763px;
   height: 40px;
   padding: 0 20px;
-  margin-left: 20px;
+  margin-left: 15px;
   margin-bottom: 10px;
 
   .mat-card {
@@ -87,19 +88,19 @@
   // New delete button
   .bin-button {
     position: absolute;
-    top: 0;
-    right: -50px;
+    right: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
     background-color: rgb(255, 95, 95);
     cursor: pointer;
     border: 3px solid rgb(255, 201, 201);
     transition-duration: 0.3s;
+    margin-left: 118px;
   }
   .bin-bottom {
     width: 15px;
@@ -185,7 +186,7 @@
 // Arrow
 #b {
   position: absolute;
-  left: -80px;
+  left: -70px;
   top: -3px;
   display: flex;
   justify-content: center;

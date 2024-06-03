@@ -1,160 +1,133 @@
-<div class="container">
-  <div
-    class="col-md-7"
-    style="
-      width: 100%;
-      height: fit-content;
-      min-height: 1000px;
-      overflow: hidden;
-      background-color: rgb(235, 240, 248);
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding: 30px;
-    "
-  >
-    <div class="mat-app-background basic-container">
-      <div class="top">
-        <h3>
-          <span>USER: &nbsp;</span>{{ selectedUser.name }}&nbsp;{{
-            selectedUser.surname
-          }}
-          &nbsp;({{ selectedUser.userName }})
-        </h3>
-        <div class="matSelect">
-          <mat-form-field>
-            <mat-label style="font-size: 18px; font-weight: 500; color: indigo"
-              >Select another User</mat-label
-            >
-            <mat-select
-              style="
-                font-size: 18px;
-                font-weight: 500;
-                color: indigo;
-                width: 200px;
-                height: 18px;
-              "
-            >
-              <mat-option
-                *ngFor="let user of filteredUsers"
-                [value]="user.id"
-                (click)="onSelect(user.id)"
-                >{{ user.userName }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
+<div class="task-container">
+  <div class="mat-app-background basic-container">
+    <div class="top"></div>
 
-      <form class="example-form">
-        <mat-form-field class="title">
-          <mat-label style="font-size: 14px">Title</mat-label>
-          <input
-            class="message"
-            matInput
-            #message1
-            maxlength="43"
-            [(ngModel)]="title"
-            [ngModelOptions]="{ standalone: true }"
-            style="font-size: 14px; height: 15px"
-            (ngModelChange)="onFormChange('title', $event)"
-          />
-
-          <mat-hint align="end">{{ message1.value.length }} / 43</mat-hint>
-        </mat-form-field>
-        <mat-form-field class="description" style="width: 40%">
-          <mat-label style="font-size: 14px">Description</mat-label>
-          <input
-            class="message"
-            matInput
-            #message2
-            maxlength="165"
-            [(ngModel)]="description"
-            [ngModelOptions]="{ standalone: true }"
-            (ngModelChange)="onFormChange('description', $event)"
-            style="font-size: 14px; font-weight: 500; height: 15px"
-          />
-
-          <mat-hint align="end">{{ message2.value.length }} / 165</mat-hint>
-        </mat-form-field>
-
-        <mat-form-field style="margin-bottom: 80px; height: 0px; width: 20%">
-          <mat-label style="font-size: 14px">Due date</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            #message3
-            [(ngModel)]="datePickerDate"
-            (dateChange)="onDatePickerChange($event)"
-            [ngModelOptions]="{ standalone: true }"
-            style="font-size: 14px"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <div class="buttons">
-          <button
-            class="button"
-            [disabled]="isDisabled"
-            [style]="
-              isDisabled
-                ? 'background:#545b77;color:grey;'
-                : 'background:#58AD91'
+    <form class="example-form">
+      <div class="matSelect">
+        <mat-form-field>
+          <mat-label style="font-size: 18px; font-weight: 500; color: indigo">{{
+            selectedUser.userName
+          }}</mat-label>
+          <mat-select
+            style="
+              font-size: 18px;
+              font-weight: 500;
+              color: indigo;
+              width: 200px;
+              height: 18px;
             "
-            (click)="addTask()"
           >
-            Add
-          </button>
-          <button (click)="updateTitle()" class="button">Clear</button>
-        </div>
-      </form>
-      <hr />
-      <mat-button-toggle-group
-        name="fontStyle"
-        aria-label="Font Style"
-        (change)="onFilterChange($event)"
-      >
-        <mat-button-toggle value="all">All tasks</mat-button-toggle>
-        <mat-button-toggle value="unfinished"
-          >Unfinished tasks</mat-button-toggle
-        >
-        <mat-button-toggle value="completed">Completed tasks</mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-
-    <!-- Tasks -->
-
-    <div class="tasks">
-      <div *ngIf="tasks.length === 0"><h2>No tasks</h2></div>
-      <app-task
-        *ngFor="let task of tasks | filter : filter; let index = id"
-        [task]="task"
-        [subtasks]="subtasks"
-        [taskIndex]="tasks.indexOf(task)"
-        (onTaskDelete)="onTaskDelete($event)"
-        (onDetailsClick)="onDetailsClick($event)"
-        (modalOpen)="modalOpen($event)"
-        (checkSubtask)="statusUpdateSubtask($event)"
-        (openUpdateModal)="openUpdateModal($event)"
-      ></app-task>
-    </div>
-
-    <!-- Chart -->
-
-    <div class="chart-container">
-      <h3>DAY CREATED TASKS & SUBTASKS</h3>
-      <div class="chart">
-        <app-task-chart
-          [tasks]="this.tasks"
-          [subtasks]="this.subtasks"
-        ></app-task-chart>
+            <mat-option
+              *ngFor="let user of filteredUsers"
+              [value]="user.id"
+              (click)="onSelect(user.id)"
+              >{{ user.userName }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
       </div>
+      <mat-form-field class="title">
+        <mat-label style="font-size: 14px">Title</mat-label>
+        <input
+          class="message"
+          matInput
+          #message1
+          maxlength="43"
+          [(ngModel)]="title"
+          [ngModelOptions]="{ standalone: true }"
+          style="font-size: 14px; height: 15px"
+          (ngModelChange)="onFormChange('title', $event)"
+        />
+
+        <mat-hint align="end">{{ message1.value.length }} / 43</mat-hint>
+      </mat-form-field>
+      <mat-form-field class="description" style="width: 40%">
+        <mat-label style="font-size: 14px">Description</mat-label>
+        <input
+          class="message"
+          matInput
+          #message2
+          maxlength="165"
+          [(ngModel)]="description"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="onFormChange('description', $event)"
+          style="font-size: 14px; font-weight: 500; height: 15px"
+        />
+
+        <mat-hint align="end">{{ message2.value.length }} / 165</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field style="margin-bottom: 80px; height: 0px; width: 140px">
+        <mat-label style="font-size: 14px">Due date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          #message3
+          [(ngModel)]="datePickerDate"
+          (dateChange)="onDatePickerChange($event)"
+          [ngModelOptions]="{ standalone: true }"
+          style="font-size: 14px"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <div class="buttons">
+        <button
+          class="button"
+          [disabled]="isDisabled"
+          [style]="
+            isDisabled ? 'background:#545b77;color:grey;' : 'background:#58AD91'
+          "
+          (click)="addTask()"
+        >
+          Add
+        </button>
+        <button (click)="updateTitle()" class="button">Clear</button>
+      </div>
+    </form>
+    <hr />
+  </div>
+
+  <!-- Filter -->
+  <div class="filter">
+    <mat-button-toggle-group
+      name="fontStyle"
+      aria-label="Font Style"
+      (change)="onFilterChange($event)"
+    >
+      <mat-button-toggle value="all">All tasks</mat-button-toggle>
+      <mat-button-toggle value="unfinished">Unfinished tasks</mat-button-toggle>
+      <mat-button-toggle value="completed">Completed tasks</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <!-- Tasks -->
+
+  <div class="tasks">
+    <div *ngIf="tasks.length === 0"><h2>No tasks</h2></div>
+    <app-task
+      *ngFor="let task of tasks | filter : filter; let index = id"
+      [task]="task"
+      [subtasks]="subtasks"
+      [taskIndex]="tasks.indexOf(task)"
+      (onTaskDelete)="onTaskDelete($event)"
+      (onDetailsClick)="onDetailsClick($event)"
+      (modalOpen)="modalOpen($event)"
+      (checkSubtask)="statusUpdateSubtask($event)"
+      (openUpdateModal)="openUpdateModal($event)"
+    ></app-task>
+  </div>
+
+  <!-- Chart -->
+
+  <div class="chart-container">
+    <h3>DAY CREATED TASKS & SUBTASKS</h3>
+    <div class="chart">
+      <app-task-chart
+        [tasks]="this.tasks"
+        [subtasks]="this.subtasks"
+      ></app-task-chart>
     </div>
   </div>
 

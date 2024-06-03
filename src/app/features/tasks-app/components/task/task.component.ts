@@ -13,11 +13,11 @@ export class TaskComponent implements OnInit {
   @Input() task: Task;
   @Input() taskIndex: number;
   @Input() subtasks: Subtask[];
-  @Output() onTaskDelete: EventEmitter<any> = new EventEmitter<any>();
-  @Output() onDetailsClick: EventEmitter<any> = new EventEmitter<any>();
-  @Output() modalOpen: EventEmitter<any> = new EventEmitter<any>();
-  @Output() checkSubtask: EventEmitter<any> = new EventEmitter<any>();
-  @Output() openUpdateModal: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onTaskDelete: EventEmitter<number> = new EventEmitter<number>();
+  @Output() onDetailsClick: EventEmitter<number> = new EventEmitter<number>();
+  @Output() modalOpen: EventEmitter<number> = new EventEmitter<number>();
+  @Output() checkSubtask: EventEmitter<number> = new EventEmitter<number>();
+  @Output() openUpdateModal: EventEmitter<number> = new EventEmitter<number>();
   filteredSubtasks: Subtask[];
 
   constructor(

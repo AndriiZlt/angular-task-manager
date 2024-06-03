@@ -11,6 +11,7 @@ import { HubConnectionService } from 'src/app/core/services/hub-connection.servi
 import { SubtaskApiService } from '../services/subtask.service';
 import { UserApiService } from 'src/app/core/user/services/user.service';
 import { Subscription } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 enum TaskFilterValue {
   'all' = 1,
@@ -48,6 +49,8 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
     surname: 'string',
   };
   subscription: Subscription;
+  myControl = new FormControl();
+  inputValue: string = '';
 
   constructor(
     private router: Router,

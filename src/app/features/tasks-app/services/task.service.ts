@@ -21,11 +21,11 @@ export class TaskApiService extends ApiService {
   }
 
   deleteTask(taskId: number): Observable<Task> {
-    return this.delete<Task>(`deletetask?${taskId}`);
+    return this.delete<Task>(`deletetask/${taskId}`);
   }
 
   updateStatus(taskId: number): Observable<Task> {
-    return this.put<Task>(`updatestatus?taskId=${taskId}`, taskId);
+    return this.put<Task>(`updatestatus/${taskId}`, taskId);
   }
 
   updateTask(task: Task): Observable<Task> {

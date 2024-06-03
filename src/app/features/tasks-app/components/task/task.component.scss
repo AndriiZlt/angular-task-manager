@@ -5,22 +5,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  justify-content: space-between;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 8px;
-  margin-top: 10px;
-
+  width: 100%;
   ::first-letter {
     text-transform: capitalize;
   }
   .text {
-    width: 350px;
+    display: flex;
+    gap: 8px;
+    width: 70%;
     h3 {
-      height: 22px;
+      height: 20px;
       margin-bottom: 0px;
-      font-size: 16px;
-      line-height: 24px;
-      font-family: "Roboto", sans-serif;
+      font-size: 14px;
+      line-height: 20px;
+      font-family: "Lato", sans-serif;
       font-weight: 500;
       font-style: normal;
       overflow: hidden;
@@ -35,8 +35,8 @@
     }
 
     #titleH3 {
-      font-weight: 600;
-      font-size: 16px;
+      font-weight: 500;
+      font-size: 14px;
     }
     h5 {
       margin: 0;
@@ -61,7 +61,9 @@
 .subtasks {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 40px;
 }
 
 .card {
@@ -69,9 +71,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
-  height: 60px;
-
+  height: 50px;
   padding: 0 30px;
   margin-right: 20px;
 
@@ -91,8 +91,8 @@
   }
 
   mat-checkbox::ng-deep .mat-checkbox-inner-container {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
   }
 
   .cta {
@@ -156,9 +156,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
-    border-radius: 15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
     background-color: rgb(255, 95, 95);
     cursor: pointer;
     border: 3px solid rgb(255, 201, 201);
