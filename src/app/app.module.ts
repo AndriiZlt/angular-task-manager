@@ -14,6 +14,7 @@ import { FeaturesModule } from './features/features.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthInterceptor } from './core/auth/services/auth.interceptor';
 import {NgxsModule} from '@ngxs/store'
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +31,7 @@ import {NgxsModule} from '@ngxs/store'
     CoreModule,
     FeaturesModule,
     SharedModule,
-    NgxsModule.forRoot([],{}),
+    NgxsModule.forRoot([],{developmentMode:!environment.production}),
   ],
   providers: [
     {
